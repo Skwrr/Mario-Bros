@@ -258,7 +258,7 @@ module.exports = (client, message, args, Discord) => {
     .setDescription("Comandos")
     .addField("`hpwork`", "** **")
     .addField("`hpslut`", "** **")
-    .addField("`hpcrime", "** **")
+    .addField("`hpcrime`", "** **")
     .addField("`hprob (jugador)`", "** **")
     .addField("`hpbal [jugador]`", "** **")
     .addField("`hpdep (cantidad/all)`", "** **")
@@ -269,13 +269,13 @@ module.exports = (client, message, args, Discord) => {
     .addField("`hpset-money (jugador) (cantidad) (cash/bank)`", "** **")
     escribe
     setTimeout(() => {
-      message.author.send({embed: embed2})
+      message.author.send({embed: embed})
       message.channel.send("**"+message.author.tag+"**, mira tus mensajes privados")
     }, 2864) 
     nescribe
   }else
   if (categoria === 'cdn'){
-    const embed = new Discord.RichEmbed()
+    const embed2 = new Discord.RichEmbed()
     .setColor("RANDOM")
     .setTitle("Comandos de Economia")
     .setDescription("Comandos")

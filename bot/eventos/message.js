@@ -34,9 +34,7 @@ module.exports = async(client, message) => {
 
   if (message.author.bot) return;
   if(!message.content.toLowerCase().startsWith(prefix)){
-    if(message.content.toLowerCase().startsWith('zerok')){
-    message.channel.send('ZerokMortal? El pvto que dejó morir HypnoCraft?')
-  } 
+  
   if(message.content.toLowerCase().startsWith('sepox')){
     message.channel.send('SEPOXCRAFT48? El que busca gente que le ayude y todos le ignoran?')
   }

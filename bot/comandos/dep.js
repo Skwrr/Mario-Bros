@@ -12,6 +12,7 @@ module.exports = async(client, message, args, Discord) => {
     return;
   }else if(agregar <= 0){
     message.channel.send("No puedes depositar menos dinero que 0")
+    return
   }
   if(isNaN(agregar)) return message.reply('Escriba una cantidad')
 

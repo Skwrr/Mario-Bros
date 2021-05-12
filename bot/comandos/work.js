@@ -15,7 +15,7 @@ let level = await lvl.get(user+".lvl")
 lvl.sumar(user+".xp", (Math.floor(Math.random() * 20) + 1))
 if(xp >= (5 * (level ^ 2) + 50 * level + 100)) { 
         lvl.sumar(user+".lvl", 1)
-        message.reply("Has subido de nivel! Nuevo nivel " + level); 
+        message.reply("Has subido de nivel! Nuevo nivel " + (level+1)); 
     }
 
 //PARTE DEL WORK
