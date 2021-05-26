@@ -1,11 +1,11 @@
 module.exports = (client) => {
-     client.user.setPresence({
-     status: "online",
-     game: {
-       name: "mi creador || hphelp",
-       url: "https://www.youtube.com/watch?v=FDBzKxZntKQ",
-       type: "STREAMING"
-     }
-  });
+  client.user.setPresence({
+        activity: {
+            name: `mi creador || hphelp`,
+            type: 'STREAMING',
+            url: "https://www.youtube.com/watch?v=FDBzKxZntKQ"
+        },
+        status: 'online'
+    });
   
 }

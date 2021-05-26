@@ -1,14 +1,12 @@
 module.exports = async(client, message, args, Discord) => {
-  let db = require("megadb")
-  let ipdb = new db.crearDB("ipdb")
   let mci = require("minecraft-information")
-  let ip = ipdb.get(message.guild.id)
+  let ip = args.join(" ")
   let info = await mci.server(ip)
   let favicon = await mci.server_icon(ip)
   try{
 
   
-      const embed = new Discord.RichEmbed()
+      const embed = new Discord.MessageEmbed()
       .setTitle('Server Data')
       .addField('Server IP', ip)
       .setImage(favicon)

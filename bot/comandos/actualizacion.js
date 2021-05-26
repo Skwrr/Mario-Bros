@@ -7,5 +7,5 @@ module.exports = (client, message, args) => {
       let texto = args.slice(0).join(" ");
       if (!texto)
         return message.channel.send("Porfavor escriba la actualización");
-      client.channels.get("764147619504062475").send(texto.toLowerCase());
+      client.channels.get("764147619504062475").send(texto);
 }

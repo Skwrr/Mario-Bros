@@ -1,5 +1,5 @@
 module.exports = async (client, message, args, Discord) => {
-  if (!message.member.hasPermission("ADMINISTRATOR")) return message.reply("**No tienes permiso para ejecutar este coma**")
+  if (!message.member.permissions.has("ADMINISTRATOR")) return message.reply("**No tienes permiso para ejecutar este coma**")
   let encuesta = args.join(" ");
 
   if (!encuesta)
@@ -8,7 +8,7 @@ module.exports = async (client, message, args, Discord) => {
     );
 
   message.delete();
-  const embed = new Discord.RichEmbed()
+  const embed = new Discord.MessageEmbed()
     .setDescription(encuesta)
     .setFooter(message.guild.name, message.guild.iconURL)
     .setTimestamp()

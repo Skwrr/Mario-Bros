@@ -7,15 +7,15 @@ module.exports = async (client, message, args, Discord) => {
   let mor = args[0];
   let gan = mor * 4;
 
- const din = new Discord.RichEmbed()
-  .setAuthor(user.username, message.author.avatarURL) 
+ const din = new Discord.MessageEmbed()
+  .setAuthor(user.username, message.author.displayAvatarURL()) 
   .setDescription("Debes poner una cantidad de dinero para apostar.\nEl mínimo de dinero para apostar es de **100** <a:dollar:768550312604336188>") 
   .setColor("RED")
 
  if(!mor) return message.channel.send(din)
  
-const minimo = new Discord.RichEmbed()
-  .setAuthor(user.username, message.author.avatarURL)
+const minimo = new Discord.MessageEmbed()
+  .setAuthor(user.username, message.author.displayAvatarURL())
   .setDescription("No puedes apostar menos de **100** <a:dollar:768550312604336188> ")
   .setColor("RED")
 
@@ -28,8 +28,8 @@ const minimo = new Discord.RichEmbed()
    let money = await dinero.obtener(`${user.id}.cash`); 
 
   if(isNaN(mor)){
-      const nonum = new Discord.RichEmbed()
-      .setAuthor(user.username, message.author.avatarURL)
+      const nonum = new Discord.MessageEmbed()
+      .setAuthor(user.username, message.author.displayAvatarURL())
       .setDescription(`Solo puedes apostar dinero.`) 
       .setColor("RED")
       message.channel.send(nonum) 
@@ -38,8 +38,8 @@ const minimo = new Discord.RichEmbed()
   }
 
   if(mor > money){ 
-      const nomo = new Discord.RichEmbed()
-      .setAuthor(user.username, message.author.avatarURL)
+      const nomo = new Discord.MessageEmbed()
+      .setAuthor(user.username, message.author.displayAvatarURL())
       .setDescription("No tienes suficiente dinero.") 
       .setColor("RED")
       message.channel.send(nomo)
@@ -50,8 +50,8 @@ const minimo = new Discord.RichEmbed()
   let co = args[1]; 
  
 if(!co){ 
-const color = new Discord.RichEmbed() 
-.setAuthor(user.username, message.author.avatarURL)
+const color = new Discord.MessageEmbed() 
+.setAuthor(user.username, message.author.displayAvatarURL())
 .setDescription(":duck: Debes elegir un color entre `rojo` o `negro`")
 .setColor("RED")
 
@@ -67,8 +67,8 @@ if(co === "rojo"){
  if(dinero.tiene(`${user.id}`)) 
    dinero.sumar(`${user.id}.cash`, gan)
 
-  const ganaste = new Discord.RichEmbed() 
-  .setAuthor(user.username, message.author.avatarURL)
+  const ganaste = new Discord.MessageEmbed() 
+  .setAuthor(user.username, message.author.displayAvatarURL())
   .setDescription(`La bola cayó en el color **rojo**\n\nDinero ganado: **${gan}** <a:dollar:768550312604336188>`)
   .setColor("#FFFDFD")
 
@@ -78,8 +78,8 @@ return message.channel.send(`<@${message.author.id}>`), message.channel.send(gan
  if(dinero.tiene(`${user.id}`)) 
    dinero.restar(`${user.id}.cash`, mor) 
 
-const perdiste = new Discord.RichEmbed()
-.setAuthor(user.username, message.author.avatarURL)
+const perdiste = new Discord.MessageEmbed()
+.setAuthor(user.username, message.author.displayAvatarURL())
 .setDescription(`La bola cayó en el color **rojo**\n\nDinero perdido: **${mor}** <a:dollar:768550312604336188>`)
 .setColor("RED")
 
@@ -94,8 +94,8 @@ if(co === "negro"){
  if(dinero.tiene(`${user.id}`)) 
    dinero.sumar(`${user.id}.cash`, gan)
 
-  const ganaste2 = new Discord.RichEmbed()
-  .setAuthor(user.username, message.author.avatarURL)
+  const ganaste2 = new Discord.MessageEmbed()
+  .setAuthor(user.username, message.author.displayAvatarURL())
   .setDescription(`La bola cayó en el color **negro**\n\nDinero ganado: **${gan}** <a:dollar:768550312604336188>`)
   .setColor("#FFFDFD")
   
@@ -105,8 +105,8 @@ return message.channel.send(ganaste2)
    dinero.restar(`${user.id}.cash`, mor)
 
 
-const perdiste2 = new Discord.RichEmbed()
-.setAuthor(user.username, message.author.avatarURL)
+const perdiste2 = new Discord.MessageEmbed()
+.setAuthor(user.username, message.author.displayAvatarURL())
 .setDescription(`La bola cayó en el color **negro**\n\nDinero perdido: **${mor}** <a:dollar:768550312604336188>`)
 .setColor("RED")
 
@@ -117,8 +117,8 @@ return;
 
 }
   else { 
-    const solop = new Discord.RichEmbed()
-    .setAuthor(user.username, message.author.avatarURL)
+    const solop = new Discord.MessageEmbed()
+    .setAuthor(user.username, message.author.displayAvatarURL())
     .setDescription("Solo puedes poner `rojo` o `negro`.") 
     .setColor("RED")
 

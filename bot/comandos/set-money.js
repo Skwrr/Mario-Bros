@@ -1,7 +1,7 @@
 module.exports = async(client, message, args, Discord) => {
   const db = require("megadb")
   const money = new db.crearDB("economy")
-  if(!message.member.hasPermission("ADMINISTRATOR")) return message.reply("No tienes permisos para dar dinero")
+  if(!message.member.permissions.has("ADMINISTRATOR")) return message.reply("No tienes permisos para dar dinero")
   let j = message.mentions.users.first()
   if(!j) return message.reply("Mencione a alguien")
   let c = args[1]
@@ -15,7 +15,7 @@ module.exports = async(client, message, args, Discord) => {
       await money.set(`${j.id}.bank`, 0)
     }
     await money.set(`${j.id}.${cb}`, c)
-    message.channel.send("Has esyablecido correctamente "+c+"$ a "+j+" en "+cb)
+    message.channel.send("Has establecido correctamente "+c+"$ a "+j+" en "+cb)
   }else{
     message.reply("Escribe `cash` o `bank`, no "+cb)
     return

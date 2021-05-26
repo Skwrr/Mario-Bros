@@ -11,7 +11,7 @@ let nuevoprefix = args[0]
     if (!nuevoprefix)
     return message.channel.send('**Escriba un nuevo prefix o `clear` para devolverlo al original**');
   if(args[0] === 'clear'){
-    if (!message.member.hasPermission("MANAGE_MESSAGES"))
+    if (!message.member.permissions.has("MANAGE_MESSAGES"))
     return message.channel.send(
       "**No tienes los permisos suficientes para cambiar el prefix del bot**"
     );
@@ -30,7 +30,7 @@ let nuevoprefix = args[0]
     
   if (nuevoprefix.length > 3) return message.channel.send("**No puedes poner ese prefix tan largo**")
   
-  if (!message.member.hasPermission("MANAGE_MESSAGES"))
+  if (!message.member.permissions.has("MANAGE_MESSAGES"))
     return message.channel.send(
       "**No tienes los permisos suficientes para cambiar el prefix del bot**"
     );

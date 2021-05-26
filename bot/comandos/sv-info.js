@@ -1,7 +1,7 @@
 module.exports = (client, message, args, Discord) => {
   var server = message.guild;
 
-      const embed = new Discord.RichEmbed()
+      const embed = new Discord.MessageEmbed()
         .setThumbnail(server.iconURL)
         .setAuthor(server.name, server.iconURL)
         .addField("ID", server.id, true)

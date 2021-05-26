@@ -13,11 +13,9 @@ module.exports = async (client, message, args, Discord) => {
   if (args[0] === 'reply'){
     if (message.author.id !== '466241681654808576') return message.reply("Este subcomando solo lo puede usar mi creador")
     if (!args[1]) return message.channel.send("Escriba una id")
-    client.users.get(args[1]).send('Su reporte fue atendido correctamente y fue arreglado, gracias por reportarlo :)')
+    client.users.cache.get(args[1]).send('Su reporte fue atendido correctamente y fue arreglado, gracias por reportarlo :)')
     message.channel.send("<:gapple:611203741441327117>").then(m => {
-      setTimeout(() => {
-        m.delete()
-      }, 2000)
+        m.delete({timeout: 5000})
     })
     return
   }
@@ -32,25 +30,19 @@ module.exports = async (client, message, args, Discord) => {
   const bl = blbr.has(message.author.id)
   if (bl) {
     return message.reply("Estas en la lista negra de usar este comando por mal-usarlo").then(m => {
-      setTimeout(() => {
-        m.delete()
-      }, 2000)
+        m.delete({timeout: 2000})
     })
   } else {
     if (!bug) return message.channel.send('Escriba el bug').then(m => {
-      setTimeout(() => {
-        m.delete()
-      }, 2000)
+        m.delete({timeout: 2000})
     })
-    const embed = new Discord.RichEmbed()
+    const embed = new Discord.MessageEmbed()
     .setDescription(`Reporte de ${message.author.username}#${message.author.discriminator}`)
     .setColor("RANDOM")
     .addField(`${bug}`, `${message.author.id}`)
-    client.channels.get('726518343921696849').send(embed)
+    client.channels.cache.get('726518343921696849').send(embed)
     message.channel.send("Su reporte de un bug ha sido enviado correctamente").then(m => {
-      setTimeout(() => {
-        m.delete()
-      }, 5000)
+        m.delete({timeout: 5000})
     })
   }
   

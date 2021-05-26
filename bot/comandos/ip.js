@@ -2,7 +2,7 @@ module.exports = async(client, message, args) => {
   let db = require("megadb")
   let ipdb = new db.crearDB("ipdb")
   if (message.guild.id === "720657677323075584") {
-    if(message.member.hasPermission("ADMINISTRAOR")){
+    if(message.member.permissions.has("ADMINISTRAOR")){
       if(!args[0]) return message.channel.send(await ipdb.get(message.guild.id))
       if(args[0] === 'set'){
         if(!args[1]) return message.reply('Escriba la nueva ip')

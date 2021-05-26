@@ -3,9 +3,9 @@ module.exports = (client, message, args, Discord) => {
       if (!userm) {
         var user = message.author;
 
-        const embed = new Discord.RichEmbed()
-          .setThumbnail(user.avatarURL)
-          .setAuthor(user.username + "#" + user.discriminator, user.avatarURL)
+        const embed = new Discord.MessageEmbed()
+          .setThumbnail(user.displayAvatarURL())
+          .setAuthor(user.username + "#" + user.discriminator, user.displayAvatarURL())
           .addField(
             "Jugando a",
             user.presence.game != null ? user.presence.game.name : "Nada",
@@ -24,11 +24,11 @@ module.exports = (client, message, args, Discord) => {
 
         message.channel.send({ embed });
       } else {
-        const embed = new Discord.RichEmbed()
-          .setThumbnail(userm.avatarURL)
+        const embed = new Discord.MessageEmbed()
+          .setThumbnail(userm.displayAvatarURL())
           .setAuthor(
             userm.username + "#" + userm.discriminator,
-            userm.avatarURL
+            userm.displayAvatarURL()
           )
           .addField(
             "Jugando a",

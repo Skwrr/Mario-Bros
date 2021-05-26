@@ -10,7 +10,6 @@ function login(t){
   if(!t) t=process.env.TOKEN;
   return client.login(`${t}`)
 }
-
 for (const file of readdirSync('./bot/comandos/')) {
 	if (file.endsWith('.js')) {
 		let fileName = file.substring(0, file.length - 3);

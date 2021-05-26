@@ -24,8 +24,8 @@ module.exports = async(client, message, args, Discord) => {
   let cashf = await money.get(`${message.author.id}.cash`)
   let bankf = await money.get(`${message.author.id}.bank`)
 
-  const embed = new Discord.RichEmbed()
-  .setThumbnail(message.author.displayAvatarURL)
+  const embed = new Discord.MessageEmbed()
+  .setThumbnail(message.author.displayAvatarURL())
   .setTitle("Has sacado del banco algo de dinero")
   .setDescription("Sacaste "+sacar+"$ del banco")
   .addField("En tu bolsillo:", cashf)

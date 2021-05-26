@@ -9,13 +9,13 @@ if(!warns.has(`${message.guild.id}.kicks`)){
 
 
 if(args[0] === "get"){
-  if(!message.member.hasPermission('KICK_MEMBERS')) return message.reply("No puedes obtener los avisos de alguien")
+  if(!message.member.permissions.has('KICK_MEMBERS')) return message.reply("No puedes obtener los avisos de alguien")
   if(!usuario) return message.channel.send("Debes mencionar a un usuario")
   let warneos = await warns.get(`${message.guild.id}.${usuario.id}`)
   if(warneos === undefined){
     warneos = 0
 
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
   .setTitle('Warneos')
   .addField('Usuario:', `<@${usuario.id}>`)
   .addField('Cantidad de sanciones:', `${warneos}`)
@@ -23,7 +23,7 @@ if(args[0] === "get"){
   message.channel.send(embed);
   return true
   }
-  let embed = new Discord.RichEmbed()
+  let embed = new Discord.MessageEmbed()
   .setTitle('Warneos')
   .addField('Usuario:', `<@${usuario.id}>`)
   .addField('Cantidad de sanciones:', `${warneos}`)
@@ -34,11 +34,11 @@ if(args[0] === "get"){
 
 
 if(args[0] === "clear"){
-  if(!message.member.hasPermission('KICK_MEMBERS')) return message.reply("No puedes obtener los avisos de alguien")
+  if(!message.member.permissions.has('KICK_MEMBERS')) return message.reply("No puedes obtener los avisos de alguien")
   if(!usuario) return message.channel.send("Debes mencionar a un usuario")
   const warneos = await warns.get(`${message.guild.id}.${usuario.id}`)
   const newwarneos = await warns.set(`${message.guild.id}.${usuario.id}`, 0)
-  let embed = new Discord.RichEmbed()
+  let embed = new Discord.MessageEmbed()
   .setTitle('Warneos')
   .addField('Usuario:', `<@${usuario.id}>`)
   .addField('Cantidad de sanciones borradas:', `${warneos}`)
@@ -48,11 +48,11 @@ if(args[0] === "clear"){
   }
 
 if(args[0] === "set"){
-  if(!message.member.hasPermission('KICK_MEMBERS')) return message.reply("No tienes permisos para modificar los warns antes de la sanción")
+  if(!message.member.permissions.has('KICK_MEMBERS')) return message.reply("No tienes permisos para modificar los warns antes de la sanción")
   if(!args[1]) return message.channel.send("Debes establecer un numero maximos de warns antes de ser kikeado");
   const wbk = await warns.get(`${message.guild.id}.kicks`)
   if(isNaN(args[1])) return message.reply("Debes establecer un nuemro, no una letra/un caracter extraño")
-  let embed = new Discord.RichEmbed()
+  let embed = new Discord.MessageEmbed()
   .setTitle('Warneos')
   .addField('Antiguos avisos antes del kikeo:', `${wbk}`)
   .addField('Nuevos avisos antes del kikeo:', `${args[1]}`)
@@ -66,14 +66,15 @@ if(!usuario) return message.channel.send('No has mencionado ningún usuario')
 const warnings = await warns.get(`${message.guild.id}.${usuario.id}`)
 
 
-let razon = args[1] ? args.slice(1).join(' ') : 'No fue especificada'
-if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.channel.send('No tienes permisos para ejecutar este comando')
+let razon = args.slice(1).join(' ')
+if(!razon) razon = 'No fue especificada'
+if(!message.member.permissions.has('MANAGE_MESSAGES')) return message.channel.send('No tienes permisos para ejecutar este comando')
 if(razon.length > 1024) return message.reply('La razón no puede exceder los 1024 caracteres') 
 if(!warns.tiene(`${message.guild.id}.${usuario.id}`)){warns.establecer(`${message.guild.id}.${usuario.id}`, 0)
 }
 
 warns.sumar(`${message.guild.id}.${usuario.id}`, 1) 
-let embed = new Discord.RichEmbed()
+let embed = new Discord.MessageEmbed()
 .setTitle('Usuario advertido')
 .addField('Usuario:', `<@${usuario.id}>`)
 .addField('Autor de la sanción:', `<@${message.author.id}>`)
@@ -83,7 +84,7 @@ message.channel.send(embed);
 usuario.send(`Hola! Vine a informarte que fuiste avisado en el servidor ${message.guild.name} por la razón: ${razon}`).catch(e => e)
 const customwarns = await warns.get(`${message.guild.id}.kicks`)
 if(warnings === `${customwarns}`){
-  message.guild.member(usuario).kick(`Alcanzar ${customwarns} warns`)
+  message.guild.members.cache.find(usuario).kick(`Alcanzar ${customwarns} warns`)
   warns.set(`${message.guild.id}.${usuario.id}`, 0)
 }
 }

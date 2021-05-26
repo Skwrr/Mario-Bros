@@ -3,7 +3,7 @@ module.exports = (client, message, args) => {
     const namemc = args[0]
     if (!namemc) return message.reply("Escribe su nombre de minecraft premium")
     const owner = "466241681654808576"
-    client.users.get(owner).send(`${message.author.tag} ha solicitado tener rango verificado en hypnocraft con el nombre ${namemc}`);
+    client.users.cache.get(owner).send(`${message.author.tag} ha solicitado tener rango verificado en hypnocraft con el nombre ${namemc}`);
     message.channel.send("**Ya se envio la solicitud de tener rango Verificado, solo espere a ser respondido**")
   } else {
     message.channel.send(

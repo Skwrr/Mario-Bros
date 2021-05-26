@@ -21,7 +21,7 @@ module.exports = async(client, message, args, Discord) => {
     rn = "Has llegado al maximo";
   }
 
-  const rank = new Discord.RichEmbed()
+  const rank = new Discord.MessageEmbed()
   .setTitle(`Tarjeta de rango de ${usuario.tag}`)
   .setDescription("Gana xp usando el comando `hpwork`")
   .addField('Nivel:', level)
@@ -30,7 +30,7 @@ module.exports = async(client, message, args, Discord) => {
   .addField('Consigue un rango al llegar al nivel:', rn)
   .setColor("RANDOM")
   .setTimestamp()
-  .setAuthor(usuario.username, usuario.avatarURL)
+  .setAuthor(usuario.username, usuario.displayAvatarURL())
 
   message.channel.send(rank)
 }

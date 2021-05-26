@@ -66,7 +66,7 @@ module.exports = async(client, message, args, Discord) => {
   }
   let tiempo = args[1]
   if(!tiempo) return message.reply("Escriba un numero")
-  if(isNaN(tiempo)) return message.reply("Escriba un numero, no "+tiempo)
+  if(isNaN(tiempo)) return message.reply("Escriba un numero, no \""+tiempo+"\"")
   let secmin = args[2]
   if(!secmin) return message.reply("Escriba \"segundos\" o \"minutos\"")
   let multiplicador;

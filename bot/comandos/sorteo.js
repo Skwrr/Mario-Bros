@@ -1,43 +1,40 @@
 module.exports = async(client, message, args, Discord) => {
-  const sorteo = args.slice(1).join(" ");
-  const tiempo = args[0]
+  let rol = message.guild.roles.cache.find(x => x.name === "Giveaway")
+  if(!rol) return message.reply("No se ha encontrado un rol con el nombre `Giveaway`, contacta con algun moderador o si eres uno, añade el rol `Giveaway`")
+  if(!message.member.roles.cache.has(rol.id)) return message.reply("No tienes el rol `Giveaway`")
+  const ms = require("ms")
+  const prize = args.slice(1).join(" ");
+  let tiempo = args[0]
 
-  if(!tiempo) return message.reply("Escribe en cuanto tiempo (en segundos) desea acabar este evento")
-  if(!sorteo) return message.reply("Escribe que deseas sortear")
+  if(!tiempo) return message.reply("Escribe en cuanto tiempo desea acabar este evento")
+  tiempo = ms(ms(tiempo), { long: true })
+  if(!prize) return message.reply("Escribe que deseas sortear")
+  if(ms(tiempo)>1209600000||ms(tiempo)<10000) return message.reply("No puedes crear un sorteo de mas de 2 semanas o menos de 10 segundos")
 
-
-  const embed = new Discord.RichEmbed()
-  .setTitle("**Reacciona en el mensaje para participar**")
-  .setDescription(`**${sorteo}**`)
-  .setFooter(`Este sorteo acabará en ${tiempo} segundos`)
-  .setTimestamp()
+  let embed = new Discord.MessageEmbed()
+  .setTitle(`**${prize}**`)
+  .setDescription(`Reacciona con 🎉 para participar\nHosteado por: <@${message.author.id}>`)
+  .setFooter("Termina")
+  .setTimestamp(Date.now() + ms(args[0]))
+  .setColor("RED")
   
-  message.channel.send("@everyone").then(() => {
-  message.channel.send(embed).then(msg => {
+  message.channel.send(embed).then(async m => {
+    m.react("🎉");
+    setTimeout(() => {
+      if (m.reactions.cache.get("🎉").count <= 1) {
+        return message.channel.send(
+          `No reaccionó suficiente gente para el sorteo!`
+        );
+      }
 
-msg.react("💚") 
-
-const filter = (reaction, user) => reaction.emoji.name == '💚' && user.id !== client.user.id; 
-
-const collector = msg.createReactionCollector(filter, {time: tiempo * 1000}); 
-
-var array = [] 
-
-collector.on("collect", r => {
-array.push(r.users.last().id); 
-})
-
-collector.on("end", () => {
-
-const winner = array[Math.floor(Math.random() * array.length)]
-
-
-if(winner === undefined || null) return message.channel.send("Nadie ha ganado, porque nadie participó")
-message.channel.send("Ganador <@"+winner+">")
-
-})
-
-})
-  })
+      let winner = m.reactions.cache
+        .get("🎉")
+        .users.cache.filter((u) => !u.bot)
+        .random();
+      message.channel.send(
+        `Ganador de **${prize}** es...\n ${winner} Felicidades!!🥳🥳 `
+      );
+    }, ms(args[0]));
+    })
 
 }

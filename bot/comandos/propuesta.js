@@ -6,7 +6,7 @@ module.exports = async (client, message, args) => {
  const prefixdb = new db.crearDB("prefixes")
   var prefix = prefixdb.tiene(message.guild.id) ? await prefixdb.obtener(message.guild.id) : "hp";
   const usuario =
-        message.mentions.users.first() || client.users.get(args[0]);
+        message.mentions.users.first() || client.users.cache.get(args[0]);
 
       if (!usuario)
         return message.channel.send(

@@ -9,10 +9,10 @@ module.exports = async(client, message, args, Discord) => {
   }
     if(args[0] === 'add' || args[0] === 'añadir'){
       if(message.author.id != process.env.OWNER_ID) return message.reply('Tu no eres mi dueño, no tienes permiso a este comando')
-      var guild = client.guilds.get(args[1])
+      var guild = client.guilds.cache.get(args[1])
       var sv = args[1]
       if(args[1] === 'this') {
-        guild = client.guilds.get(message.guild.id);
+        guild = client.guilds.cache.get(message.guild.id);
         sv = message.guild.id;
       }
       
@@ -21,7 +21,7 @@ module.exports = async(client, message, args, Discord) => {
         message.reply("Ese servidor ya es premium")
         return
       }
-      let cate = guild.channels.find( c => c.name == "anuncios" && c.type == "text");
+      let cate = guild.channels.cache.find( c => c.name == "anuncios" && c.type == "text");
       if (!cate) {
     guild.createChannel("anuncios", {
       type: "text"
@@ -36,10 +36,10 @@ module.exports = async(client, message, args, Discord) => {
     
   }else if(args[0] === 'remove' || args[0] === 'delete' || args[0 === 'borrar']){
     if(message.author.id != process.env.OWNER_ID) return message.reply('Tu no eres mi dueño, no tienes permiso a este comando')
-      var guild = client.guilds.get(args[1])
+      var guild = client.guilds.cache.get(args[1])
       var sv = args[1]
       if(args[1] === 'this') {
-        guild = client.guilds.get(message.guild.id);
+        guild = client.guilds.cache.get(message.guild.id);
         sv = message.guild.id;
       }
       if(!guild) return message.reply("Escriba la id de algun servidor en el que yo esté")
@@ -47,7 +47,7 @@ module.exports = async(client, message, args, Discord) => {
         message.reply("Ese servidor no es premium")
         return
       }
-      let cate = guild.channels.find( c => c.name == "anuncios" && c.type == "text");
+      let cate = guild.channels.cache.find( c => c.name == "anuncios" && c.type == "text");
       if (!cate) {
     guild.createChannel("anuncios", {
       type: "text"

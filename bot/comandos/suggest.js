@@ -7,14 +7,14 @@ module.exports = async(client, message, args, Discord) => {
   })
   let canaldesuggestion = await suggest.obtener(message.guild.id)
   if(!canaldesuggestion || canaldesuggestion === null) return message.channel.send(":x: | El canal de sugerencias no está establecido, contacte con un admin o si usted es moderador, escriba en el canal de sugerencias `hpsetsuggestions`").then(m => {
-    m.delete(6000)
+    m.delete({timeout: 6000})
   })
-  let suggestionembed = new Discord.RichEmbed()
+  let suggestionembed = new Discord.MessageEmbed()
   .setTitle("*Sugerencia nueva :D*")
   .setDescription(args.join(" "))
   .setFooter(`Sugerencia de ${message.author.username}`)
   .setColor("RANDOM")
-  let cds = message.guild.channels.get(canaldesuggestion)
+  let cds = message.guild.channels.cache.get(canaldesuggestion)
   cds.send(suggestionembed).then(async m => {
     await m.react("👍")
     await m.react("👎")

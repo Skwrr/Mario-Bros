@@ -17,15 +17,7 @@ app.get('/codes/create', (req, res) => {
 })
 
 app.get('/codes/search', (req, res) => {
-  res.sendFile(__dirname + '/codes/buscar/search.php')
-})
-
-app.get('/php', (req, res) => {
-  res.sendFile(__dirname + '/backend.html')
-})
-
-app.get('/style.css', (req, res) => {
-  res.sendFile(__dirname + '/style.css')
+  res.sendFile(__dirname + '/codes/search.php')
 })
 
 module.exports = () => {

@@ -12,19 +12,19 @@ module.exports = async(client, message, args, Discord) => {
   ]
   f = f[Math.floor(Math.random() * f.length)]
 
-  const rw = new Discord.RichEmbed()
+  const rw = new Discord.MessageEmbed()
   .setTitle(`${f}`)
   .setDescription(`${message.author.tag} ha ganado: ${dg}$`)
   .setTimestamp()
-  .setAuthor(message.author.tag, message.author.avatarURL)
+  .setAuthor(message.author.tag, message.author.displayAvatarURL())
   .setColor("GREEN")
 
 
-  const rl = new Discord.RichEmbed()
+  const rl = new Discord.MessageEmbed()
   .setTitle(`${f}`)
   .setDescription(`${message.author.tag} ha perdido: ${dg}$`)
   .setTimestamp()
-  .setAuthor(message.author.tag, message.author.avatarURL)
+  .setAuthor(message.author.tag, message.author.displayAvatarURL())
   .setColor("RED")
 
   if(p < 100){

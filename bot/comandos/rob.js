@@ -13,19 +13,19 @@ module.exports = async(client, message, args, Discord) => {
   if(td < 200) return message.reply('No puedes robarle a alguien con tan poco dinero (menos de 200)')
   if(!money.has(j.id)) return message.reply("Ese usuario no esta en la base de datos!")
 
-  const rw = new Discord.RichEmbed()
+  const rw = new Discord.MessageEmbed()
   .setTitle(`${message.author.tag} ha intentado robar a ${j.tag}`)
   .setDescription(`${message.author.tag} ha ganado ${await dg}`)
   .setTimestamp()
-  .setAuthor(message.author.tag, message.author.avatarURL)
+  .setAuthor(message.author.tag, message.author.displayAvatarURL())
   .setColor("GREEN")
 
 
-  const rl = new Discord.RichEmbed()
+  const rl = new Discord.MessageEmbed()
   .setTitle(`${message.author.tag} ha intentado robar a ${j.tag}`)
   .setDescription(`${message.author.tag} ha perdido ${await dg}`)
   .setTimestamp()
-  .setAuthor(message.author.tag, message.author.avatarURL)
+  .setAuthor(message.author.tag, message.author.displayAvatarURL())
   .setColor("RED")
 
   if(p < 100){

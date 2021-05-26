@@ -6,7 +6,7 @@ module.exports = async(client, message, args, Discord) => {
   let cash = await money.get(`${dineroautor.id}.cash`)
   let bank = await money.get(`${dineroautor.id}.bank`)
   if(!money.has(`${dineroautor.id}.bank`)) cash=0, bank=0;
-  const embed = new Discord.RichEmbed()
+  const embed = new Discord.MessageEmbed()
   .setTitle(`Dinero de ${dineroautor.username}`)
   .setColor("RANDOM")
   .setDescription("Economia Internacional")

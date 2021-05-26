@@ -62,12 +62,12 @@ module.exports = async(client, message) => {
     .trim()
     .split(/ +/g);
   command = args.shift();
-  let canal = client.channels.filter(c => c.name == "userphone");
+  let canal = client.channels.cache.filter(c => c.name == "userphone");
 
-    const embed = new Discord.RichEmbed()
-      .setAuthor(message.author.tag, message.author.avatarURL)
+    const embed = new Discord.MessageEmbed()
+      .setAuthor(message.author.tag, message.author.displayAvatarURL())
       .setFooter(message.guild.name)
-      .setThumbnail(message.author.avatarURL)
+      .setThumbnail(message.author.displayAvatarURL())
       .setDescription(command+' '+args.join(' '))
       .setColor("RANDOM");
 
@@ -94,7 +94,7 @@ module.exports = async(client, message) => {
       } else {
 
         canal.forEach(m => {
-          client.channels.get(m.id).send(embed);
+          client.channels.cache.get(m.id).send(embed);
         }); 
       } 
     } 
@@ -110,6 +110,7 @@ return
   let cmd = client.comandos.get(command);
   if(command === '') return message.reply('Escribe `hphelp` para ver todos mis comandos')
   if (!cmd) return message.reply('**No existe ese comando, pero puedes sugerirlo contactando con mi dueño ;)**')
+  if(new db.crearDB("blacklistglobal").has(message.author.id)) return message.reply("Estas en la lista negra de los comandos, no intentes recuperar el derecho a usarme")
   
   cmd(client, message, args, Discord)
 };

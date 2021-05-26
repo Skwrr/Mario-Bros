@@ -28,9 +28,9 @@ let trabajo = [
 ]
 trabajo = trabajo[Math.floor(Math.random() * trabajo.length)]
   if(cn.has(message.author.id)) return message.channel.send("Tienes que esperar 5 segundos exactamente para poder usar este comando de vuelta") 
-  let embed = new Discord.RichEmbed() 
+  let embed = new Discord.MessageEmbed() 
   .setTimestamp()
-  .setThumbnail(message.author.displayAvatarURL)
+  .setThumbnail(message.author.displayAvatarURL())
   .setTitle(`${trabajo}`)
   .setDescription(`Y has ganado: ${ganancia}$`)
   .addField("En tu bolsillo:", `${await money.get(`${message.author.id}.cash`)+ganancia}`)

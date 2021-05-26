@@ -4,30 +4,30 @@ module.exports = (client, message, args, Discord) => {
   const nescribe = message.channel.stopTyping(true)
   const tiempo = setTimeout
 
-  const nodm = new Discord.RichEmbed()
+  const nodm = new Discord.MessageEmbed()
     .setTitle("Comandos de ayuda")
-    .setAuthor(message.author.username, message.author.avatarURL)
+    .setAuthor(message.author.username, message.author.displayAvatarURL())
     .setColor("RANDOM")
     .setDescription("Aqui tienes todos los comandos de ayuda.")
-    .setFooter("()=Obligatorio []=Opcional", client.user.avatarURL)
-    .setThumbnail(message.author.avatarURL)
+    .setFooter("()=Obligatorio []=Opcional", client.user.displayAvatarURL())
+    .setThumbnail(message.author.displayAvatarURL())
     .setTimestamp()
     .addField("Comandos Beta del Creador", "`Vacio`")
     .addField("Comandos Beta", "`Vacio`")
     .addField("Comandos semi-beta", "`Vacio`")
-    .addField("Comandos del creador", "`hpactualizacion (mensaje)` `hpinfoall [name/nombres]` `hpeval (avaluar)` `hpgpass` `hppremium [add/remove] (id servidor)`")
-    .addField("Comandos personalizados", "`hpverify` `hpsupport [close]` `hpip`")
+    .addField("Comandos del creador", "`hpactualizacion (mensaje)` `hpinfoall [name/nombres/invite/id] (id del servidor)` `hpeval (avaluar)` `hpgpass` `hppremium [add/remove] (id servidor)` `hpblacklist (bl/wl) (id) [reason]`")
+    .addField("Comandos personalizados", "`hpverify` `hpip`")
     .addField(
       "Comandos de moderación",
-      "`hpsetsuggestions` `hpprefix [prefix]` `hpdeletec` `hpwarn (usuario/get/clear/set) [razón]`"
+      "`hpsetsuggestions` `hpprefix [prefix]` `hpdeletec` `hpwarn (usuario/get/clear/set) [razón]` `hpsetconfessions` `hpnuke`"
     )
     .addField(
       "Comandos de diversion",
-      "`hpsuggest (sugerencia)` `hpppt (piedra-papel-tijeras)` `hpvotar (algo)` `hptyping` `hphola` `hprandom (numero)` `hpuser-info [@user]` `hpavatar [@user]` `hpsay (algo)` `hp8ball (pregunta)` `hppropuesta (mencion o id)` `hpsorteo (duracion en segundos) (sorteo)` `hpsetconfessions` `hpconfession (a/p) (confesion)` `hpemotes` `hpbuscaminas (numero de bombas) (tiempo) (minutos/segundos)` `hpnitro (cantidad)`"
+      "`hpsuggest (sugerencia)` `hpppt (piedra-papel-tijeras)` `hpvotar (algo)` `hptyping` `hphola` `hprandom (numero)` `hpuser-info [@user]` `hpavatar [@user]` `hpsay (algo)` `hp8ball (pregunta)` `hppropuesta (mencion o id)` `hpsorteo (duracion en segundos) (sorteo)` `hpconfession (a/p) (confesion)` `hpemotes` `hpbuscaminas (numero de bombas) (tiempo) (minutos/segundos)` `hpnitro (cantidad)`"
     )
     .addField(
       "Comandos de ayuda",
-      "`hpgetid` `hpgetcid` `hpbugreport (reporte/bl/wl/reply) (id)` `hpping` `hphelp (categoria/categorias/alias)` `hpservidor` `hpinvite` `hpsv-info`"
+      "`hpgetid` `hpsupport [close]` `hpgetcid` `hpbugreport (reporte/bl/wl/reply) (id)` `hpping` `hphelp (categoria/categorias/alias)` `hpservidor` `hpinvite` `hpsv-info`"
     )
     .addField("Comandos de Economia", "`hpwork` `hpbal [jugador]` `hpdep (cantidad/all)` `hpwith (cantidad/all)` `hproulette (cantidad) (rojo/negro)` `hprob (jugador)` `hpgive-money (jugador) (cantidad) (cash/bank)` `hpset-money (jugador) (cantidad) (cash/bank)` `hpremove-money (jugador) (cantidad) (cash/bank)` `hpcrime`")
     .addField("Comandos de Niveles", "`hpset-xp (usuario) (lvl/xp) (cantidad)` `hprank [usuario]`")
@@ -54,7 +54,7 @@ module.exports = (client, message, args, Discord) => {
     
   }else
   if (categoria === "categorias") {
-    const embed2 = new Discord.RichEmbed()
+    const embed2 = new Discord.MessageEmbed()
       .setColor("RANDOM")
       .setTitle("Las categorias")
       .setDescription('Categorias')
@@ -72,7 +72,7 @@ module.exports = (client, message, args, Discord) => {
     }, 2859)
   }else
   if (categoria === "cbdc") {
-    const embed2 = new Discord.RichEmbed()
+    const embed2 = new Discord.MessageEmbed()
       .setColor("RANDOM")
       .setTitle("Comandos Beta del Creador")
       .setDescription('Comandos')
@@ -90,7 +90,7 @@ module.exports = (client, message, args, Discord) => {
     }, 2859)
   }else
   if (categoria === "cb") {
-    const embed2 = new Discord.RichEmbed()
+    const embed2 = new Discord.MessageEmbed()
       .setColor("RANDOM")
       .setTitle("Comandos Beta")
       .setDescription('Comandos')
@@ -108,7 +108,7 @@ module.exports = (client, message, args, Discord) => {
     }, 2859)
   }else
   if (categoria === "csb") {
-    const embed2 = new Discord.RichEmbed()
+    const embed2 = new Discord.MessageEmbed()
       .setColor("RANDOM")
       .setTitle("Comandos semi-beta")
       .setDescription('Comandos')
@@ -126,7 +126,7 @@ module.exports = (client, message, args, Discord) => {
     }, 2859)
   }else
   if (categoria === "cdc") {
-    const embed2 = new Discord.RichEmbed()
+    const embed2 = new Discord.MessageEmbed()
       .setColor("RANDOM")
       .setTitle("Comandos del creador")
       .setDescription('Comandos')
@@ -144,7 +144,7 @@ module.exports = (client, message, args, Discord) => {
     }, 2859)
   }else
   if (categoria === "cp") {
-    const embed2 = new Discord.RichEmbed()
+    const embed2 = new Discord.MessageEmbed()
       .setColor("RANDOM")
       .setTitle("Comandos personalizados")
       .setDescription('Comandos')
@@ -162,7 +162,7 @@ module.exports = (client, message, args, Discord) => {
     }, 2859)
   }else
   if (categoria === "cdm") {
-    const embed2 = new Discord.RichEmbed()
+    const embed2 = new Discord.MessageEmbed()
       .setColor("RANDOM")
       .setTitle("Comandos de moderacion")
       .setDescription('Comandos')
@@ -180,7 +180,7 @@ module.exports = (client, message, args, Discord) => {
     }, 2859)
   }else
   if (categoria === "cdd") {
-    const embed2 = new Discord.RichEmbed()
+    const embed2 = new Discord.MessageEmbed()
       .setColor("RANDOM")
       .setTitle("Comandos de diversion")
       .setDescription('Comandos')
@@ -198,7 +198,7 @@ module.exports = (client, message, args, Discord) => {
     }, 2859)
   }else
   if (categoria === "cda") {
-    const embed2 = new Discord.RichEmbed()
+    const embed2 = new Discord.MessageEmbed()
       .setColor("RANDOM")
       .setTitle("Comandos de ayuda")
       .setDescription('Comandos')
@@ -216,7 +216,7 @@ module.exports = (client, message, args, Discord) => {
     }, 2859)
   }else
   if (categoria === "cdco") {
-    const embed2 = new Discord.RichEmbed()
+    const embed2 = new Discord.MessageEmbed()
       .setColor("RANDOM")
       .setTitle("Comandos de contraseñas")
       .setDescription('Comandos')
@@ -234,7 +234,7 @@ module.exports = (client, message, args, Discord) => {
     }, 2859)
   }else
   if (categoria === "abreviaturas" || categoria === "alias") {
-    const embed2 = new Discord.RichEmbed()
+    const embed2 = new Discord.MessageEmbed()
       .setColor("RANDOM")
       .setTitle("Las abreviaturas")
       .setDescription('En el mismo orden que como hphelp categorias')
@@ -252,7 +252,7 @@ module.exports = (client, message, args, Discord) => {
     }, 2859)
   }else
   if (categoria === 'cde'){
-    const embed = new Discord.RichEmbed()
+    const embed = new Discord.MessageEmbed()
     .setColor("RANDOM")
     .setTitle("Comandos de Economia")
     .setDescription("Comandos")
@@ -275,7 +275,7 @@ module.exports = (client, message, args, Discord) => {
     nescribe
   }else
   if (categoria === 'cdn'){
-    const embed2 = new Discord.RichEmbed()
+    const embed2 = new Discord.MessageEmbed()
     .setColor("RANDOM")
     .setTitle("Comandos de Economia")
     .setDescription("Comandos")

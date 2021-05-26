@@ -5,7 +5,7 @@ module.exports = (client, message, args) => {
 
   if (!args[0]) {
     msg.send(
-      "Error || Escribe `s/pass canjear`para canjearla"
+      "Error || Escribe `hppass canjear`para canjearla"
     );
   }
 
