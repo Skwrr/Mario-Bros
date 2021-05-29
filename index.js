@@ -33,7 +33,7 @@ const Monitor = require('ping-monitor');
 
 keepAlive();
 let monitor = new Monitor({
-	website: 'https://Host.tscollab.repl.co/',
+	website: 'https://Host.sergioesquina.repl.co/',
 	title: 'host',
 	interval: 5 // minutes
 });

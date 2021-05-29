@@ -39,8 +39,17 @@ module.exports = async(client, message, args, Discord) => {
         message.channel.send(
         `Ganador de **${prize}** es...\n ${winner} Felicidades!!🥳🥳 `
         );
-        let embed2 = embed.setDescription(`Sorteo terminado, ganador: ${winner}\nHosteado por: <@${message.author.id}>`)
-        m.edit(embed2)
+        let embed2 = embed.setDescription(`Sorteo terminado, ganador: ${winner}\nHosteado por: <@${message.author.id}>\n\nQuieres ReRoll? Reacciona a "✔️"`)
+        m.edit(embed2).then(async g => {
+          await g.react("✔️")
+          g.awaitReactions((reaction, user) => {
+            if(reaction.emoji.name === "✔️"){
+              reaction.remove(user.id)
+              if(user.roles.cache.has(rol.id)) return message.reply("No tienes permiso para hacer un ReRoll").delete({timeout: 2500})
+              message.channel.send(`Otro ganador de **${prize}** es...\n ${winner} Felicidades!!🥳🥳`)
+            }
+          })
+        })
         return clearInterval(interval)
       }
     }, 5000)
