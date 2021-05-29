@@ -1,4 +1,4 @@
-module.exports = (client, message, args, Discord) => {
+module.exports = async(client, message, args, Discord) => {
   if(message.author.id !== "466241681654808576") {
             let embed = new Discord.MessageEmbed() //Creamos el embed
             .setDescription("Mmm, no tienes los permisos suficientes para hacer esto")

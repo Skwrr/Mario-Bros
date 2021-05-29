@@ -1,4 +1,5 @@
 module.exports = async(client, message, args, Discord) => {
+  const time = require('sleep')
   let rol = message.guild.roles.cache.find(x => x.name === "Giveaway")
   if(!rol) return message.reply("No se ha encontrado un rol con el nombre `Giveaway`, contacta con algun moderador o si eres uno, añade el rol `Giveaway`")
   if(!message.member.roles.cache.has(rol.id)) return message.reply("No tienes el rol `Giveaway`")
@@ -13,28 +14,36 @@ module.exports = async(client, message, args, Discord) => {
 
   let embed = new Discord.MessageEmbed()
   .setTitle(`**${prize}**`)
-  .setDescription(`Reacciona con 🎉 para participar\nHosteado por: <@${message.author.id}>`)
+  .setDescription(`Reacciona con 🎉 para participar\nTiempo restante: ${tiempo}\nHosteado por: <@${message.author.id}>`)
   .setFooter("Termina")
   .setTimestamp(Date.now() + ms(args[0]))
   .setColor("RED")
   
   message.channel.send(embed).then(async m => {
-    m.react("🎉");
-    setTimeout(() => {
-      if (m.reactions.cache.get("🎉").count <= 1) {
-        return message.channel.send(
+    await m.react("🎉");
+    const interval = setInterval(() => {
+      tiempo = ms(tiempo)-5000
+      tiempo = ms(tiempo)
+      embed = embed.setDescription(`Reacciona con 🎉 para participar\nTiempo restante: ${tiempo}\nHosteado por: <@${message.author.id}>`)
+      m.edit(embed)
+      if(ms(tiempo) <= 0) {
+        if (m.reactions.cache.get("🎉").count <= 1) {
+          return message.channel.send(
           `No reaccionó suficiente gente para el sorteo!`
-        );
-      }
-
-      let winner = m.reactions.cache
-        .get("🎉")
-        .users.cache.filter((u) => !u.bot)
-        .random();
-      message.channel.send(
+          );
+        }
+        let winner = m.reactions.cache
+          .get("🎉")
+          .users.cache.filter((u) => !u.bot)
+          .random();
+        message.channel.send(
         `Ganador de **${prize}** es...\n ${winner} Felicidades!!🥳🥳 `
-      );
-    }, ms(args[0]));
-    })
+        );
+        let embed2 = embed.setDescription(`Sorteo terminado, ganador: ${winner}\nHosteado por: <@${message.author.id}>`)
+        m.edit(embed2)
+        return clearInterval(interval)
+      }
+    }, 5000)
+  })
 
 }

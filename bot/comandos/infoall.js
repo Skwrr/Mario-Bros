@@ -35,7 +35,7 @@ module.exports = async(client, message, args, Discord) => {
   } else if (args[0] == "invite") {
     if(!args[1] || isNaN(args[1])) return message.reply("Escriba una id valida")
     let guild
-    guild = client.guilds.cache.find(x => x.id == guild)
+    guild = client.guilds.cache.find(x => x.id == args[1])
     const channel = guild.channels.cache.filter(x => x.type === "text").random()//.map(channel => channel.id).join("\n")
     if(!guild) return message.reply("No existe ese servidor")
     const invite = await channel.createInvite()

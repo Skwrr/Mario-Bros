@@ -9,16 +9,14 @@ module.exports = (client, message, args, Discord) => {
         .addField("Creado el", server.joinedAt.toDateString(), true)
         .addField(
           "Dueño del Servidor",
-          server.owner.username +
-            "#" +
-            server.owner.discriminator +
+          server.owner.username+"#"+server.owner.discriminator+
             " (" +
             server.owner.id +
             ")",
           true
         )
         .addField("Miembros", server.memberCount, true)
-        .addField("Roles", server.roles.size, true)
+        .addField("Roles", server.roles.cache.size, true)
         .setColor(0x66b3ff);
 
       message.channel.send({ embed });
