@@ -1,7 +1,7 @@
 module.exports = (client, message, args, Discord) => {
   let userm = message.mentions.users.first();
       if (!userm) {
-        var user = message.author;
+        var user = message.mentions.users.first() || message.author
 
         const embed = new Discord.MessageEmbed()
           .setThumbnail(user.displayAvatarURL())
@@ -18,7 +18,7 @@ module.exports = (client, message, args, Discord) => {
           .addField("Fecha de Ingreso", message.member.joinedAt.toDateString())
           .addField(
             "Roles",
-            message.member.roles.map(roles => `\`${roles.name}\``).join(", ")
+            message.member.roles.cache.map(roles => `\`${roles.name}\``).join(", ")
           )
           .setColor(0x66b3ff);
 

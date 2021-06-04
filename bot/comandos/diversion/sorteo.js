@@ -6,11 +6,11 @@ module.exports = async(client, message, args, Discord) => {
   const ms = require("ms")
   const prize = args.slice(1).join(" ");
   let tiempo = args[0]
-
-  if(!tiempo) return message.reply("Escribe en cuanto tiempo desea acabar este evento")
-  tiempo = ms(ms(tiempo), { long: true })
+  
+  if(!tiempo || tiempo === null || tiempo === undefined || isNaN(tiempo[0])) return message.reply("Escribe en cuanto tiempo desea acabar este evento")
+  tiempo = ms(ms(tiempo))
   if(!prize) return message.reply("Escribe que deseas sortear")
-  if(ms(tiempo)>1209600000||ms(tiempo)<10000) return message.reply("No puedes crear un sorteo de mas de 2 semanas o menos de 10 segundos")
+  if(ms(tiempo) > 1209600000 || ms(tiempo) < 10000) return message.reply("No puedes crear un sorteo de mas de 2 semanas o menos de 10 segundos")
 
   let embed = new Discord.MessageEmbed()
   .setTitle(`**${prize}**`)
@@ -28,9 +28,10 @@ module.exports = async(client, message, args, Discord) => {
       m.edit(embed)
       if(ms(tiempo) <= 0) {
         if (m.reactions.cache.get("🎉").count <= 1) {
-          return message.channel.send(
+          message.channel.send(
           `No reaccionó suficiente gente para el sorteo!`
           );
+          return clearInterval(interval)
         }
         let winner = m.reactions.cache
           .get("🎉")
@@ -39,13 +40,18 @@ module.exports = async(client, message, args, Discord) => {
         message.channel.send(
         `Ganador de **${prize}** es...\n ${winner} Felicidades!!🥳🥳 `
         );
-        let embed2 = embed.setDescription(`Sorteo terminado, ganador: ${winner}\nHosteado por: <@${message.author.id}>\n\nQuieres ReRoll? Reacciona a "✔️"`)
+        let embed2 = embed.setDescription(`Sorteo terminado, ganador: ${winner}\nHosteado por: <@${message.author.id}>\n\nQuieres ReRoll? Reacciona a "✔"`)
         m.edit(embed2).then(async g => {
-          await g.react("✔️")
+          await g.react("✔")
           g.awaitReactions((reaction, user) => {
-            if(reaction.emoji.name === "✔️"){
-              reaction.remove(user.id)
-              if(user.roles.cache.has(rol.id)) return message.reply("No tienes permiso para hacer un ReRoll").delete({timeout: 2500})
+            if(reaction.emoji.name === "✔"){
+              if(user.bot) return
+              reaction.users.remove(user.id)
+              if(!message.guild.members.resolve(user.id).roles.cache.has(rol.id)) {
+                let a = message.reply("No tienes permiso para hacer un ReRoll")
+                a.delete({timeout: 2500})
+                return
+                }
               message.channel.send(`Otro ganador de **${prize}** es...\n ${winner} Felicidades!!🥳🥳`)
             }
           })

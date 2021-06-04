@@ -21,18 +21,17 @@ module.exports = async(client, message, args, Discord) => {
         message.reply("Ese servidor ya es premium")
         return
       }
-      let cate = guild.channels.cache.find( c => c.name == "anuncios" && c.type == "text");
+      let cate = guild.channels.cache.find(c => c.name == "anuncios" && c.type == "text");
       if (!cate) {
-    guild.createChannel("anuncios", {
+    guild.channels.create("anuncios", {
       type: "text"
-    });
-    message.reply('Vuelve a escribir este comando').then(m => {
-      m.delete(6000)
+    }).then(c => {
+      c.send("Hola! Vengo a avisar que tu servidor ha sido activado como premium ¡FELICIDADES!")
+      return gp.set(sv, "true")
     })
-    return;
       }
       cate.send("Hola! Vengo a avisar que tu servidor ha sido activado como premium ¡FELICIDADES!")
-      gp.set(sv, sv)
+      gp.set(sv, "true")
     
   }else if(args[0] === 'remove' || args[0] === 'delete' || args[0 === 'borrar']){
     if(message.author.id != process.env.OWNER_ID) return message.reply('Tu no eres mi dueño, no tienes permiso a este comando')
@@ -49,13 +48,12 @@ module.exports = async(client, message, args, Discord) => {
       }
       let cate = guild.channels.cache.find( c => c.name == "anuncios" && c.type == "text");
       if (!cate) {
-    guild.createChannel("anuncios", {
+    guild.channels.create("anuncios", {
       type: "text"
-    });
-    message.reply('Vuelve a escribir este comando').then(m => {
-      m.delete(6000)
+    }).then(c => {
+      c.send("Hola! Siento mucho decir esto, pero tu servidor ya no es premium")
+      return gp.delete(sv)
     })
-    return
       }
       cate.send("Hola! Siento mucho decir esto, pero tu servidor ya no es premium")
       gp.delete(sv)

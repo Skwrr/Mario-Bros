@@ -16,20 +16,20 @@ module.exports = (client, message, args, Discord) => {
     .addField("Comandos Beta", "`Vacio`")
     .addField("Comandos semi-beta", "`Vacio`")
     .addField("Comandos del creador", "`hpactualizacion (mensaje)` `hpinfoall [name/nombres/invite/id] (id del servidor)` `hpeval (avaluar)` `hpgpass` `hppremium [add/remove] (id servidor)` `hpblacklist (bl/wl) (id) [reason]`")
-    .addField("Comandos personalizados", "`hpverify` `hpip`")
+    .addField("Comandos personalizados", "`hpverify` `hpip` `hpmcpremium (jugadorpremium (si aparece un steve, es no premium))`")
     .addField(
       "Comandos de moderación",
-      "`hpsetsuggestions` `hpprefix [prefix]` `hpdeletec` `hpwarn (usuario/get/clear/set) [razón]` `hpsetconfessions` `hpnuke`"
+      "`hpsetsuggestions` `hpprefix [prefix]` `hpdeletec` `hpwarn (usuario/get/clear/set) [razón]` `hpsetconfessions` `hpnuke` `hpblindchannel [time]` `hpunblindchannel`"
     )
     .addField(
       "Comandos de diversion",
-      "`hpsuggest (sugerencia)` `hpppt (piedra-papel-tijeras)` `hpvotar (algo)` `hptyping` `hphola` `hprandom (numero)` `hpuser-info [@user]` `hpavatar [@user]` `hpsay (algo)` `hp8ball (pregunta)` `hppropuesta (mencion o id)` `hpsorteo (duracion en segundos) (sorteo)` `hpconfession (a/p) (confesion)` `hpemotes` `hpbuscaminas (numero de bombas) (tiempo) (minutos/segundos)` `hpnitro (cantidad)`"
+      "`hpsuggest (sugerencia)` `hpppt (piedra-papel-tijeras)` `hpvotar (algo)` `hptyping` `hphola` `hprandom (numero)` `hpuser-info [@user]` `hpavatar [@user]` `hpsay (algo)` `hp8ball (pregunta)` `hppropuesta (mencion o id)` `hpsorteo (duracion en segundos) (sorteo)` `hpconfession (a/p) (confesion)` `hpemotes` `hpbuscaminas (numero de bombas) (tiempo) (minutos/segundos)` `hpnitro (cantidad)` `hpgetip (ip de minecraft)` `hplogo (gen/reget) (algo)` `hptts (texto a decir)`"
     )
     .addField(
       "Comandos de ayuda",
       "`hpgetid` `hpsupport [close]` `hpgetcid` `hpbugreport (reporte/bl/wl/reply) (id)` `hpping` `hphelp (categoria/categorias/alias)` `hpservidor` `hpinvite` `hpsv-info`"
     )
-    .addField("Comandos de Economia", "`hpwork` `hpbal [jugador]` `hpdep (cantidad/all)` `hpwith (cantidad/all)` `hproulette (cantidad) (rojo/negro)` `hprob (jugador)` `hpgive-money (jugador) (cantidad) (cash/bank)` `hpset-money (jugador) (cantidad) (cash/bank)` `hpremove-money (jugador) (cantidad) (cash/bank)` `hpcrime`")
+    .addField("Comandos de Economia", "`hpwork` `hpbal [jugador]` `hpdep (cantidad/all)` `hpwith (cantidad/all)` `hproulette (cantidad) (rojo/negro)` `hprob (jugador)` `hpgive-money (jugador) (cantidad) (cash/bank)` `hpset-money (jugador) (cantidad) (cash/bank)` `hpremove-money (jugador) (cantidad) (cash/bank)` `hpcrime` `hpbuymyguild (duracion)`")
     .addField("Comandos de Niveles", "`hpset-xp (usuario) (lvl/xp) (cantidad)` `hprank [usuario]`")
     .addField("Comandos de contraseñas", "`hppass canjear (pass)`")
   if (!categoria) {
@@ -185,7 +185,7 @@ module.exports = (client, message, args, Discord) => {
       .setTitle("Comandos de diversion")
       .setDescription('Comandos')
       .addField(
-        "`hprevivewkiss` `hpsuggest (sugerencia)` `hpkill (@alguien)` `hpslap (@alguien)` `hpppt (piedra-papel-tijeras)` `hpvotar (algo)` `hptyping` `hphola` `hprandom (numero)` `hpuser-info [@user]` `hpavatar [@user]` `hpsay (algo)` `hp8ball (pregunta)` `hppropuesta (mencion o id)` `hpsorteo (duracion en segundos) (sorteo)` `hpsetconfessions` `hpconfession (a/p) (confesion)` `hpemotes`",
+        "`hprevivewkiss` `hpsuggest (sugerencia)` `hpkill (@alguien)` `hpslap (@alguien)` `hpppt (piedra-papel-tijeras)` `hpvotar (algo)` `hptyping` `hphola` `hprandom (numero)` `hpuser-info [@user]` `hpavatar [@user]` `hpsay (algo)` `hp8ball (pregunta)` `hppropuesta (mencion o id)` `hpsorteo (duracion en segundos) (sorteo)` `hpsetconfessions` `hpconfession (a/p) (confesion)` `hpemotes` `hpgetip (ip de minecraft)` `hplogo (gen/reget) (algo)` `hptts (texto a decir)`",
         "** **"
       );
     escribe
@@ -267,6 +267,7 @@ module.exports = (client, message, args, Discord) => {
     .addField("`hpgive-money (jugador) (cantidad) (cash/bank)`", "** **")
     .addField("`hpremove-money (jugador) (cantidad) (cash/bank)`", "** **")
     .addField("`hpset-money (jugador) (cantidad) (cash/bank)`", "** **")
+    .addField("`hpbuymyguild (duracion)`", "** **")
     escribe
     setTimeout(() => {
       message.author.send({embed: embed})
@@ -277,7 +278,7 @@ module.exports = (client, message, args, Discord) => {
   if (categoria === 'cdn'){
     const embed2 = new Discord.MessageEmbed()
     .setColor("RANDOM")
-    .setTitle("Comandos de Economia")
+    .setTitle("Comandos de Niveles")
     .setDescription("Comandos")
     .addField("`hpset-xp (usuario) (lvl/xp) (cantidad)`", "** **")
     .addField("`hprank [usuario]`", "** **")

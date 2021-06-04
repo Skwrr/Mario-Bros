@@ -1,7 +1,7 @@
 //El primer bot que hice
 const Discord = require('discord.js');
 const client = new Discord.Client();
-let { readdirSync } = require('fs');
+let fs = require('fs');
 require('dotenv').config();
 
 client.comandos = new Discord.Collection();
@@ -10,16 +10,25 @@ function login(t){
   if(!t) t=process.env.TOKEN;
   return client.login(`${t}`)
 }
-for (const file of readdirSync('./bot/comandos/')) {
-	if (file.endsWith('.js')) {
-		let fileName = file.substring(0, file.length - 3);
+fs.readdirSync('./bot/comandos/').forEach(dir => {
+  if(dir.endsWith('.js')){
+    let fileName = dir.substring(0, dir.length - 3);
 
-		let fileContents = require(`./bot/comandos/${file}`);
-
+		let fileContents = require(`./bot/comandos/${dir}`);
+    
 		client.comandos.set(fileName, fileContents);
-	}
-}
-for (const file of readdirSync('./bot/eventos/')) {
+  }else{
+    const commands = fs.readdirSync(`./bot/comandos/${dir}`);
+    for(let file of commands){
+      let fileName = file.substring(0, file.length - 3);
+
+		  let fileContents = require(`./bot/comandos/${dir}/${file}`);
+
+		  client.comandos.set(fileName, fileContents);
+    }
+  }
+})
+for (const file of fs.readdirSync('./bot/eventos/')) {
 	if (file.endsWith('.js')) {
 		let fileName = file.substring(0, file.length - 3);
 
