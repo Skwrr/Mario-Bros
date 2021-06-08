@@ -3,12 +3,12 @@ module.exports = async(client, message, args, Discord) => {
   const gp = new db.crearDB("premium")
   let premium = gp.has(message.guild.id)
   if(!args[0]){
-    if(!premium) return message.reply("Tu servidor necesita ser premium para ejecutar este comando, puedes adquirirlo mandandole un mensaje a mi creador; <@!"+process.env.OWNER_ID+">")
+    if(!premium) return message.reply("Tu servidor necesita ser premium para ejecutar este comando, puedes adquirirlo mandandole un mensaje a mi creador")
     message.channel.send("Hay distintos argumentos; `add` y `remove`")
-    return
   }
     if(args[0] === 'add' || args[0] === 'añadir'){
-      if(message.author.id != process.env.OWNER_ID) return message.reply('Tu no eres mi dueño, no tienes permiso a este comando')
+      const staff = process.env.OWNERS_ID
+      if (!staff.includes(message.author.id)) return message.channel.send("❌ **Solo mi Creador puede usar Este cmd** ❌")
       var guild = client.guilds.cache.get(args[1])
       var sv = args[1]
       if(args[1] === 'this') {
@@ -34,7 +34,7 @@ module.exports = async(client, message, args, Discord) => {
       gp.set(sv, "true")
     
   }else if(args[0] === 'remove' || args[0] === 'delete' || args[0 === 'borrar']){
-    if(message.author.id != process.env.OWNER_ID) return message.reply('Tu no eres mi dueño, no tienes permiso a este comando')
+    if(message.author.id != process.env.OWNER_ID  && message.author.id !== "692363394719809577") return message.reply('Tu no eres mi dueño, no tienes permiso a este comando')
       var guild = client.guilds.cache.get(args[1])
       var sv = args[1]
       if(args[1] === 'this') {

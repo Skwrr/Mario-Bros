@@ -1,6 +1,7 @@
 module.exports = (client, message, args) => {
   message.delete();
-      if (message.author.id !== "466241681654808576")
+      const staff = process.env.OWNERS_ID
+      if (!staff.includes(message.author.id)) return message.channel.send("❌ **Solo mi Creador puede usar Este cmd** ❌")
         return message.channel.send(
           "Este comando solo puede usarlo mi creador"
         );

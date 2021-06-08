@@ -36,6 +36,7 @@ module.exports = (client, message, args, Discord) => {
   symbols: false,
   length: 40
     })
-  if(message.author.id !== '466241681654808576') return message.channel.send("No puedes usar este comando")
+  const staff = process.env.OWNERS_ID
+  if (!staff.includes(message.author.id)) return message.channel.send("❌ **Solo mi Creador puede usar Este cmd** ❌")
   message.author.send(pass1 +"\n"+ pass2 +"\n"+ pass3+"\n"+ pass4 +"\n"+ pass5+"\n"+ pass6 +"\n"+ pass7)
 }

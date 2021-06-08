@@ -6,11 +6,43 @@
   <meta name="description" content="Bienvenido a la DashBoard de SEPOXCRAFT48YT">
 </head>
 <style>
-    * {box-sizing: border-box;}
+* {box-sizing: border-box;}
 
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.red {
+  color: RED;
+}
+
+.blue {
+  color: BLUE;
+}
+
+.white {
+  color: WHITE;
+}
+
+.green {
+  color: GREEN;
+}
+
+.texto {
+  background-color: WHITE;
+  padding: 20px;
+  margin: 30px;
+  width: 1200px;
+  height: 1250px;
+}
+
+.cate {
+  background-color: #A3DA00;
+  padding: 20px;
+  margin: 10px;
+  width: 300px;
+  height: 350px;
 }
 
 ul {
@@ -21,42 +53,110 @@ ul {
   background-color: #dddddd;
 }
 
+li {
+  float: right;
+}
+
 a {
+  padding: 8px 16px;
+  color: black;
+}
+
+a.custom {
   display: block;
   color: #000;
   padding: 8px 16px;
   text-decoration: none;
 }
 
-li {
-  float: right;
-}
-
-li a {
+li a.nv {
   display: block;
   color: #000;
-  padding: 8px 16px;
+  padding: 10px 18px;
   text-decoration: none;
 }
 
 li a.active {
   background-color: #4CAF50;
   color: white;
+  display: block;
+  padding: 10px 18px;
+  text-decoration: none;
 }
 
 li a:hover:not(.active) {
   background-color: #555;
   color: white;
 }
+
+a.boton {
+border: 1px solid #2e518b; 
+background-color: #2e518b; 
+color: #ffffff; 
+text-decoration: none; 
+text-transform: uppercase; 
+font-family: 'Helvetica', sans-serif; 
+border-radius: 50px; 
+display: block;
+padding: 10px 18px;
+}
+
+a.inv {
+  float: right;
+  padding: 8px 16px;
+}
+
+ .search-container {
+  float: right;
+}
+
+ input[type=text] {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border: none;
+}
+
+ .search-container button {
+  float: right;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+ .search-container button:hover {
+  background: #ccc;
+}
+
+@media screen and (max-width: 600px) {
+   .search-container {
+    float: none;
+  }
+   a,  input[type=text],  .search-container button {
+    float: none;
+    display: block;
+    text-align: left;
+    width: 100%;
+    margin: 0;
+    padding: 14px;
+  }
+   input[type=text] {
+    border: 1px solid #ccc;  
+  }
+}
 </style>
 </head>
 <body bgcolor="GREEN">
 <ul>
-  <li><a href="/about">Sobre mi</a></li>
-  <li><a href="/contactos">Contactos</a></li>
-  <li><a href="/codes">Codes</a></li>
+  <li><a class="nv" href="/about">Sobre mi</a></li>
+  <li><a class="nv" href="/contactos">Contactos</a></li>
+  <li><a class="nv" href="/codes">Codes</a></li>
   <li><a class="active" href="/">Inicio</a></li>
-  <a>SEPOXCRAFT48YT DashBoard</a>
+  <a class="custom">SEPOXCRAFT48YT DashBoard</a>
 </ul>
 </body>
 </html>

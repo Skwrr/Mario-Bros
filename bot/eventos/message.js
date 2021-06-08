@@ -36,7 +36,7 @@ module.exports = async(client, message) => {
   if (message.author.bot) return;
   if(!message.content.toLowerCase().startsWith(prefix)){
   
-  if(message.content.toLowerCase().startsWith('sepox')){
+  /*if(message.content.toLowerCase().startsWith('sepox')){
     message.channel.send('SEPOXCRAFT48? El que busca gente que le ayude y todos le ignoran?')
   }
   if(message.content.toLowerCase().startsWith('shiro')){
@@ -53,8 +53,13 @@ module.exports = async(client, message) => {
   }
   if(message.content.toLowerCase().startsWith('guga') || message.content.toLowerCase().startsWith('guga')){
     message.channel.send('gugaliz? Que queres de el, no toques al mejor amigo de SEPOX')
-  }//Userphone :facherismo:
+  }*///Userphone :facherismo:
   if (message.channel.name == "userphone") {
+    if(message.content.startsWith(prefix)){
+
+    message.channel.send("Aqui no puedes escribir ningun comando").then(m => m.delete({timeout: 4000}))
+    return message.delete()
+    }
     message.delete();
     prefix = ''
   }

@@ -1,5 +1,5 @@
 module.exports = (client, message, args) => {
-  let ping = Math.floor(message.client.ping);
+  let ping = Math.floor(message.client.ws.ping);
     let permiso = message.member.hasPermission("ADMINISTRATOR");
     if (!permiso)
       return message.channel.send("No tienes permisos para usar este comando");

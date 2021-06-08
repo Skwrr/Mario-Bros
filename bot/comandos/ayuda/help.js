@@ -15,11 +15,11 @@ module.exports = (client, message, args, Discord) => {
     .addField("Comandos Beta del Creador", "`Vacio`")
     .addField("Comandos Beta", "`Vacio`")
     .addField("Comandos semi-beta", "`Vacio`")
-    .addField("Comandos del creador", "`hpactualizacion (mensaje)` `hpinfoall [name/nombres/invite/id] (id del servidor)` `hpeval (avaluar)` `hpgpass` `hppremium [add/remove] (id servidor)` `hpblacklist (bl/wl) (id) [reason]`")
+    .addField("Comandos del creador", "`hpactualizacion (mensaje)` `hpinfoall [name/nombres/invite/id] (id del servidor)` `hpeval (avaluar)` `hpgpass` `hppremium [add/remove] (id servidor)` `hpblacklist (bl/wl) (id) [reason]` `hprcmd (comando) (ruta)`")
     .addField("Comandos personalizados", "`hpverify` `hpip` `hpmcpremium (jugadorpremium (si aparece un steve, es no premium))`")
     .addField(
       "Comandos de moderación",
-      "`hpsetsuggestions` `hpprefix [prefix]` `hpdeletec` `hpwarn (usuario/get/clear/set) [razón]` `hpsetconfessions` `hpnuke` `hpblindchannel [time]` `hpunblindchannel` `hpclear (cantidad)`"
+      "`hpsetsuggestions` `hpprefix [prefix]` `hpdeletec` `hpwarn (usuario/get/clear/set) [razón]` `hpsetconfessions` `hpnuke` `hpblindchannel [time]` `hpunblindchannel` `hpclear (cantidad)` `hplock [time]` `hpunlock`"
     )
     .addField(
       "Comandos de diversion",

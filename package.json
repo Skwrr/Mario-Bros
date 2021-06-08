@@ -23,6 +23,7 @@
     "express": "^4.17.1",
     "ffmpeg-static": "^4.2.7",
     "fresaapi": "^0.2.3",
+    "jspaste": "^7.0.0",
     "math-expression-evaluator": "^1.2.22",
     "megadb": "^3.4.0",
     "minecraft-information": "^0.3.0",

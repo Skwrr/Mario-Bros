@@ -20,11 +20,13 @@ fs.readdirSync('./bot/comandos/').forEach(dir => {
   }else{
     const commands = fs.readdirSync(`./bot/comandos/${dir}`);
     for(let file of commands){
-      let fileName = file.substring(0, file.length - 3);
+      if(file.endsWith('.js')){
+        let fileName = file.substring(0, file.length - 3);
 
-		  let fileContents = require(`./bot/comandos/${dir}/${file}`);
+		    let fileContents = require(`./bot/comandos/${dir}/${file}`);
 
-		  client.comandos.set(fileName, fileContents);
+		    client.comandos.set(fileName, fileContents);
+      }
     }
   }
 })
