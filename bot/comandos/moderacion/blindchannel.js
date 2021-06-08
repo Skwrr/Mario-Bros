@@ -1,5 +1,6 @@
 module.exports = async(client, message, args, Discord) => {
   const ms = require("ms")
+  let tiempo = args[0];
   if(!message.member.permissions.has("MANAGE_CHANNELS")) return message.reply("No tienes permisos")
   let ch = message.channel
   if(!args[0]) message.channel.send("No has establecido el tiempo, supongo que quieres que sea permanente.")
@@ -7,7 +8,7 @@ module.exports = async(client, message, args, Discord) => {
   ch.overwritePermissions([
     {
       id: everyone.id,
-      deny: ["VIEW_CHANNEL", "SEND_MESSAGES"]
+      deny: ["VIEW_CHANNEL"]
     }
   ])
   message.channel.send("Canal escondido 😎")
@@ -18,10 +19,10 @@ module.exports = async(client, message, args, Discord) => {
       ch.overwritePermissions([
         {
           id: everyone.id,
-          allow: ["VIEW_CHANNEL", "SEND_MESSAGES"]
+          allow: ["VIEW_CHANNEL"]
         }
       ])
       message.channel.send("Canal revelado 👀")
-    }, ms(args[1]))
+    }, ms(args[0]))
   }
 }

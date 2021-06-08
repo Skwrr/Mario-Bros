@@ -67,7 +67,7 @@ const warnings = await warns.get(`${message.guild.id}.${usuario.id}`)
 
 
 let razon = args.slice(1).join(' ')
-if(!razon) razon = 'No fue especificada'
+if(!razon) razon = 'Razon no especificada'
 if(!message.member.permissions.has('MANAGE_MESSAGES')) return message.channel.send('No tienes permisos para ejecutar este comando')
 if(razon.length > 1024) return message.reply('La razón no puede exceder los 1024 caracteres') 
 if(!warns.tiene(`${message.guild.id}.${usuario.id}`)){warns.establecer(`${message.guild.id}.${usuario.id}`, 0)
@@ -83,8 +83,9 @@ let embed = new Discord.MessageEmbed()
 message.channel.send(embed);
 usuario.send(`Hola! Vine a informarte que fuiste avisado en el servidor ${message.guild.name} por la razón: ${razon}`).catch(e => e)
 const customwarns = await warns.get(`${message.guild.id}.kicks`)
-if(warnings === `${customwarns}`){
-  message.guild.members.cache.find(usuario).kick(`Alcanzar ${customwarns} warns`)
+if(warnings >= customwarns){
+  message.guild.member(usuario).kick(`Alcanzar ${customwarns} warns`)
   warns.set(`${message.guild.id}.${usuario.id}`, 0)
+  message.channel.send("Se ha kikeado al usuario **"+usuario.username+"** por alcanzar **"+warnings+"** warns")
 }
 }

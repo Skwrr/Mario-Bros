@@ -12,6 +12,7 @@ module.exports = async(client, message) => {
 
   const db = require("megadb");
   let prefixdb = new db.crearDB("prefixes")
+  let counting = new db.crearDB("counting")
   let blg = new db.crearDB("blacklistglobal")
 
 
@@ -97,9 +98,16 @@ module.exports = async(client, message) => {
           client.channels.cache.get(m.id).send(embed);
         }); 
       } 
-    } 
-    
-    if (!message.channel.name == "userphone") return;
+    }else if(counting.has(message.guild.id)){
+      if(message.channel.id !== counting.get(`${message.guild.id}.channel`)) return
+      if(message.content !== counting.get(`${message.guild.id}.count`)) return message.delete();
+      counting.set(`${message.guild.id}.count`, await counting.get(`${message.guild.id}.count`)+1)
+    }else{
+      return
+    }
+
+
+  
 
 return
   }

@@ -19,7 +19,7 @@ module.exports = (client, message, args, Discord) => {
     .addField("Comandos personalizados", "`hpverify` `hpip` `hpmcpremium (jugadorpremium (si aparece un steve, es no premium))`")
     .addField(
       "Comandos de moderación",
-      "`hpsetsuggestions` `hpprefix [prefix]` `hpdeletec` `hpwarn (usuario/get/clear/set) [razón]` `hpsetconfessions` `hpnuke` `hpblindchannel [time]` `hpunblindchannel`"
+      "`hpsetsuggestions` `hpprefix [prefix]` `hpdeletec` `hpwarn (usuario/get/clear/set) [razón]` `hpsetconfessions` `hpnuke` `hpblindchannel [time]` `hpunblindchannel` `hpclear (cantidad)`"
     )
     .addField(
       "Comandos de diversion",

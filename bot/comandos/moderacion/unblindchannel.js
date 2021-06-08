@@ -5,7 +5,7 @@ module.exports = async(client, message, args, Discord) => {
   ch.overwritePermissions([
     {
       id: everyone.id,
-      allow: ["VIEW_CHANNEL", "SEND_MESSAGES"]
+      allow: ["VIEW_CHANNEL"]
     }
   ])
   message.channel.send("Canal revelado 👀")
