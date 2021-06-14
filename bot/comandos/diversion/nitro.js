@@ -1,4 +1,11 @@
-module.exports = async(client, message, args, Discord) => {
+module.exports = {
+  name: "nitro",
+  description: "Genera codigos de nitro",
+  use: "(num)",
+  category: 'diversion',
+  alias: [],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   const db = require("megadb")
   const premium = new db.crearDB("premium")
   if(!premium.has(message.guild.id)) return message.reply("Tu servidor no es premium, para usar este comando, contacta con mi creador para hacer un trato y hacer tu servidor premium")
@@ -63,4 +70,5 @@ module.exports = async(client, message, args, Discord) => {
     }
   }
   message.channel.send("Se han generado "+cantidad+" Nitros")
+}
 }

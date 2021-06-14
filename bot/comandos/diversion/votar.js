@@ -1,4 +1,11 @@
-module.exports = async (client, message, args, Discord) => {
+module.exports = {
+  name: "votar",
+  description: "Haz una encuesta",
+  use: "(vote)",
+  category: 'diversion',
+  alias: [],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   if (!message.member.permissions.has("ADMINISTRATOR")) return message.reply("**No tienes permiso para ejecutar este coma**")
   let encuesta = args.join(" ");
 
@@ -16,4 +23,5 @@ module.exports = async (client, message, args, Discord) => {
   const msg = await message.channel.send(embed);
   await msg.react("611203741441327117");
   await msg.react("611200731059322909");
-};
+}
+}

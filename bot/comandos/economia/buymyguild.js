@@ -1,4 +1,11 @@
-module.exports = async(client, message, args, Discord) => {
+module.exports = {
+  name: "buymyguild",
+  description: "Compra TODOS mis servidores",
+  use: "(time)",
+  category: 'economia',
+  alias: ["bmg"],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   const ms = require("ms")
   const db = require("megadb")
   const economydb = new db.crearDB("economy")
@@ -34,4 +41,5 @@ module.exports = async(client, message, args, Discord) => {
       message.author.send(`${guild.name} - ${invite}`)
     })
   }
+}
 }

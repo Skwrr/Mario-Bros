@@ -1,4 +1,11 @@
-module.exports = async(client, message, args, Discord) => {
+module.exports = {
+  name: "nuke",
+  description: "Borra los mensajes de todo el canal",
+  use: "",
+  category: 'moderacion',
+  alias: ["clearchannel"],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   if(!message.member.permissions.has("MANAGE_CHANNELS")) return message.reply("No tienes permiso para `nukear` un canal")
   message.reply("Seguro que quieres nukear este canal?").then(async m => {
     await m.react("✅")
@@ -20,4 +27,5 @@ module.exports = async(client, message, args, Discord) => {
       }
     })
   })
+}
 }

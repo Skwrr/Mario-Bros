@@ -1,4 +1,11 @@
-module.exports = async(client, message, args, Discord) => {
+module.exports = {
+  name: "lock",
+  description: "Mutea el canal en el que te encuentras",
+  use: "(time)",
+  category: 'moderacion',
+  alias: ["lockchannel"],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   const ms = require("ms")
   let tiempo = args[0];
   if(!message.member.permissions.has("MANAGE_CHANNELS")) return message.reply("No tienes permisos")
@@ -25,4 +32,5 @@ module.exports = async(client, message, args, Discord) => {
       message.channel.send("Canal revelado 👀").then(m => m.delete({timeout: 5000}))
     }, ms(args[0]))
   }
+}
 }

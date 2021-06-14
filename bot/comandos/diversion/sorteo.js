@@ -1,4 +1,11 @@
-module.exports = async(client, message, args, Discord) => {
+module.exports = {
+  name: "sorteo",
+  description: "Haz un sorteo",
+  use: "(time) (giveaway)",
+  category: 'diversion',
+  alias: ["giveaway", "g"],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   const time = require('sleep')
   let rol = message.guild.roles.cache.find(x => x.name === "Giveaway")
   if(!rol) return message.reply("No se ha encontrado un rol con el nombre `Giveaway`, contacta con algun moderador o si eres uno, añade el rol `Giveaway`")
@@ -22,7 +29,7 @@ module.exports = async(client, message, args, Discord) => {
   message.channel.send(embed).then(async m => {
     await m.react("🎉");
     const interval = setInterval(() => {
-      tiempo = ms(tiempo)-5000
+      tiempo = ms(tiempo)-7500
       tiempo = ms(tiempo)
       embed = embed.setDescription(`Reacciona con 🎉 para participar\nTiempo restante: ${tiempo}\nHosteado por: <@${message.author.id}>`)
       m.edit(embed)
@@ -58,7 +65,8 @@ module.exports = async(client, message, args, Discord) => {
         })
         return clearInterval(interval)
       }
-    }, 5000)
+    }, 7500)
   })
 
+}
 }

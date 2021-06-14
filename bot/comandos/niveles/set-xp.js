@@ -1,4 +1,11 @@
-module.exports = async(client, message, args, Discord) => {
+module.exports = {
+  name: "set-xp",
+  description: "Establece el nivel a otro usuario",
+  use: "(@user)",
+  category: 'niveles',
+  alias: [],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   const db = require("megadb")
   const lvl = new db.crearDB("niveles")
 
@@ -17,4 +24,5 @@ module.exports = async(client, message, args, Discord) => {
     lvl.set(`${usuario.id}.${nx}`, c)
     message.channel.send(`Se ha establecido correctamente a ${usuario} ${c} de xp`)
   }
+}
 }

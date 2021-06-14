@@ -1,4 +1,11 @@
-module.exports = async (client, message, args) => {
+module.exports = {
+  name: "prefix",
+  description: "Cambia el prefix del servidor",
+  use: "(newPrefix)",
+  category: 'moderacion',
+  alias: [],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   const db = require("megadb");
   let prefixdb = new db.crearDB("prefixes");
   var prefix = prefixdb.has(message.guild.id)
@@ -44,4 +51,5 @@ let nuevoprefix = args[0]
         m.edit(`**Prefix cambiado a ${nuevoprefix}**`);
       });
   });
-};
+}
+}

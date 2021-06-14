@@ -1,4 +1,11 @@
-module.exports = async(client, message, args, Discord) => {
+module.exports = {
+  name: "counting",
+  description: "Establece el canal para contar",
+  use: "",
+  category: 'diversion',
+  alias: ["count"],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   let d
   const db = require("megadb")
   const counting = new db.crearDB("counting")
@@ -27,4 +34,5 @@ module.exports = async(client, message, args, Discord) => {
       }
     })
   })
+}
 }

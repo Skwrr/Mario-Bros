@@ -1,4 +1,11 @@
-module.exports = (client, message, args, Discord) => {
+module.exports = {
+  name: "sv-info",
+  description: "Obten información sobre el servidor",
+  use: "",
+  category: 'ayuda',
+  alias: ["serverinfo", "svinfo"],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
       const embed = new Discord.MessageEmbed()
         .setThumbnail(message.guild.iconURL())
         .setAuthor(message.guild.name, message.guild.iconURL())
@@ -18,4 +25,5 @@ module.exports = (client, message, args, Discord) => {
         .setColor(0x66b3ff);
 
       message.channel.send({ embed });
+  }
 }

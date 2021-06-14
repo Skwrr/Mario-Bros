@@ -1,4 +1,11 @@
-module.exports = async(client, message, args, Discord) => {
+module.exports = {
+  name: "premium",
+  description: "Obten informacion sobre el estado premium de tu servidor",
+  use: "",
+  category: 'creador',
+  alias: [],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   const db = require("megadb")
   const gp = new db.crearDB("premium")
   let premium = gp.has(message.guild.id)
@@ -26,11 +33,12 @@ module.exports = async(client, message, args, Discord) => {
     guild.channels.create("anuncios", {
       type: "text"
     }).then(c => {
-      c.send("Hola! Vengo a avisar que tu servidor ha sido activado como premium ¡FELICIDADES!")
+      c.send("Hola! Vengo a avisar que tu servidor ha sido activado como premium ¡FELICIDADES!\nContacta con mi creador para recibir la recompensa")
       return gp.set(sv, "true")
+      return
     })
       }
-      cate.send("Hola! Vengo a avisar que tu servidor ha sido activado como premium ¡FELICIDADES!")
+      cate.send("Hola! Vengo a avisar que tu servidor ha sido activado como premium ¡FELICIDADES!\nContacta con mi creador para recibir la recompensa")
       gp.set(sv, "true")
     
   }else if(args[0] === 'remove' || args[0] === 'delete' || args[0 === 'borrar']){
@@ -53,6 +61,7 @@ module.exports = async(client, message, args, Discord) => {
     }).then(c => {
       c.send("Hola! Siento mucho decir esto, pero tu servidor ya no es premium")
       return gp.delete(sv)
+      return
     })
       }
       cate.send("Hola! Siento mucho decir esto, pero tu servidor ya no es premium")
@@ -60,4 +69,5 @@ module.exports = async(client, message, args, Discord) => {
   }else{
     message.channel.send("No existe ese subcomando!")
     }
+  }
 }

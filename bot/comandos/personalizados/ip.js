@@ -1,4 +1,11 @@
-module.exports = async(client, message, args) => {
+module.exports = {
+  name: "ip",
+  description: "Obten la ip del servidor",
+  use: "[set] (newIp)",
+  category: 'personalizados',
+  alias: [],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   let db = require("megadb")
   let ipdb = new db.crearDB("ipdb")
   if (message.guild.id === "720657677323075584") {
@@ -21,4 +28,5 @@ module.exports = async(client, message, args) => {
         ")**"
     );
   }
-};
+}
+}

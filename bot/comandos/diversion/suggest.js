@@ -1,6 +1,13 @@
 let db = require("megadb")
 let suggest = new db.crearDB("suggestionchannel")
-module.exports = async(client, message, args, Discord) => {
+module.exports = {
+  name: "suggest",
+  description: "Haz una sugerencia al servidor",
+  use: "(suggest)",
+  category: 'diversion',
+  alias: ["sugerencia"],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   message.delete()
   if (!args.join(" ")) return message.channel.send("Escriba la sugerencia a enviar").then(m => {
     m.delete(6000)
@@ -20,4 +27,5 @@ module.exports = async(client, message, args, Discord) => {
     await m.react("👎")
   })
   
+}
 }

@@ -1,4 +1,11 @@
-module.exports = async(client, message, args, Discord) => {
+module.exports = {
+  name: "warn",
+  description: "Advierte a un usuario",
+  use: "(get/clear/set/@user) (@user/reason)",
+  category: 'moderacion',
+  alias: [],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
 let db = require("megadb")
 let warns = new db.crearDB("warns");
 
@@ -87,5 +94,6 @@ if(warnings >= customwarns){
   message.guild.member(usuario).kick(`Alcanzar ${customwarns} warns`)
   warns.set(`${message.guild.id}.${usuario.id}`, 0)
   message.channel.send("Se ha kikeado al usuario **"+usuario.username+"** por alcanzar **"+warnings+"** warns")
+}
 }
 }

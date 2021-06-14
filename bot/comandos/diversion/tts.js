@@ -1,4 +1,11 @@
-module.exports = (client, message, args) => {
+module.exports = {
+  name: "tts",
+  description: "Di algo en llamada pero lo digo yo B)",
+  use: "(texto)",
+  category: 'diversion',
+  alias: [],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
 	const msg = message;
 	let discordTTS = require('discord-tts'); // vamos a requerir del siguiente modulo, npm i discord-tts
 	const db = require('megadb');
@@ -22,4 +29,5 @@ module.exports = (client, message, args) => {
 			); // Hacemos una const para conectar con discord-tts y dentro ponemos >decir>(los argumentos que se escucharan)
 			const dispatcher = connection.play(broadcast);
 		});
-};
+}
+}

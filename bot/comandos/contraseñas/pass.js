@@ -1,4 +1,11 @@
-module.exports = (client, message, args) => {
+module.exports = {
+  name: "pass",
+  description: "Intenta conseguir rango en mi servidor de soporte ;)",
+  use: "",
+  category: 'contraseñas',
+  alias: [],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   const m = message;
   const msg = message.channel;
   const msga = message.author;
@@ -37,4 +44,5 @@ module.exports = (client, message, args) => {
     message.reply("**Error || Escribe `s/pass canjear`para canjearla**")
   }
     
-};
+  }
+}

@@ -26,7 +26,7 @@ module.exports = async(client, message) => {
     .slice(prefix.length)
     .trim()
     .split(/ +/g);
-  let command = args.shift();
+  let commandName = args.shift();
   
   const Discord = require("discord.js");
 
@@ -67,14 +67,14 @@ module.exports = async(client, message) => {
     .slice(prefix.length)
     .trim()
     .split(/ +/g);
-  command = args.shift();
+  commandName = args.shift();
   let canal = client.channels.cache.filter(c => c.name == "userphone");
 
     const embed = new Discord.MessageEmbed()
       .setAuthor(message.author.tag, message.author.displayAvatarURL())
       .setFooter(message.guild.name)
       .setThumbnail(message.author.displayAvatarURL())
-      .setDescription(command+' '+args.join(' '))
+      .setDescription(commandName+' '+args.join(' '))
       .setColor("RANDOM");
 
     const array = [
@@ -120,10 +120,12 @@ return
   
   
   //Obtener comandos
-  let cmd = client.comandos.get(command);
-  if(command === '') return message.reply('Escribe `hphelp` para ver todos mis comandos')
+  let cmd = client.comandos.get(commandName) || client.comandos.find(cmd => cmd.alias && cmd.alias.includes(commandName))
+  if(commandName === '') return message.reply('Escribe `hphelp` para ver todos mis comandos')
   if (!cmd) return message.reply('**No existe ese comando, pero puedes sugerirlo contactando con mi dueño ;)**')
   if(new db.crearDB("blacklistglobal").has(message.author.id)) return message.reply("Estas en la lista negra de los comandos, no intentes recuperar el derecho a usarme")
-  
-  cmd(client, message, args, Discord)
+  if(cmd){
+    const { MessageEmbed } = require("discord.js")
+    cmd.run(client, message, args, db, Discord)
+  }
 };

@@ -1,23 +1,38 @@
 const db = require("megadb")
-module.exports = async(client, message, args, Discord) => {
-  const store = new db.crearDB("store")
+module.exports = {
+  name: "shop",
+  description: "Compra algo",
+  use: "(item)",
+  category: 'economia',
+  alias: ["buy"],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
+  let store = new db.crearDB("store")
   
   let b = await store.get(message.guild.id);
-  console.log(b)
   if(!store.has(message.guild.id)){
     store.set(message.guild.id+".PremiumBOT", 2000000000)
     return message.reply("Ejecute este comando otra vez, la lista ha sido cargada correctamente")
   }
+  let guild = message.guild.id
   if(!args[0]){
-  store.map(`${message.guild.id}`, (v) =>
-    `${b} - ${v}`).then(async d => {
-      const embed = new Discord.MessageEmbed()
-      .setTitle("Store")
-      .setDescription(d.slice(0, 10).join('\n'))
-      .setColor("RANDOM")
-      console.log(d)
-      return message.channel.send(embed)
+    let items = [
+      await b
+    ]
+    let i = 0
+    items.forEach(async(item) => {
+      console.log(item)
+      i++
+      items.push(item.i)
+      console.log(item.i)
     })
+    delete items[0]
+    console.log(items)
+    const embed = new Discord.MessageEmbed()
+    .setTitle("Store")
+    .setDescription(items)
+    .setColor("RANDOM")
+    return message.channel.send(embed)
   }
   if(args[0] === 'info'){
     if(!args[1]) return message.reply("Escriba el nombre del item")
@@ -30,4 +45,5 @@ module.exports = async(client, message, args, Discord) => {
     return message.channel.send(embed)
   }
   
+}
 }

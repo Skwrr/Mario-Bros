@@ -1,4 +1,11 @@
-module.exports = (client, message, args, Discord) => {
+module.exports = {
+  name: "ppt",
+  description: "Juega al piedra papel o tijeras",
+  use: "",
+  category: 'diversion',
+  alias: [],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   if(!args[0]) return message.channel.send("Opciones: `piedra`, `papel` o `tijera`")
 
 let opciones = ["piedra", "papel", "tijera"]
@@ -30,4 +37,5 @@ if(args[0] == 'tijera') {
   message.reply(` ${random3[Math.floor(Math.random() * random3.length)]}`)
  }
 
+  }
 }

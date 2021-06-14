@@ -1,7 +1,14 @@
 const db = require("megadb")
 const blacklist = new db.crearDB("blacklistglobal")
 let user
-module.exports = async(client, message, args, Discord) => {
+module.exports = {
+  name: "blacklist",
+  description: "Entra a mi servidor de soporte",
+  use: "(bl/wl) (user) [reason]",
+  category: 'creador',
+  alias: ["bl"],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   const staff = process.env.OWNERS_ID
   if (!staff.includes(message.author.id)) return message.channel.send("❌ **Solo mi Creador puede usar Este cmd** ❌")
   if(!args[0] || args[0] !== "wl" && args[0] !== "bl") return message.reply("Debes poner un comando valido; `wl` `bl`")
@@ -22,4 +29,5 @@ module.exports = async(client, message, args, Discord) => {
   }
 
 
+  }
 }

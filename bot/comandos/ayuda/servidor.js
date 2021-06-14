@@ -1,5 +1,13 @@
-module.exports = (client, message, args) => {
-  message.channel.send(
+module.exports = {
+  name: "servidor",
+  description: "Entra a mi servidor de soporte",
+  use: "",
+  category: 'ayuda',
+  alias: [],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
+    message.channel.send(
         "Estas invitado a mi casa :D\nhttps://discord.gg/fwGj3ug"
       );
+  }
 }

@@ -1,4 +1,11 @@
-module.exports = async(client, message, args, Discord) => {
+module.exports = {
+  name: "bal",
+  description: "Obten el presupuesto de alguien",
+  use: "(ammount)",
+  category: 'economia',
+  alias: ["balance"],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   const db = require("megadb")
   const money = new db.crearDB("economy")
   let dineroautor = message.mentions.users.first()
@@ -13,4 +20,5 @@ module.exports = async(client, message, args, Discord) => {
   .addField('En el bolsillo:', cash)
   .addField('En el banco:', bank)
   message.channel.send(embed)
+}
 }

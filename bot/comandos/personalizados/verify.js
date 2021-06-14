@@ -1,4 +1,11 @@
-module.exports = (client, message, args) => {
+module.exports = {
+  name: "verify",
+  description: "Mandale un md a mi creador para solicitar el rango Premium",
+  use: "(nick)",
+  category: 'personalizados',
+  alias: [],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   if (message.guild.id === "720657677323075584") {
     const namemc = args[0]
     if (!namemc) return message.reply("Escribe su nombre de minecraft premium")
@@ -12,4 +19,5 @@ module.exports = (client, message, args) => {
         ")**"
     );
   }
-};
+}
+}

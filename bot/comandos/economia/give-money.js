@@ -1,4 +1,11 @@
-module.exports = async(client, message, args, Discord) => {
+module.exports = {
+  name: "give-money",
+  description: "Dale dinero a un usuario",
+  use: "(@user) (ammount) (cash/bank)",
+  category: 'economia',
+  alias: [],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   const db = require("megadb")
   const money = new db.crearDB("economy")
   if(!message.member.permissions.has("ADMINISTRATOR")) return message.reply("No tienes permisos para dar dinero")
@@ -21,4 +28,5 @@ module.exports = async(client, message, args, Discord) => {
     message.reply("Escribe `cash` o `bank`, no \""+cb+"\"")
     return
   }
+}
 }

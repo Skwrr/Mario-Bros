@@ -1,4 +1,11 @@
-module.exports = async(client, message, args, Discord) => {
+module.exports = {
+  name: "crime",
+  description: "Haz un crimen y gana dinero",
+  use: "",
+  category: 'economia',
+  alias: [],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   const db = require("megadb")
   const money = new db.crearDB("economy")
   let dg = Math.floor(Math.random() * 2000) + 1
@@ -36,4 +43,5 @@ module.exports = async(client, message, args, Discord) => {
     await money.sumar(`${message.author.id}.cash`, dg)
     return
   }
+}
 }

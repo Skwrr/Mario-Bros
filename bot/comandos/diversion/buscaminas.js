@@ -1,4 +1,11 @@
-module.exports = async(client, message, args, Discord) => {
+module.exports = {
+  name: "buscaminas",
+  description: "Juega al clásico buscaminas",
+  use: "(bomb number) (time) (minutes/seconds)",
+  category: 'diversion',
+  alias: ["bm"],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   const choices = ["||:zero:||", "||:one:||", "||:two:||", "||:three:||", "||:four:||", "||:five:||", "||:six:||", "||:seven:||", "||:eight:||","||:bomb:||"];
   const number = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]; 
   const bomb = 9; 
@@ -87,4 +94,5 @@ module.exports = async(client, message, args, Discord) => {
       m.edit("Se acabo el tiempo!")
     }, total)
   })
-};
+}
+}

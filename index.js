@@ -1,10 +1,13 @@
 //El primer bot que hice
+console.clear()
 const Discord = require('discord.js');
 const client = new Discord.Client();
 let fs = require('fs');
 require('dotenv').config();
 
 client.comandos = new Discord.Collection();
+
+
 
 function login(t){
   if(!t) t=process.env.TOKEN;
@@ -42,19 +45,29 @@ for (const file of fs.readdirSync('./bot/eventos/')) {
 const keepAlive = require('./webpage/server.js');
 const Monitor = require('ping-monitor');
 
-keepAlive();
-let monitor = new Monitor({
-	website: 'https://Host.sergioesquina.repl.co/',
-	title: 'host',
-	interval: 5 // minutes
-});
+let host = [
+  'https://Host.sergioesquina.repl.co/',
+  'https://sepoxcraft48yt-premium.sergioesquina.repl.co/'
+]
 
-monitor.on('up', (res) => console.log(`${res.website} está encedido.`));
-monitor.on('down', (res) =>
-	console.log(`${res.website} se ha caído - ${res.statusMessage}`)
-);
-monitor.on('stop', (website) => console.log(`${website} se ha parado.`));
-monitor.on('error', (error) => console.error(error));
+let monitor;
+
+keepAlive();
+host = host.forEach(async(id) => {
+  monitor = new Monitor({
+	  website: id,
+	  title: 'host',
+	  interval: 5 // minutes
+  });
+
+
+
+  monitor.on('up', (res) => console.log(`${res.website} está encedido.`));
+  monitor.on('down', (res) =>
+	console.log(`${res.website} se ha caído - ${res.statusMessage}`));
+  monitor.on('stop', (website) => console.log(`${website} se ha parado.`));
+  monitor.on('error', (error) => console.error(error));
+})
 
 login()
 	.then(() => {

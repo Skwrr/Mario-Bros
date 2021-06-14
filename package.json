@@ -17,6 +17,7 @@
     "discord-cards": "^1.2.4",
     "discord-tts": "^1.0.3",
     "discord.js": "^12.1.1",
+    "distube": "^2.8.15",
     "dotenv": "^8.2.0",
     "easy-password-gen": "^2.1.0",
     "ejs": "^3.1.5",

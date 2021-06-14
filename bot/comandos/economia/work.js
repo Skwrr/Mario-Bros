@@ -1,4 +1,11 @@
-module.exports = async(client, message, args, Discord) => {
+module.exports = {
+  name: "work",
+  description: "Trbaja para ganar dinero (y gana experiencia)",
+  use: "",
+  category: 'economia',
+  alias: [],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
 let db = require("megadb")
 let cn = new db.crearDB("cooldown")
 let money = new db.crearDB("economy")
@@ -48,4 +55,5 @@ trabajo = trabajo[Math.floor(Math.random() * trabajo.length)]
   }, 5000)
     message.channel.send(embed)
 
+}
 }

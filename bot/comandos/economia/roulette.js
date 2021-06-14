@@ -1,4 +1,11 @@
-module.exports = async (client, message, args, Discord) => {
+module.exports = {
+  name: "roulette",
+  description: "Apuesta para ganar el cuatro veces mas",
+  use: "(ammount)",
+  category: 'economia',
+  alias: [],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
 
   const db = require('megadb') 
 
@@ -126,4 +133,5 @@ return;
 
 }
  
+}
 }

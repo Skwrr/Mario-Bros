@@ -1,4 +1,11 @@
-module.exports = async(client, message, args, Discord) => {
+module.exports = {
+  name: "getip",
+  description: "Obten información de un servidor de minecraft",
+  use: "(ip)",
+  category: 'diversion',
+  alias: [],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   let mci = require("minecraft-information")
   let ip = args.join(" ")
   let info = await mci.server(ip)
@@ -16,4 +23,5 @@ module.exports = async(client, message, args, Discord) => {
   } catch (error) {
     message.channel.send("Ha ocurrido un error:\n"+error)
   }
+}
 }

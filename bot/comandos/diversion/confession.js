@@ -1,4 +1,11 @@
-module.exports = async(client, message, args, Discord) => {
+module.exports = {
+  name: "confession",
+  description: "Confiesa algo que quieras",
+  use: "(a/p) (secret)",
+  category: 'diversion',
+  alias: ["confesar"],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   const db = require("megadb")
   const confessiondb = new db.crearDB("confessiondb")
   const propu = args[0]
@@ -30,4 +37,5 @@ module.exports = async(client, message, args, Discord) => {
   }
   
   
+  }
 }

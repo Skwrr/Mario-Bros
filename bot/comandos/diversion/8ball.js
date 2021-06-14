@@ -1,4 +1,11 @@
-module.exports = (client, message, args) => {
+module.exports = {
+  name: "8ball",
+  description: "Obten una respuesta mía sobre una pregunta tuya",
+  use: "(question)",
+  category: 'diversion',
+  alias: [],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   let texto = args.slice(0).join(" ");
 
       var rpts = [
@@ -30,4 +37,5 @@ module.exports = (client, message, args) => {
           rpts[Math.floor(Math.random() * rpts.length)] +
           "`"
       );
+  }
 }

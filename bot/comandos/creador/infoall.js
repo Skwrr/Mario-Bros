@@ -1,4 +1,11 @@
-module.exports = async(client, message, args, Discord) => {
+module.exports = {
+  name: "infoall",
+  description: "Obten informacion sobre mis servidores/usuarios",
+  use: "",
+  category: 'creador',
+  alias: [],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   if (!args[0]) {
     const staff = process.env.OWNERS_ID
     if (!staff.includes(message.author.id)) return message.channel.send("❌ **Solo mi Creador puede usar Este cmd** ❌")
@@ -48,4 +55,5 @@ module.exports = async(client, message, args, Discord) => {
     })
     
   }
-};
+  }
+}

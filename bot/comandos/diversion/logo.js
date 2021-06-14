@@ -1,6 +1,13 @@
 const db = require("megadb");
 const logos = new db.crearDB("logos");
-module.exports = async (client, message, args, Discord) => {
+module.exports = {
+  name: "logo",
+  description: "Genera u obten el ultimo logo generado",
+  use: "(gen/reget) (algo)",
+  category: 'diversion',
+  alias: [],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   const texto = args.slice(1).join("%20");
   if (args[0] === "gen") {
     if(!texto) return message.reply("Escriba algo para 'loguear'")
@@ -32,4 +39,5 @@ module.exports = async (client, message, args, Discord) => {
   }else if(args[0] !== "gen" && args[0] !== "reget"){
     message.reply("Ese subcomando no existe, los unicos que hay son `gen` y `reget`")
   }
-};
+}
+}

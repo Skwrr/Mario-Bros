@@ -1,4 +1,11 @@
-module.exports = (client, message, args) => {
+module.exports = {
+  name: "random",
+  description: "Genera un número random",
+  use: "",
+  category: 'diversion',
+  alias: [],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   var numero = args.join(" ");
       var random = Math.round(Math.random() * numero);
       if (!numero)
@@ -6,4 +13,5 @@ module.exports = (client, message, args) => {
       if (isNaN(numero))
         return message.channel.send("**Porfavor escriba un numero valido**");
       message.channel.send("El numero aleatorio es: " + random);
+}
 }

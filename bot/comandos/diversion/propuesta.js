@@ -1,4 +1,11 @@
-module.exports = async (client, message, args) => {
+module.exports = {
+  name: "propuesta",
+  description: "Proponle una propuesta de matrimonio a alguien",
+  use: "(@user)",
+  category: 'diversion',
+  alias: [],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   
   
  const db = require("megadb") 
@@ -39,4 +46,5 @@ module.exports = async (client, message, args) => {
             "Parece que alguien huye del matrimonio :rolling_eyes:"
           );
       });
+}
 }

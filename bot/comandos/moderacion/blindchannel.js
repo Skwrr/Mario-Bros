@@ -1,4 +1,11 @@
-module.exports = async(client, message, args, Discord) => {
+module.exports = {
+  name: "blindchannel",
+  description: "Oculta el canal a todos los usuarios",
+  use: "(time)",
+  category: 'moderacion',
+  alias: ["blind"],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   const ms = require("ms")
   let tiempo = args[0];
   if(!message.member.permissions.has("MANAGE_CHANNELS")) return message.reply("No tienes permisos")
@@ -25,4 +32,5 @@ module.exports = async(client, message, args, Discord) => {
       message.channel.send("Canal revelado 👀")
     }, ms(args[0]))
   }
+}
 }

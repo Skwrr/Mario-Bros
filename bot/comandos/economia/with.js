@@ -1,4 +1,11 @@
-module.exports = async(client, message, args, Discord) => {
+module.exports = {
+  name: "with",
+  description: "Saca dinero del banco internacional",
+  use: "(ammount/all)",
+  category: 'economia',
+  alias: ["w"],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   const db = require("megadb")
   const money = new db.crearDB("economy")
   let sacar = args[0]
@@ -33,4 +40,5 @@ module.exports = async(client, message, args, Discord) => {
   .setTimestamp()
   .setColor("RANDOM")
   message.channel.send(embed)
+}
 }

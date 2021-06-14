@@ -1,4 +1,11 @@
-module.exports = async (client, message, args) => {
+module.exports = {
+  name: "support",
+  description: "Crea un ticket",
+  use: "[close]",
+  category: 'ayuda',
+  alias: ["ticket"],
+  async run(client, message, args) {
+    const Discord = require("discord.js")
   const supportnamech = message.author.tag
     .replace(/[^a-zA-z0-9 ]/g, '-')
     .trim()
@@ -169,4 +176,5 @@ module.exports = async (client, message, args) => {
 
     return true;
   }
-};
+}
+}
