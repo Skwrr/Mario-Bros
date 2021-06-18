@@ -17,10 +17,12 @@ module.exports = {
   if(isNaN(c)) return message.reply("Escribe un numero")
 
   if(nx === 'lvl'){
+    if(!message.author.permissions.has("MANAGE_MESSAGES")) return message.reply("No tienes los permisos suficientes")
     lvl.set(`${usuario.id}.${nx}`, c)
     message.channel.send(`Se ha establecido correctamente a ${usuario} ${c} niveles`)
   }
   if(nx === 'xp'){
+    if(!message.author.permissions.has("MANAGE_MESSAGES")) return message.reply("No tienes los permisos suficientes")
     lvl.set(`${usuario.id}.${nx}`, c)
     message.channel.send(`Se ha establecido correctamente a ${usuario} ${c} de xp`)
   }

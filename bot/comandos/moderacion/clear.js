@@ -7,6 +7,8 @@ module.exports = {
   alias: [],
   async run(client, message, args) {
     const Discord = require("discord.js")
+    let u = [process.env.OWNERS_ID]
+    if(!message.member.permissions.has("MANAGE_MESSAGES") || !u.includes(message.author.id)) return message.reply("No tienes permisos")
   message.delete()
   let c = args[0]
   if(!c || isNaN(c) || c < 1) return message.reply("Escriba el numero de mensajes a borrar")

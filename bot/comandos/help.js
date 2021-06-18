@@ -146,10 +146,15 @@ module.exports = {
 
     embed.setTitle(`**${command.name}**`)
 
+    function mayuscula(string) {
+      string = string.replace(/[^a-z]/gi, '')
+      return string[0].toUpperCase()+string.slice(1)
+    }
+
     if (command.alias && command.alias.length >= 1) embed.addField(`**Alias**`, command.alias.join(', '))
     if (command.description) embed.addField(`**Descripción**`, command.description)
     if (command.use) embed.addField(`**Uso**`, prefix+command.name+" "+command.use)
-    if (command.category) embed.addField(`**Categoría**`, command.category.replace())
+    if (command.category) embed.addField(`**Categoría**`, mayuscula(command.category))
 
     message.channel.send(embed);
   }
