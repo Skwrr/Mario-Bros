@@ -11,19 +11,35 @@ module.exports = {
   let premium = gp.has(message.guild.id)
   if(!args[0]){
     if(!premium) return message.reply("Tu servidor necesita ser premium para ejecutar este comando, puedes adquirirlo mandandole un mensaje a mi creador")
-    message.channel.send("Hay distintos argumentos; `add` y `remove`")
+    return message.channel.send("Hay distintos argumentos; `add` y `remove`")
   }
+  const staff = process.env.OWNERS_ID
+  if (!staff.includes(message.author.id)) return message.channel.send("❌ **Solo mi Creador puede usar Este cmd** ❌")
     if(args[0] === 'add' || args[0] === 'añadir'){
-      const staff = process.env.OWNERS_ID
-      if (!staff.includes(message.author.id)) return message.channel.send("❌ **Solo mi Creador puede usar Este cmd** ❌")
       var guild = client.guilds.cache.get(args[1])
       var sv = args[1]
       if(args[1] === 'this') {
         guild = client.guilds.cache.get(message.guild.id);
         sv = message.guild.id;
+        if(premium){
+          message.reply("Ese servidor ya es premium")
+          return
+        }
+        if(args[2] === '-s'){
+          gp.set(sv, "true")
+          return message.channel.send("Se ha activado el premium en este servidor de manera silenciosa")
+        }
+      }else
+      if(args[2] === '-s'){
+        if(!guild || isNaN(guild)) return message.reply("Escriba la id de algun servidor en el que yo esté")
+        if(premium){
+          message.reply("Ese servidor ya es premium")
+          return
+        }
+        gp.set(sv, "true")
+        return message.channel.send("Se ha activado el premium en este servidor de manera silenciosa")
       }
-      
-      if(!guild) return message.reply("Escriba la id de algun servidor en el que yo esté")
+      if(!guild || isNaN(guild)) return message.reply("Escriba la id de algun servidor en el que yo esté")
       if(premium){
         message.reply("Ese servidor ya es premium")
         return
@@ -42,14 +58,30 @@ module.exports = {
       gp.set(sv, "true")
     
   }else if(args[0] === 'remove' || args[0] === 'delete' || args[0 === 'borrar']){
-    if(message.author.id != process.env.OWNER_ID  && message.author.id !== "692363394719809577") return message.reply('Tu no eres mi dueño, no tienes permiso a este comando')
       var guild = client.guilds.cache.get(args[1])
       var sv = args[1]
       if(args[1] === 'this') {
         guild = client.guilds.cache.get(message.guild.id);
         sv = message.guild.id;
+        if(!premium){
+          message.reply("Ese servidor no es premium")
+          return
+        }
+        if(args[2] === '-s'){
+          gp.delete(sv, "true")
+          return message.channel.send("Se ha desactivado el premium en este servidor de manera silenciosa")
+        }
+      }else
+      if(args[2] === '-s'){
+        if(!guild || isNaN(guild)) return message.reply("Escriba la id de algun servidor en el que yo esté")
+        if(!premium){
+          message.reply("Ese servidor no es premium")
+          return
+        }
+        gp.delete(sv, "true")
+        return message.channel.send("Se ha desactivado el premium en este servidor de manera silenciosa")
       }
-      if(!guild) return message.reply("Escriba la id de algun servidor en el que yo esté")
+      if(!guild || isNaN(guild)) return message.reply("Escriba la id de algun servidor en el que yo esté")
       if(!premium){
         message.reply("Ese servidor no es premium")
         return

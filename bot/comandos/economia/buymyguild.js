@@ -13,7 +13,7 @@ module.exports = {
   const embed = new Discord.MessageEmbed()
   .setTitle("Menu")
   .setDescription("Debes seleccionar la cantidad de tiempo que esté activa la invite")
-  .addField("¿Cuánto tiempo quieres que dure las invites?", "1d, 2d, 5d, 30m, 15m, 5m")
+  .addField("¿Cuánto tiempo quieres que dure las invites?", "7d, 1d, 12h, 6h, 1h, 30m")
   .setColor("RANDOM")
   .setTimestamp()
   .setThumbnail(message.author.displayAvatarURL())
@@ -39,7 +39,8 @@ module.exports = {
       let t= ms(args[0])/1000
       const invite = await channel.createInvite({maxAge: t, maxUses: 1})
       message.author.send(`${guild.name} - ${invite}`)
-    })
+    }) 
+    message.reply("Mira tus MDs")
   }
 }
 }

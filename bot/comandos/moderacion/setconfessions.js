@@ -5,6 +5,7 @@ module.exports = {
   category: 'moderacion',
   alias: [],
   async run(client, message, args) {
+    if(args || args.length >= 1) return message.reply("Este comando no necesita argumentos")
     const Discord = require("discord.js")
   const db = require("megadb")
   const confessiondb = new db.crearDB("confessiondb")

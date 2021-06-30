@@ -14,6 +14,7 @@
     "@discordjs/opus": "^0.3.2",
     "beautify": "0.0.8",
     "canvas": "^2.6.1",
+    "discord-buttons": "^3.2.1",
     "discord-cards": "^1.2.4",
     "discord-tts": "^1.0.3",
     "discord.js": "^12.1.1",

@@ -4,6 +4,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 let fs = require('fs');
 require('dotenv').config();
+require('discord-buttons')(client)
 
 client.comandos = new Discord.Collection();
 

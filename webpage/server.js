@@ -44,6 +44,7 @@ api.get('/api/comandos', (req, res) => {
       }
     }
   })
+  res.send({ comandos: cmds })
 })
 
 module.exports = () => {
