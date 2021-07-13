@@ -130,22 +130,6 @@ module.exports = {
                 }
               });
             });
-					/*
-      let colector = mens.createReactionCollector((reaction, user) => {
-	      return user.id !== client.user.id
-      });
-
-      colector.on('collect', (reaction) => { 
-
-	      if(reaction.emoji.name === 'key' || reaction.emoji.name === '🔑'){
-		     reaction.message.channel.overwritePermissions([
-		       {
-		       id: message.author.id,
-		       deny: ["VIEW_CHANNEL"]
-		       }
-		     ])
-	      }
-	      })*/
         });
     })
   } else if (args[0] === 'close') {

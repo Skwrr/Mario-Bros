@@ -5,21 +5,21 @@ module.exports = {
   category: "economia",
   alias: ["baltop", "top"],
   async run(client, message, args) {
-    const Discord = require("discord.js")
-    const db = require("megadb")
-    const dinero = new db.crearDB("economy")
-    let map = dinero.map(false, (dinero, u) => `<@${u}>: ${dinero.bank}$`)
-    map = dinero.sort(false, "bank")
-    for(let clave in map){
-      for(let valor of clave){
-        console.log(clave, valor)
-      }
+    try {
+      const Discord = require("discord.js")
+      const db = require("megadb")
+      const dinero = new db.crearDB("economy")
+      let sort = await dinero.sort(false, "bank")
+      let embed = new Discord.MessageEmbed().setTitle("Top Economia")
+        let map = sort.map(datos => `**${client.users.cache.find(e => e.id === datos.clave).tag}**: \nBanco: ${datos.valor.bank} | Bolsillo: ${datos.valor.cash}\n`)
+        embed
+        .setDescription(map.slice(0,10))
+        .setColor("RANDOM")
+        .setTimestamp()
+        .setThumbnail(message.guild.iconURL()) 
+      message.channel.send(embed)
+    }catch (err){
+      return message.reply("Ha ocurrido un error")
     }
-    let embed = new Discord.MessageEmbed()
-    .setDescription(`<@${clave}>: ${valor}`)
-    .setColor("RANDOM")
-    .setTimestamp()
-    .setThumbnail(message.guild.iconURL())
-    message.channel.send(embed)
   }
 }

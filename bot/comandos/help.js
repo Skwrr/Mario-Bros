@@ -11,6 +11,7 @@ module.exports = {
     const prefixes = new db.crearDB("prefixes")
     let prefix = await prefixes.get(message.guild.id)
     if(!prefix || prefix === undefined) prefixes.set(message.guild.id, 'hp')
+    prefix = await prefixes.get(message.guild.id)
 
     const name = args[0];
     const command = client.comandos.get(name) || client.comandos.find(c => c.alias && c.alias.includes(name));
@@ -42,11 +43,17 @@ module.exports = {
 
       let moderacioncmd = client.comandos.filter(c => c.category == 'moderacion').map(e => e.name)
 
+      let musicacmd = client.comandos.filter(c => c.category == 'musica').map(e => e.name)
+
       let nivelescmd = client.comandos.filter(c => c.category == 'niveles').map(e => e.name)
 
       let personalizadoscmd = client.comandos.filter(c => c.category == 'personalizados').map(e => e.name)
 
       let totalcmdc = ayudacmd.length+betacmdc.length+betaccmdc.length+contraseñascmd.length+creadorcmd.length+diversioncmd.length+economiacmd.length+moderacioncmd.length+nivelescmd.length+personalizadoscmd.length
+
+      data.push('Aquí tienes una lista de todos mis comandos');
+	    data.push(`Puedes escribir ${prefix}help [commandName] para más información`);
+      
       const embed = new Discord.MessageEmbed()
       .setTitle(data[0])
       .addField(`Ayuda [${ayudacmd.length}]`, `\`${ayudacmd.join("\` - \`")}\``)
@@ -57,6 +64,7 @@ module.exports = {
       .addField(`Diversion [${diversioncmd.length}]`, `\`${diversioncmd.join("\` - \`")}\``)
       .addField(`Economia [${economiacmd.length}]`, `\`${economiacmd.join("\` - \`")}\``)
       .addField(`Moderacion [${moderacioncmd.length}]`, `\`${moderacioncmd.join("\` - \`")}\``)
+      .addField(`Musica [${musicacmd.length}]`, `\`${musicacmd.join("\` - \`")}\``)
       .addField(`Niveles [${nivelescmd.length}]`, `\`${nivelescmd.join("\` - \`")}\``)
       .addField(`Personalizados [${personalizadoscmd.length}]`, `\`${personalizadoscmd.join("\` - \`")}\``)
       .addField(`Comandos Totales`, totalcmdc)
@@ -104,13 +112,15 @@ module.exports = {
 
       let moderacioncmd = client.comandos.filter(c => c.category == 'moderacion').map(e => e.name)
 
+      let musicacmd = client.comandos.filter(c => c.category == 'musica').map(e => e.name)
+
       let nivelescmd = client.comandos.filter(c => c.category == 'niveles').map(e => e.name)
 
       let personalizadoscmd = client.comandos.filter(c => c.category == 'personalizados').map(e => e.name)
 
       let totalcmdc = ayudacmd.length+betacmdc.length+betaccmdc.length+contraseñascmd.length+creadorcmd.length+diversioncmd.length+economiacmd.length+moderacioncmd.length+nivelescmd.length+personalizadoscmd.length
       const embed = new Discord.MessageEmbed()
-      .setTitle(data[0])
+      .setTitle('Aqui tienes una lista de todos mis comandos')
       .addField(`Ayuda [${ayudacmd.length}]`, `\`${ayudacmd.join("\` - \`")}\``)
       .addField(`Beta [${betacmdc.length}]`, `\`${betacmd}\``)
       .addField(`Beta Creador [${betaccmdc.length}]`, `\`${betaccmd}\``)
@@ -119,6 +129,7 @@ module.exports = {
       .addField(`Diversion [${diversioncmd.length}]`, `\`${diversioncmd.join("\` - \`")}\``)
       .addField(`Economia [${economiacmd.length}]`, `\`${economiacmd.join("\` - \`")}\``)
       .addField(`Moderacion [${moderacioncmd.length}]`, `\`${moderacioncmd.join("\` - \`")}\``)
+      .addField(`Musica [${musicacmd.length}]`, `\`${musicacmd.join("\` - \`")}\``)
       .addField(`Niveles [${nivelescmd.length}]`, `\`${nivelescmd.join("\` - \`")}\``)
       .addField(`Personalizados [${personalizadoscmd.length}]`, `\`${personalizadoscmd.join("\` - \`")}\``)
       .addField(`Comandos Totales`, totalcmdc)
@@ -155,6 +166,11 @@ module.exports = {
     if (command.description) embed.addField(`**Descripción**`, command.description)
     if (command.use) embed.addField(`**Uso**`, prefix+command.name+" "+command.use)
     if (command.category) embed.addField(`**Categoría**`, mayuscula(command.category))
+    if (command.premium && command.premium === true) {
+      embed.addField(`**Premium?**`, "Sí")
+    }else{
+      embed.addField(`**Premium?**`, "No")
+    }
 
     message.channel.send(embed);
   }

@@ -1,7 +1,7 @@
 module.exports = {
   name: "infoall",
   description: "Obten informacion sobre mis servidores/usuarios",
-  use: "",
+  use: "[nombres/ids/invites]",
   category: 'creador',
   alias: [],
   async run(client, message, args) {
@@ -10,7 +10,7 @@ module.exports = {
     const staff = process.env.OWNERS_ID
     if (!staff.includes(message.author.id)) return message.channel.send("❌ **Solo mi Creador puede usar Este cmd** ❌")
     message.channel.send(
-      `${client.users.cache.size} usuarios \n${client.guilds.cache.size} servidores`
+      `${client.users.cache.filter(x => !x.bot).size} usuarios y ${client.users.cache.filter(x => x.bot).size} bots\n${client.guilds.cache.size} servidores`
     );
   } else if (args[0] === "nombres") {
     var names = client.guilds.cache.map(g => g.name).join("\n");
@@ -45,13 +45,17 @@ module.exports = {
       client.guilds.cache.forEach(async (guild) => {
         const channel = guild.channels.cache.filter(x => x.type === "text").random()//.map(channel => channel.id).join("\n")
         if(!guild) return message.reply("No existe ese servidor")
-        if(!guild.me.permissions.has("CREATE_INSTANT_INVITE")) return message.channel.send("No se pudo genererar una invitación para el servidor **"+guild.name+"**")
-        let invite = await channel.createInvite({maxAge: 0, maxUses: 1})
-        embed = embed
-        .addField(`${guild.name}`, `${invite}`)
-        .setColor("RANDOM")
-        g.edit(embed)
+        if(!guild.me.permissions.has("CREATE_INSTANT_INVITE")){
+          embed.addField(`${guild.name}`, `No se pudo generar una invite`).setColor("RANDOM")
+        }else{
+          let invite = await channel.createInvite({maxAge: 0, maxUses: 1})
+          embed = embed
+          .addField(`${guild.name}`, `${invite}`)
+          .setColor("RANDOM")
+          g.edit(embed)
+        }
       })
+      g.edit({embed: embed})
     })
     
   }

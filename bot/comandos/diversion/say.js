@@ -16,10 +16,12 @@ module.exports = {
             return message.reply("No puedes mencionar `@ everyone` ni `@ here`")
             message.delete()
           }
-        if (links.some(link => message.content.toLowerCase().includes(link))){
+          links.forEach(link => {
+        if (message.content.toLowerCase().includes(link)){
           return message.reply("No puedes enviar ningun link")
           message.delete()
         }
+          }) 
         }else{
           message.author.send("Tienes permisos de Manage_Messages, así que, tienes un bypass para los links y el @everyone/@here")
         }

@@ -1,10 +1,9 @@
-const api = require('express').Router()
-let app = require("express")
-app = app()
+let { Router } = require('express')
+let api = Router()
+const app = require("express")() 
 const fs = require("fs")
-const { join } = require("path");
-
-app.get('/', (req, res) => {
+const Auth = require("./Middlewares/Auth")
+app.get('/', Auth, (req, res) => {
   res.sendFile(__dirname + '/index.html')
 });
 
@@ -16,13 +15,11 @@ app.get('/codes/create', (req, res) => {
   res.sendFile(__dirname + '/codes/create.html')
 })
 
-api.get('/api/comandos', (req, res) => {
-  let cmddir = join(__dirname, "..", "bot", "comandos");
+app.get('/api/commands', Auth, (req, res) => {
   let cmds = [];
-
-  fs.readdirSync(require('../bot/comandos/')).forEach(dir => {
+  fs.readdir('../bot/comandos').forEach(dir => {
     if(dir.endsWith('.js')){
-      cmds.push({
+		  cmds.push({
         name: dir.name,
         aliases: dir.alias,
         usage: dir.use,
@@ -30,10 +27,10 @@ api.get('/api/comandos', (req, res) => {
         category: dir.category
       });
     }else{
-      const commands = fs.readdirSync(require(`../bot/comandos/${dir}`));
+      const commands = fs.readdir(`../bot/comandos/${dir}`);
       for(let file of commands){
         if(file.endsWith('.js')){
-          cmds.push({
+		      cmds.push({
             name: file.name,
             aliases: file.alias,
             usage: file.use,
@@ -44,12 +41,6 @@ api.get('/api/comandos', (req, res) => {
       }
     }
   })
-  res.send({ comandos: cmds })
+  res.send({ commands: cmds })
 })
-
-module.exports = () => {
-  app.listen(3000, () => {
-    console.log('Servidor Listo.');
-  });
-  return true;
-}
+module.exports = app

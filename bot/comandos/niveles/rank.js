@@ -19,7 +19,7 @@ module.exports = {
 
   const rank = new Discord.MessageEmbed()
   .setTitle(`Tarjeta de rango de ${usuario.tag}`)
-  .setDescription("Gana xp usando el comando `"+prefix+"work`")
+  .setDescription("Gana xp usando el comando `"+await prefix+"work`")
   .addField('Nivel:', level)
   .addField('XP:', xp)
   .addField('XP necesaria para subir de nivel:', (5 * (level ^ 2) + 75 * level + 100))

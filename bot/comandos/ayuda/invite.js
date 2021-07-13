@@ -5,17 +5,11 @@ module.exports = {
   category: 'ayuda',
   alias: [],
   async run(client, message, args) {
-    const Discord = require("discord.js")
-    const { MessageButton } = require("discord-buttons")
-    let btn = new MessageButton()
-    .setLabel("Invite")
-    .setStyle("url")
-    .setURL("https://discordapp.com/api/oauth2/authorize?client_id=662995691164925973&permissions=8&scope=bot")
+    const Discord = require("discord.js") 
     const embed = new Discord.MessageEmbed()
-    .setDescription("Aqui tienes mi invitacion")
+    .setDescription("[Aqui tienes mi invitacion](https://discordapp.com/api/oauth2/authorize?client_id=662995691164925973&permissions=8&scope=bot)")
     .setColor("RANDOM");
     await message.channel.send({
-      component: btn,
       embed: embed
     });
   }

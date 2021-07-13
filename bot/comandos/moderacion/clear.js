@@ -7,24 +7,25 @@ module.exports = {
   alias: [],
   async run(client, message, args) {
     const Discord = require("discord.js")
-    let u = [process.env.OWNERS_ID]
-    if(!message.member.permissions.has("MANAGE_MESSAGES") || !u.includes(message.author.id)) return message.reply("No tienes permisos")
-  message.delete()
+    let u = process.env.OWNERS_ID
+    if(!message.member.permissions.has("MANAGE_MESSAGES")) return message.reply("No tienes permisos")
   let c = args[0]
   if(!c || isNaN(c) || c < 1) return message.reply("Escriba el numero de mensajes a borrar")
   .then(m => {
     m.delete({timeout: 4000})
   })
-  message.channel.bulkDelete(c).catch(err => {
-    message.channel.send("Ha ocurrido un error, probablemente hay un mensaje con más de 2 semanas de antiguedad")
-    .then(m => {
-      m.delete({timeout: 4000})
+    c= parseInt(c)
+    c=c+1
+  message.channel.send(`${parseInt(c)-1} mensajes eliminados`)
+  .then(m => {
+message.channel.bulkDelete(c).catch(err => {
+    return message.edit("Ha ocurrido un error. \n\n"+err)
+    .then(me => {
+      me.delete({timeout: 10000})
     })
     return true
   })
-  message.channel.send(`${c} mensajes eliminados`)
-  .then(m => {
-    m.delete({timeout: 4000})
+m.delete({timeout: 4000})
   })
-}
+  }
 }

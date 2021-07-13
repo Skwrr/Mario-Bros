@@ -6,9 +6,9 @@ module.exports = {
   alias: [],
   async run(client, message, args) {
     const Discord = require("discord.js")
-  const db = require("megadb")
-  const gp = new db.crearDB("premium")
-  let premium = gp.has(message.guild.id)
+    const db = require("megadb")
+    const gp = new db.crearDB("premium")
+    let premium = gp.has(message.guild.id)
   if(!args[0]){
     if(!premium) return message.reply("Tu servidor necesita ser premium para ejecutar este comando, puedes adquirirlo mandandole un mensaje a mi creador")
     return message.channel.send("Hay distintos argumentos; `add` y `remove`")

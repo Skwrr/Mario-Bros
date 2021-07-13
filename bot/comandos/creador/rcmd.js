@@ -67,7 +67,6 @@ module.exports = {
       .setColor("RANDOM")
       .setDescription(error);
       message.channel.send(embed2)
-      console.log(error)
     }
   }
 }

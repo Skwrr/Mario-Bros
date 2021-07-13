@@ -16,8 +16,8 @@ module.exports = {
       .setTimestamp()
       .setThumbnail(snipe.get("authorav"))
       message.channel.send(embed)
-      client.snipes.delete("author")
-      client.snipes.delete("message")
+      client.snipes = {}
+      delete client.snipes
     } catch (error) {
       let embed = new Discord.MessageEmbed()
       .setTitle("No hay ningún mensaje eliminado recientemente")

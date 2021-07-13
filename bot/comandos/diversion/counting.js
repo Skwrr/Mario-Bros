@@ -22,12 +22,16 @@ module.exports = {
       if(reaction.emoji.name === "encendido"){
         if(!already){
           embed.setTitle("Canal de `counting` establecido correctamente, empiece contando por **0**")
-          m.edit(embed)
+          m.edit({
+            embed: embed
+          })
           counting.set(`${message.guild.id}.channel`, message.channel.id)
           counting.set(`${message.guild.id}.count`, "0")
         }else{
           embed.setTitle("Canal de `counting` establecido correctamente, empiece contando por **"+d+"**")
-          m.edit(embed)
+          m.edit({
+            embed: embed
+          })
           counting.set(`${message.guild.id}.channel`, message.channel.id)
           counting.set(`${message.guild.id}.count`, d)
         }

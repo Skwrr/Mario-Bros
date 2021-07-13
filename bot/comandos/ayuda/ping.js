@@ -7,9 +7,6 @@ module.exports = {
   async run(client, message, args) {
     const Discord = require("discord.js")
   let ping = Math.floor(message.client.ws.ping);
-    let permiso = message.member.hasPermission("ADMINISTRATOR");
-    if (!permiso)
-      return message.channel.send("No tienes permisos para usar este comando");
 
     message.channel.send(":ping_pong: Pong!").then(m => {
       m.edit(

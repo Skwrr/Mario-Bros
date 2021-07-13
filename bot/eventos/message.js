@@ -15,14 +15,15 @@ module.exports = async(client, message) => {
   let counting = new db.crearDB("counting")
   let blg = new db.crearDB("blacklistglobal")
 
-
-
+  if(client.distube.getQueue(message)){
+    if(client.distube.getQueue(message).autoplay === true) client.distube.toggleAutoplay(message)
+  }
   
 
   prefix = prefixdb.tiene(message.guild.id) ? await prefixdb.obtener(message.guild.id) : "hp"
 
 //Args y command
-  let args = message.content.toLowerCase()
+  let args = message.content
     .slice(prefix.length)
     .trim()
     .split(/ +/g);
@@ -94,7 +95,7 @@ module.exports = async(client, message) => {
         message
           .reply("No se permiten invitaciones en este servidor.")
           .then(response => {
-            response.delete(5000);
+            response.delete({timeout:5000});
           });
 
       } else {
@@ -103,18 +104,17 @@ module.exports = async(client, message) => {
           client.channels.cache.get(m.id).send(embed);
         }); 
       } 
-    }else if(counting.has(message.guild.id)){
+    }
+    if(counting.has(message.guild.id)){
       if(message.channel.id !== counting.get(`${message.guild.id}.channel`)) return
       if(message.content !== counting.get(`${message.guild.id}.count`)) return message.delete();
-      counting.set(`${message.guild.id}.count`, await counting.get(`${message.guild.id}.count`)+1)
-    }else{
-      return
+      counting.sumar(`${message.guild.id}.count`, 1)
     }
 
 
   
 
-return
+    return
   }
 
   
@@ -126,6 +126,11 @@ return
   if(new db.crearDB("blacklistglobal").has(message.author.id)) return message.reply("Estas en la lista negra de los comandos, no intentes recuperar el derecho a usarme")
   if(cmd){
     const { MessageEmbed } = require("discord.js")
+    if(cmd.premium && cmd.premium === true){
+      const gp = new db.crearDB("premium")
+      let premium = gp.has(message.guild.id)
+      if(!premium) return message.reply("Tu servidor no tiene mi caracteristica \`Premium\`, por lo que no puedes usar mis comandos de \`Musica\`")
+    }
     cmd.run(client, message, args, db, Discord)
   }
 };

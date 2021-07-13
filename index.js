@@ -3,11 +3,60 @@ console.clear()
 const Discord = require('discord.js');
 const client = new Discord.Client();
 let fs = require('fs');
+let app = require("express")
 require('dotenv').config();
-require('discord-buttons')(client)
 
 client.comandos = new Discord.Collection();
 
+const distube = require("distube")
+client.distube = new distube(client, {
+  emitNewSongonly: true,
+  searchSongs: false,
+  leaveOnStop: true,
+  leaveOnFinish: false,
+  leaveOnEmpty: false
+})
+
+client.distube.on("addList", (message, playlist) => {
+  const embed = new Discord.MessageEmbed()
+  .setTitle("Nueva \`PlayList\` añadida")
+  .setDescription(playlist.name+" | "+playlist.songs.length+" canciones")
+  .setFooter(`Añadido por ${message.author.tag}`)
+  .setTimestamp()
+  .setThumbnail(message.guild.iconURL())
+  .setAuthor(message.author.tag, message.author.displayAvatarURL({dynamic: true, size: 1024}))
+  .setColor("RANDOM")
+  for(let i = 0; i < parseInt(playlist.songs.length)-1; i++){
+    embed.addField(playlist.songs[i].name, `${playlist.songs[i].formatedDuration}`)
+  }
+  message.channel.send(embed)
+})
+
+client.distube.on("addSong", (message, song) => {
+  const embed = new Discord.MessageEmbed()
+  .setTitle("Nueva \`Canción\` añadida")
+  .setDescription(client.distube.getQueue(message).songs[parseInt(client.distube.getQueue(message).songs.length)-1].name+` | ${song.formattedDuration}`)
+  .setFooter(`Añadido por ${message.author.username}`)
+  .setTimestamp()
+  .setThumbnail(message.guild.iconURL())
+  .setAuthor(message.author.tag, message.author.displayAvatarURL({dynamic: true, size: 1024}))
+  .setColor("RANDOM")
+  message.channel.send(embed)
+})
+
+client.distube.on("playSong", (message, song) => {
+  message.channel.send("Reproduciendo ahora: **"+client.distube.getQueue(message).songs[parseInt(client.distube.getQueue(message).songs.length)-1].name+"** | "+song.formattedDuration)
+})
+
+client.distube.on("playList", (message, playlist) => {
+  message.channel.send("Reproduciendo playlist: **"+playlist.name+"**")
+})
+
+client.distube.on("error", (message, error) => {
+  console.clear()
+  console.error(error.message)
+  message.channel.send(error.message)
+})
 
 
 function login(t){
@@ -43,7 +92,7 @@ for (const file of fs.readdirSync('./bot/eventos/')) {
 		client.on(fileName, fileContents.bind(null, client));
 	}
 }
-const keepAlive = require('./webpage/server.js');
+const keepAlive = require('./webpage/index.js');
 const Monitor = require('ping-monitor');
 
 let host = [

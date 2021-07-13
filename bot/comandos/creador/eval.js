@@ -5,6 +5,7 @@ module.exports = {
   category: 'creador',
   alias: ["e"],
   async run(client, message, args) {
+    const db = require("megadb")
     const Discord = require("discord.js")
     const staff = process.env.OWNERS_ID
     if (!staff.includes(message.author.id)) return message.channel.send("❌ **Solo mi Creador puede usar Este cmd** ❌")
@@ -54,27 +55,32 @@ module.exports = {
 
           let link = await jsp.publicar(`- - - - Eval - - - -\n\n${txt.replace(client.token, "Wow, un token")}`)
             
+            require("beautify")(args.join(" "), {format: 'js'})
           const embed = new Discord.MessageEmbed()
           .addField(":inbox_tray: Entrada", `\`\`\`js\n${code}\n\`\`\``)
           .addField(":outbox_tray: Salida", `\`El codigo es muy largo, link:\` ${link.url}`)
           .addField(":file_folder: Tipo", `\`\`\`js\n${mayuscula(tipo)}\n\`\`\``, true)
           .addField(":stopwatch: Tiempo", `\`\`\`fix\n${Date.now() - tiempo1}ms\n\`\`\``, true)
           .setColor("#7289DA")
-          msg.edit(embed);
+          msg.edit({
+            embed: embed
+          });
                 
         
         } else {
     
 
-    
+                require("beautify")(args.join(" "), {format: 'js'})
     
           const embed = new Discord.MessageEmbed()
-          .addField(":inbox_tray: Entrada", `\`\`\`js\n${code}\n\`\`\``)
+          .addField(":inbox_tray: Entrada", `\`\`\`js\n${require("beautify")(code, {format: 'js'})}\n\`\`\``)
           .addField(":outbox_tray: Salida", `\`\`\`js\n${txt.replace(client.token, "No quieres saber eso.")}\n\`\`\``)
           .addField(":file_folder: Tipo", `\`\`\`js\n${mayuscula(tipo)}\n\`\`\``, true)
           .addField(":stopwatch: Tiempo", `\`\`\`fix\n${Date.now() - tiempo1}ms\n\`\`\``, true)
           .setColor("#7289DA")
-          msg.edit(embed);
+          msg.edit({
+            embed: embed
+          });
         }
       } catch (err) {          
         let code = args.join(" ")
@@ -84,7 +90,9 @@ module.exports = {
         .addField(":outbox_tray: Salida", `\`\`\`js\n${err}\n\`\`\``)
         .addField(":file_folder: Tipo", `\`\`\`js\nError\n\`\`\``)
         .setColor("RED")
-        msg.edit(embed);
+        msg.edit({
+            embed: embed
+          });
       }
     })
 

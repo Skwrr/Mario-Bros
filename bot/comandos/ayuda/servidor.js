@@ -6,8 +6,6 @@ module.exports = {
   alias: [],
   async run(client, message, args) {
     const Discord = require("discord.js")
-    message.channel.send(
-        "Estas invitado a mi casa :D\nhttps://discord.gg/fwGj3ug"
-      );
+    message.channel.send("(Estas invitado a mi casa :D)[https://discord.gg/fwGj3ug]");
   }
 }

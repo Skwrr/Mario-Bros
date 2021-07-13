@@ -34,7 +34,7 @@ let trabajo = [
 "Has vendido muchas de tus cosas"
 ]
 trabajo = trabajo[Math.floor(Math.random() * trabajo.length)]
-  if(cn.has(message.author.id)) return message.channel.send("Tienes que esperar 5 segundos exactamente para poder usar este comando de vuelta") 
+  if(cn.has(message.author.id)) return message.channel.send("Tienes que esperar 15 segundos exactamente para poder usar este comando de vuelta") 
   let embed = new Discord.MessageEmbed() 
   .setTimestamp()
   .setThumbnail(message.author.displayAvatarURL())
@@ -46,13 +46,12 @@ trabajo = trabajo[Math.floor(Math.random() * trabajo.length)]
   if(!money.has(`${message.author.id}`)) { 
   money.set(`${message.author.id}.cash`, 0)
   money.set(`${message.author.id}.bank`, 0)
-  return message.channel.send("No estabas en la base de datos y te he añadido, vuelve a trabajar para ganar dinero")
   }
   money.sumar(`${message.author.id}.cash`, ganancia) 
     cn.set(message.author.id, "En cooldown pa")
   setTimeout(function(){
     cn.delete(message.author.id)
-  }, 5000)
+  }, 15000)
     message.channel.send(embed)
 
 }

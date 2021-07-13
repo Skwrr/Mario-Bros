@@ -32,7 +32,9 @@ module.exports = {
       tiempo = ms(tiempo)-7500
       tiempo = ms(tiempo)
       embed = embed.setDescription(`Reacciona con 🎉 para participar\nTiempo restante: ${tiempo}\nHosteado por: <@${message.author.id}>`)
-      m.edit(embed)
+      m.edit({
+        embed: embed
+      })
       if(ms(tiempo) <= 0) {
         if (m.reactions.cache.get("🎉").count <= 1) {
           message.channel.send(
@@ -48,7 +50,9 @@ module.exports = {
         `Ganador de **${prize}** es...\n ${winner} Felicidades!!🥳🥳 `
         );
         let embed2 = embed.setDescription(`Sorteo terminado, ganador: ${winner}\nHosteado por: <@${message.author.id}>\n\nQuieres ReRoll? Reacciona a "✔"`)
-        m.edit(embed2).then(async g => {
+        m.edit({
+          embed: embed2
+        }).then(async g => {
           await g.react("✔")
           g.awaitReactions((reaction, user) => {
             if(reaction.emoji.name === "✔"){
