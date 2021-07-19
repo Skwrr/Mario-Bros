@@ -1,9 +1,9 @@
 module.exports = {
   name: "nowplaying",
   description: "Observa que musica estás escuchando",
-  use: "[--s]",
+  use: "[all]",
   category: 'musica',
-  alias: ["np"],
+  alias: ["repeat", "l"],
   premium: true,
   async run(client, message, args) {
     const db = require("megadb")
@@ -15,10 +15,24 @@ module.exports = {
     if(message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) return message.reply("Debes estar en mi mismo canal de voz")
     try{
       if(!serverQueue) return message.reply("No hay canciones")
-      if(args[0] && args[0] === "--save" || args[0] === "--s"){
-        message.reply(`Si en algún otro momento quieres reproducir esta canción, usa este codigo => **${serverQueue.songs[0].id}**`)
+      if(args[0] && args[0] === "all"){
+        if(client.distube.getQueue(message).repeatMode === 0){
+          client.distube.setRepeatMode(message, 2)
+          message.reply(`Se ha establecido el modo de reproduccion a **toda la queue**`)
+        }else
+        if(client.distube.getQueue(message).repeatMode === 1 || serverQueue.repeatMode === 2){
+          client.distube.setRepeatMode(message, 0)
+          message.reply(`Se ha eliminado el modo de repetición`)
+        }
       }else if(!args[0]){
-        message.channel.send('Actualmente, está sonando la canción **'+serverQueue.songs[0].name+'**')
+        if(client.distube.getQueue(message).repeatMode === 0){
+          client.distube.setRepeatMode(message, 1)
+          message.reply(`Se ha establecido el modo de reproduccion a **la canción actual**`)
+        }else
+        if(client.distube.getQueue(message).repeatMode === 2 || serverQueue.repeatMode === 1){
+          client.distube.setRepeatMode(message, 0)
+          message.reply(`Se ha eliminado el modo de repetición`)
+        }
       }else{
         message.reply("Ese argumento no es valido")
       }

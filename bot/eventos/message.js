@@ -1,9 +1,9 @@
 module.exports = async(client, message) => {
   let prefix
   if(message.channel.type == 'dm'){
-    prefix = `hp`
+    prefix = `mb.`
     if(message.content.startsWith(prefix)){
-      message.channel.send("No puedo ejecutar ningun comando en md, mi prefix predeterminado es `hp`")
+      message.channel.send("No puedo ejecutar ningun comando en md, mi prefix predeterminado es `mb.`")
     return true
     }
     return true
@@ -20,7 +20,7 @@ module.exports = async(client, message) => {
   }
   
 
-  prefix = prefixdb.tiene(message.guild.id) ? await prefixdb.obtener(message.guild.id) : "hp"
+  prefix = prefixdb.tiene(message.guild.id) ? await prefixdb.obtener(message.guild.id) : "mb."
 
 //Args y command
   let args = message.content
@@ -121,7 +121,7 @@ module.exports = async(client, message) => {
   
   //Obtener comandos
   let cmd = client.comandos.get(commandName) || client.comandos.find(cmd => cmd.alias && cmd.alias.includes(commandName))
-  if(commandName === '') return message.reply('Escribe `hphelp` para ver todos mis comandos')
+  if(commandName === '') return message.reply('Escribe `mb.help` para ver todos mis comandos')
   if (!cmd) return message.reply('**No existe ese comando, pero puedes sugerirlo contactando con mi dueño ;)**')
   if(new db.crearDB("blacklistglobal").has(message.author.id)) return message.reply("Estas en la lista negra de los comandos, no intentes recuperar el derecho a usarme")
   if(cmd){

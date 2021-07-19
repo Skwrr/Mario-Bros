@@ -26,7 +26,7 @@ module.exports = {
         "ESTOY MIMENTO LCDTM, DEJAME MIMIR"
       ];
       let prefix = require("megadb").crearDB("prefixes").get(message.guild.id)
-      if(!prefix || prefix === undefined) prefix = "hp"
+      if(!prefix || prefix === undefined) prefix = "mb."
       if (!texto)
         return message.channel.send(
           `Escriba una pregunta, \`${prefix}8ball (pregunta)\``

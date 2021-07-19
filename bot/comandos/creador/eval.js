@@ -31,12 +31,44 @@ module.exports = {
       string = string.replace(/[^a-z]/gi, '')
       return string[0].toUpperCase()+string.slice(1)
     }
+    let ms = require("ms")
     
+    function timediff(m1, m2) {
+      m1 = message.channel.messages.resolve(m1)
+      m2 = message.channel.messages.resolve(m2)
+      if(!m1) throw new TypeError("Falta la id del mensaje inicial")
+      if(!m2) throw new TypeError("Falta id del mensaje final")
+      try{
+        return ms(parseInt(m2.createdTimestamp)-parseInt(m1.createdTimestamp));
+      }catch(error){
+        throw new Error(error.message)
+      }
+    }
+    
+    function t(msc, ov, act){
+      if(!ov) {
+        msc = Math.floor(msc/1000) 
+        return "<t:"+msc+">"
+      }else{
+        if(act === "-"){
+          msc = parseInt(msc) - parseInt(ov) 
+          msc = Math.floor(msc/1000) 
+          return "<t:"+msc+">"
+        }else if(act === "+"){
+          msc = parseInt(msc) + parseInt(ov)
+          return ov, msc
+          msc = Math.floor(msc/1000)
+          return "<t:"+msc+">"
+        }else{
+          throw new Error("Solo se puede sumar y restar")
+        }
+      }
+    }
 
     let tiempo1 = Date.now()
     
     if(!args[0]) return message.reply("Escriba algo a __evaluar__")
-    if(args.join(" ").toLowerCase().includes("token")) return message.channel.send("NO TOQUES MI TOKEN P U T I T O")
+    if(args.join(" ").toLowerCase().includes("token")) return message.channel.send("NO TOQUES MI TOKEN ***P U T O***")
 
     const edit = new Discord.MessageEmbed()
     .setDescription(":stopwatch: Evaluando...")
@@ -95,6 +127,39 @@ module.exports = {
           });
       }
     })
-
-  }
+  },
+  t: function(msc, ov, act){
+      if(!msc){
+        throw new Error("No se recibió primer argumento")
+      }else
+      if(!ov) {
+        if(msc === "Date.now()") msc = Date.now()
+        msc = Math.floor(parseInt(msc)/1000) 
+        if(isNaN(msc)) throw new Error("No se pudo generar")
+        return "<t:"+parseInt(msc)+">"
+      }else
+      if(ov){
+        if(msc === "Date.now()") msc = Date.now()
+        if(ov === "Date.now()") ov = Date.now()
+        if(act === "-"){
+          msc = parseInt(msc)-parseInt(ov) 
+          msc = Math.floor(parseInt(msc)/1000)
+          if(isNaN(msc)) throw new Error("No se pudo generar")
+          return "<t:"+parseInt(msc)+">"
+        }else if(act === "+"){
+          msc = parseInt(msc)
+          ov = parseInt(ov)
+          msc = msc+ov
+          msc = Math.floor(parseInt(msc)/1000)
+          if(isNaN(msc)) throw new Error("No se pudo generar")
+          return "<t:"+parseInt(msc)+">"
+        }
+      }
+    },
+    timediff: function(m1, m2) {
+      const ms = require('@fabricio-191/ms')
+      if(!m1) throw new Error("Falta la id del mensaje inicial")
+      if(!m2) throw new Error("Falta id del mensaje final")
+      return ms(parseInt(m2.createdTimestamp)-parseInt(m1.createdTimestamp), {long: false, language: 'es'});
+    }
 }

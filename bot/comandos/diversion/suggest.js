@@ -13,7 +13,7 @@ module.exports = {
     m.delete(6000)
   })
   let canaldesuggestion = await suggest.obtener(message.guild.id)
-  if(!canaldesuggestion || canaldesuggestion === null) return message.channel.send(":x: | El canal de sugerencias no está establecido, contacte con un admin o si usted es moderador, escriba en el canal de sugerencias `hpsetsuggestions`").then(m => {
+  if(!canaldesuggestion || canaldesuggestion === null) return message.channel.send(":x: | El canal de sugerencias no está establecido, contacte con un admin o si usted es moderador, escriba en el canal de sugerencias mb.setsuggestions`").then(m => {
     m.delete({timeout: 6000})
   })
   let suggestionembed = new Discord.MessageEmbed()

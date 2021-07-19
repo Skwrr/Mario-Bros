@@ -11,7 +11,7 @@ module.exports = {
  const db = require("megadb") 
  const db_marry = new db.crearDB("marry") 
  const prefixdb = new db.crearDB("prefixes")
-  var prefix = prefixdb.tiene(message.guild.id) ? await prefixdb.obtener(message.guild.id) : "hp";
+  var prefix = prefixdb.tiene(message.guild.id) ? await prefixdb.obtener(message.guild.id) : "mb.";
   const usuario =
         message.mentions.users.first() || client.users.cache.get(args[0]);
 

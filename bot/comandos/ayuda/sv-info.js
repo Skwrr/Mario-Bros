@@ -14,7 +14,7 @@ module.exports = {
         .addField("Region", message.guild.region, true)
         .addField("Me uní el", moment(message.guild.joinedAt).format("dddd, MMMM Do YYYY, h:mm:ss a"), true)
         .addField("Creado el", moment(message.guild.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a"), true)
-        .addField("Dueño del Servidor", `<@${message.guild.ownerID}> (${message.guild.ownerID})`, true)
+        .addField("Dueño del Servidor", `${client.users.resolve(message.guild.ownerID).username ? client.users.resolve(message.guild.ownerID).username : "Error al encontrar al dueño"} (${message.guild.ownerID})`, true)
         .addField("Miembros", message.guild.memberCount, true)
         .addField("Roles", message.guild.roles.cache.size, true)
         .setColor(0x66b3ff);

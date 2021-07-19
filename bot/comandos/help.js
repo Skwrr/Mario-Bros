@@ -7,10 +7,10 @@ module.exports = {
   async run(client, message, args, db) {
     const Discord = require("discord.js")
     const fs = require("fs")
-    const ms = require("ms")
+    const ms = require("fabricio-191/ms")
     const prefixes = new db.crearDB("prefixes")
     let prefix = await prefixes.get(message.guild.id)
-    if(!prefix || prefix === undefined) prefixes.set(message.guild.id, 'hp')
+    if(!prefix || prefix === undefined) prefixes.set(message.guild.id, 'mb.')
     prefix = await prefixes.get(message.guild.id)
 
     const name = args[0];

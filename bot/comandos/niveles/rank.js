@@ -10,7 +10,7 @@ module.exports = {
   const lvl = new db.crearDB("niveles")
   let prefix = new db.crearDB("prefixes")
   prefix = prefix.get(message.guild.id)
-  if(!prefix || prefix === undefined) prefix = new db.crearDB("prefixes").set(message.guild.id, "hp")
+  if(!prefix || prefix === undefined) prefix = new db.crearDB("prefixes").set(message.guild.id, "mb.")
 
   const usuario = message.mentions.users.first() || message.author;
   const xp = await lvl.get(`${usuario.id}.xp`)

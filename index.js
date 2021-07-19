@@ -49,12 +49,10 @@ client.distube.on("playSong", (message, song) => {
 })
 
 client.distube.on("playList", (message, playlist) => {
-  message.channel.send("Reproduciendo playlist: **"+playlist.name+"**")
+  message.channel.send("Reproduciendo playlist: **"+client.distube.getQueue(message).songs[parseInt(client.distube.getQueue(message).songs.length)-1].name+"**")
 })
 
 client.distube.on("error", (message, error) => {
-  console.clear()
-  console.error(error.message)
   message.channel.send(error.message)
 })
 

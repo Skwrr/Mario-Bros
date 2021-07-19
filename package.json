@@ -1,22 +1,26 @@
 {
-  "name": "sepoxcraft48yt",
-  "version": "1.0.0",
-  "description": "prueba repl.it",
+  "name": "Mario Bros",
+  "version": "5.6",
+  "description": "Mi primer bot",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@discordjs/opus": "^0.3.2",
+    "@fabricio-191/ms": "^1.2.0-2",
+    "ai-tic-tac-toe": "^1.1.1",
+    "array-lib": "^0.2.0",
     "beautify": "0.0.8",
     "canvas": "^2.6.1",
     "discord-cards": "^1.2.4",
     "discord-tts": "^1.0.3",
     "discord.js": "^12.1.1",
+    "discordimgs": "^1.4.0",
     "distube": "^2.8.15",
     "dotenv": "^8.2.0",
     "easy-password-gen": "^2.1.0",
@@ -42,10 +46,22 @@
     "puppeteer": "^10.1.0",
     "request": "^2.88.2",
     "sleep": "^6.3.0",
+    "tresenraya": "0.0.7",
     "underscore": "^1.12.0",
     "webpage": "^0.3.0",
     "youtube-search": "^1.1.4",
     "yt-search": "^2.8.0",
     "ytdl-core": "^4.8.3"
-  }
+  },
+  "devDependencies": {
+    "node": "^14.17.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SEPOXCRAFT/Mario-Bros.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SEPOXCRAFT/Mario-Bros/issues"
+  },
+  "homepage": "https://github.com/SEPOXCRAFT/Mario-Bros#readme"
 }

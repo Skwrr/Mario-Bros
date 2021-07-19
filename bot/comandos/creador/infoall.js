@@ -6,9 +6,9 @@ module.exports = {
   alias: [],
   async run(client, message, args) {
     const Discord = require("discord.js")
-  if (!args[0]) {
     const staff = process.env.OWNERS_ID
     if (!staff.includes(message.author.id)) return message.channel.send("❌ **Solo mi Creador puede usar Este cmd** ❌")
+    if(!args[0]){
     message.channel.send(
       `${client.users.cache.filter(x => !x.bot).size} usuarios y ${client.users.cache.filter(x => x.bot).size} bots\n${client.guilds.cache.size} servidores`
     );
