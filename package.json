@@ -1,6 +1,6 @@
 {
-  "name": "Mario Bros",
-  "version": "5.6",
+  "name": "Mario-Bros",
+  "version": "5.6.0",
   "description": "Mi primer bot",
   "main": "index.js",
   "scripts": {
