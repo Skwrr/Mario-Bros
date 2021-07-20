@@ -18,7 +18,13 @@ module.exports = {
       if(args[0] && args[0] === "--save" || args[0] === "--s"){
         message.reply(`Si en algún otro momento quieres reproducir esta canción, usa este codigo => **${serverQueue.songs[0].id}**`)
       }else if(!args[0]){
-        message.channel.send('Actualmente, está sonando la canción **'+serverQueue.songs[0].name+'**')
+        const embed = new Discord.MessageEmbed()
+        .setTitle(serverQueue.songs[0].name)
+        .setDescription(`\`${serverQueue.songs[0].formattedCurrentTime}\`/\`${serverQueue.songs[0].formattedDuration}\``)
+        .setFotter("Deseas devolver el premium por alguna razón? Puedes deshacerte de el con \`mb.premium leave\`")
+        .setTimestamp()
+        .setThumbnail(message.guild.id)
+        message.channel.send(embed)
       }else{
         message.reply("Ese argumento no es valido")
       }

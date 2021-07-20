@@ -2,7 +2,7 @@ module.exports = {
   name: "ttt",
   description: "Juega al clasico 3 en raya",
   use: "(@user)",
-  category: 'beta',
+  category: 'diversion',
   alias: ["tictactoe", "3raya", "3enraya", "ter", "tresenraya"],
   async run(client, message, args) {
     const tresenraya = require("tresenraya")

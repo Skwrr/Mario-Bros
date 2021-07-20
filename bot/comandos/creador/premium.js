@@ -57,7 +57,7 @@ module.exports = {
       cate.send("Hola! Vengo a avisar que tu servidor ha sido activado como premium ¡FELICIDADES!\nContacta con mi creador para recibir la recompensa")
       gp.set(sv, "true")
     
-  }else if(args[0] === 'remove' || args[0] === 'delete' || args[0 === 'borrar']){
+  }else if(args[0] === 'remove' || args[0] === 'delete' || args[0] === 'borrar'){
       var guild = client.guilds.cache.get(args[1])
       var sv = args[1]
       if(args[1] === 'this') {
@@ -98,6 +98,9 @@ module.exports = {
       }
       cate.send("Hola! Siento mucho decir esto, pero tu servidor ya no es premium")
       gp.delete(sv)
+  }else if(args[0] === 'leave'){
+    gp.delete(message.guild.id)
+    message.channel.send("Acabas de abandonar tu modo premium")
   }else{
     message.channel.send("No existe ese subcomando!")
     }

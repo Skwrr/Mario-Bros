@@ -120,9 +120,11 @@ module.exports = async(client, message) => {
   
   
   //Obtener comandos
+
   let cmd = client.comandos.get(commandName) || client.comandos.find(cmd => cmd.alias && cmd.alias.includes(commandName))
-  if(commandName === '') return message.reply('Escribe `mb.help` para ver todos mis comandos')
-  if (!cmd) return message.reply('**No existe ese comando, pero puedes sugerirlo contactando con mi dueño ;)**')
+  if(prefix.startsWith(`<`)) return message.reply("Mi prefix en este servidor es `"+prefix+"`")
+  if(commandName === '') return
+  if (!cmd) return message.reply('**No existe ese comando, puedes sugerirlo con el comando `'+prefix+'request`**')
   if(new db.crearDB("blacklistglobal").has(message.author.id)) return message.reply("Estas en la lista negra de los comandos, no intentes recuperar el derecho a usarme")
   if(cmd){
     const { MessageEmbed } = require("discord.js")
