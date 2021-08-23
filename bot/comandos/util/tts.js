@@ -2,7 +2,7 @@ module.exports = {
   name: "tts",
   description: "Di algo en llamada pero lo digo yo B)",
   use: "(texto)",
-  category: 'diversion',
+  category: 'util',
   alias: [],
   async run(client, message, args) {
     const Discord = require("discord.js")

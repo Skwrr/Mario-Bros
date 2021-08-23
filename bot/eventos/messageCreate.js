@@ -8,6 +8,7 @@ module.exports = async(client, message) => {
     }
     return true
   }
+
   
 
   const db = require("megadb");
@@ -36,7 +37,9 @@ module.exports = async(client, message) => {
 
   if (message.author.bot) return;
   if(!message.content.toLowerCase().startsWith(prefix)){
-  
+    if(message.mentions.users.first()){
+    if(message.mentions.users.first().id === client.user.id) return message.reply("Mi prefix en este servidor es `"+prefix+"`")
+    }
   /*if(message.content.toLowerCase().startsWith('sepox')){
     message.channel.send('SEPOXCRAFT48? El que busca gente que le ayude y todos le ignoran?')
   }
@@ -121,8 +124,7 @@ module.exports = async(client, message) => {
   
   //Obtener comandos
 
-  let cmd = client.comandos.get(commandName) || client.comandos.find(cmd => cmd.alias && cmd.alias.includes(commandName))
-  if(prefix.startsWith(`<`)) return message.reply("Mi prefix en este servidor es `"+prefix+"`")
+  let cmd = client.comandos.get(commandName.toLowerCase()) || client.comandos.find(cmd => cmd.alias && cmd.alias.includes(commandName.toLowerCase()))
   if(commandName === '') return
   if (!cmd) return message.reply('**No existe ese comando, puedes sugerirlo con el comando `'+prefix+'request`**')
   if(new db.crearDB("blacklistglobal").has(message.author.id)) return message.reply("Estas en la lista negra de los comandos, no intentes recuperar el derecho a usarme")
@@ -133,6 +135,36 @@ module.exports = async(client, message) => {
       let premium = gp.has(message.guild.id)
       if(!premium) return message.reply("Tu servidor no tiene mi caracteristica \`Premium\`, por lo que no puedes usar mis comandos de \`Musica\`")
     }
+    let embed = new Discord.MessageEmbed()
+    .setTitle("Valora a "+client.user.username)
+    .setDescription("Del 1 al 5 como me valorarías")
+    .setColor("RANDOM")
+    let num = Math.floor(Math.random() * 100)
+    if(num <= 5) message.channel.send(embed).then(y => {
+      [ '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣' ].forEach(em => y.react(em))
+      y.awaitReactions((r,u) => {
+        if(u.id !== message.author.id) return
+        if(u.bot) return
+        y.channel.send(embed.setDescription("Gracias por valorarme, has sido el afortunado de obtener este mensaje de un 5% de probabilidad"))
+        y.delete()
+        let valorationdb = require("megadb")
+        valorationdb = new valorationdb.crearDB("valoration")
+        let value
+        if(r.emoji.name === "1️⃣") value = 1
+        else if(r.emoji.name === "2️⃣") value = 2
+        else if(r.emoji.name === "3️⃣") value = 3
+        else if(r.emoji.name === "4️⃣") value = 4
+        else if(r.emoji.name === "5️⃣") value = 5
+        if(!valorationdb.has("total")) valorationdb.set("total", {
+          times: 1, valoration: value
+        })
+        else {
+          valorationdb.sumar("total.times", 1)
+          valorationdb.sumar("total.valoration", value)
+        }
+        return
+      })
+    })
     cmd.run(client, message, args, db, Discord)
   }
 };

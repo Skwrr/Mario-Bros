@@ -47,7 +47,7 @@ module.exports = {
       .setDescription(`Reporte de ${message.author.username}#${message.author.discriminator}`)
       .setColor("RANDOM")
       .addField(`${bug}`, `${message.author.id}`)
-      client.channels.cache.get('726518343921696849').send(embed)
+      client.channels.resolve('878389543458451477').send(embed)
       message.channel.send("Su reporte de un bug ha sido enviado correctamente").then(m => {
         m.delete({timeout: 5000})
       })

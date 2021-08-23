@@ -6,9 +6,10 @@ module.exports = {
   alias: ["lockchannel"],
   async run(client, message, args) {
     const Discord = require("discord.js")
-  const ms = require("ms")
+  const ms = require("@fabricio-191/ms")
   let tiempo = args[0];
   if(!message.member.permissions.has("MANAGE_CHANNELS")) return message.reply("No tienes permisos")
+  if(!message.guild.me.permissions.has("MANAGE_CHANNELS")) return message.reply("No tengo permisos para gestionar canales")
   let ch = message.channel
   if(!args[0]) message.channel.send("No has establecido el tiempo, supongo que quieres que sea permanente.").then(m => m.delete({timeout: 5000}))
   const everyone = message.guild.roles.cache.find(m => m.name == '@everyone')

@@ -2,7 +2,7 @@ module.exports = {
   name: "avatar",
   description: "Obten el avatar de un usuario (o de ti mismo)",
   use: "[@user]",
-  category: 'diversion',
+  category: 'util',
   alias: ["av"],
   async run(client, message, args) {
     const Discord = require("discord.js")

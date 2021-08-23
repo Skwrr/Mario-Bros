@@ -8,6 +8,10 @@ module.exports = {
     const Discord = require("discord.js")
   const db = require("megadb")
   const money = new db.crearDB("economy")
+  if(!money.has(`${message.author.id}`)) { 
+  money.set(`${message.author.id}.cash`, 0)
+  money.set(`${message.author.id}.bank`, 0)
+}
   let sacar = args[0]
   let max = await money.get(`${message.author.id}.bank`)
   if(!sacar) return message.reply("Escriba algo de dinero para agregar al banco internacional")

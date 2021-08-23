@@ -7,6 +7,7 @@ module.exports = {
   async run(client, message, args) {
     const Discord = require("discord.js")
   if(!message.member.permissions.has("MANAGE_CHANNELS")) return message.reply("No tienes permiso para `nukear` un canal")
+  if(!message.guild.me.permissions.has("MANAGE_CHANNELS")) return message.reply("No tengo permisos para gestionar canales")
   message.reply("Seguro que quieres nukear este canal?").then(async m => {
     await m.react("✅")
     await m.react("❌")
@@ -16,7 +17,7 @@ module.exports = {
         message.channel.send("Solicitud cancelada").then(a => a.delete({timeout: 5000}))
         m.delete()
         return
-      }else if(reaction.emoji.name === "✅"){
+      }else if(reaction.emoji.name === "✅"){ 
         message.channel.clone().then(x => {
           x.setPosition(message.channel.position)
           message.channel.delete()

@@ -4,11 +4,11 @@ module.exports = {
   name: "logo",
   description: "Genera u obten el ultimo logo generado",
   use: "(gen/reget) (algo)",
-  category: 'diversion',
+  category: 'util',
   alias: [],
   async run(client, message, args) {
     const Discord = require("discord.js")
-  const texto = args.slice(1).join("%20");
+  const texto = encodeURIComponent(args.slice(1).join(' '))
   if (args[0] === "gen") {
     if(!texto) return message.reply("Escriba algo para 'loguear'")
     message.channel.send({

@@ -1,5 +1,5 @@
 module.exports = {
-  name: "nowplaying",
+  name: "loop",
   description: "Observa que musica estás escuchando",
   use: "[all]",
   category: 'musica',

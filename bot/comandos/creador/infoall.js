@@ -49,10 +49,10 @@ module.exports = {
           embed.addField(`${guild.name}`, `No se pudo generar una invite`).setColor("RANDOM")
         }else{
           let invite = await channel.createInvite({maxAge: 0, maxUses: 1})
-          embed = embed
-          .addField(`${guild.name}`, `${invite}`)
-          .setColor("RANDOM")
-          g.edit(embed)
+          embed.addField(`${guild.name}`, `${invite}`).setColor("RANDOM")
+          setTimeout(() => {
+            g.edit(embed)
+          }, 2500)
         }
       })
       g.edit({embed: embed})

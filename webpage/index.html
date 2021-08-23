@@ -185,7 +185,6 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  </body>
   <style>
     body {
       background: var(--bs-gray-dark);
@@ -383,6 +382,10 @@
       background: #414ca1;
     }
   </style>
+  <script>alert("ready")
+  $(document).ready(()=>{
+  $.get("api/commands",data=>{data.commands.forEach(cmd=>{$("#commands-body").append(`
+  <tr><th scope="row">${cmd.name}</th></tr>`)})})})</script>
   <script>
     $(document).ready(() => {
       $.get("/api/info", (data) => {
@@ -409,4 +412,5 @@
     });
     })
   </script>
+  </body>
 </html>

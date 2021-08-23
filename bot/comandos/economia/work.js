@@ -25,7 +25,11 @@ if(xp >= (5 * (level ^ 2) + 50 * level + 100)) {
         message.reply("Has subido de nivel! Nuevo nivel " + (level+1)); 
     }
 
-//PARTE DEL WORK
+//PARTE DEL work
+if(!money.has(`${message.author.id}`)) { 
+  money.set(`${message.author.id}.cash`, 0)
+  money.set(`${message.author.id}.bank`, 0)
+}
 let ganancia = Math.floor(Math.random() * 500)
 let trabajo = [
 "Has trabajado como gasolinero",
@@ -43,10 +47,7 @@ trabajo = trabajo[Math.floor(Math.random() * trabajo.length)]
   .addField("En tu bolsillo:", `${await money.get(`${message.author.id}.cash`)+ganancia}`)
   .addField("En el banco internacional:", `${await money.get(`${message.author.id}.bank`)}`)
   .setColor("RANDOM")
-  if(!money.has(`${message.author.id}`)) { 
-  money.set(`${message.author.id}.cash`, 0)
-  money.set(`${message.author.id}.bank`, 0)
-  }
+   
   money.sumar(`${message.author.id}.cash`, ganancia) 
     cn.set(message.author.id, "En cooldown pa")
   setTimeout(function(){

@@ -21,9 +21,9 @@ module.exports = {
         const embed = new Discord.MessageEmbed()
         .setTitle(serverQueue.songs[0].name)
         .setDescription(`\`${serverQueue.songs[0].formattedCurrentTime}\`/\`${serverQueue.songs[0].formattedDuration}\``)
-        .setFotter("Deseas devolver el premium por alguna razón? Puedes deshacerte de el con \`mb.premium leave\`")
+        .setFooter("Deseas devolver el premium por alguna razón? Puedes deshacerte de el con \`mb.premium leave\`")
         .setTimestamp()
-        .setThumbnail(message.guild.id)
+        .setThumbnail(message.guild.iconURL())
         message.channel.send(embed)
       }else{
         message.reply("Ese argumento no es valido")

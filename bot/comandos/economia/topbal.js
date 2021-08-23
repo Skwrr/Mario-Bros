@@ -8,9 +8,14 @@ module.exports = {
     try {
       const Discord = require("discord.js")
       const db = require("megadb")
-      const dinero = new db.crearDB("economy")
-      let sort = await dinero.sort(false, "bank") 
-      let map = sort.map(datos => `**${client.users.resolve(datos.clave).tag}**\n${datos.valor.bank}bank | ${datos.valor.cash}cash\n`)
+      const dinero = new db.crearDB("economy");
+      let sort = await dinero.sort(false, "bank");
+      let map;
+      try{
+      map = sort.map(datos => `**${client.users.resolve(datos.clave).tag}**\n${datos.valor.bank}bank | ${datos.valor.cash}cash\n`)
+      }catch(error) {
+        map = sort.map(datos => `**<@!${datos.clave}>**\n${datos.valor.bank}bank | ${datos.valor.cash}cash\n`)
+      }
       let embed = new Discord.MessageEmbed()
       .setTitle("Top economia")
       .setDescription(map.slice(0,10).join("\n"))

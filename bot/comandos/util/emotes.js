@@ -2,7 +2,7 @@ module.exports = {
   name: "emotes",
   description: "Obten todos los emotes de este servidor",
   use: "",
-  category: 'diversion',
+  category: 'util',
   alias: ["emojis"],
   async run(client, message, args) {
     const Discord = require("discord.js")
@@ -44,6 +44,7 @@ message.channel.send({embed: {
   let i2 = 10;
 
   a.awaitReactions((reaction, user) => {
+    if(user.id !== message.author.id) return
     
   
 

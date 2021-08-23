@@ -76,7 +76,7 @@ module.exports = {
     message.channel.send(edit).then(async msg => {
       try {
         let code = args.join(" ");
-        let evalued = await eval(code);
+        let evalued = await eval(`(async() => {${code}})()`);
         let tipo = typeof evalued||"Tipo no encontrado."
         if (typeof evalued !== 'string') evalued = require('util').inspect(evalued, { depth: 0, maxStringLength: 2000});
         let txt = "" + evalued;
@@ -160,6 +160,6 @@ module.exports = {
       const ms = require('@fabricio-191/ms')
       if(!m1) throw new Error("Falta la id del mensaje inicial")
       if(!m2) throw new Error("Falta id del mensaje final")
-      return ms(parseInt(m2.createdTimestamp)-parseInt(m1.createdTimestamp), {long: false, language: 'es'});
+      return ms(m2.createdTimestamp-m1.createdTimestamp, {long: false, language: 'es'});
     }
 }

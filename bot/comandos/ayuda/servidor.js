@@ -7,7 +7,7 @@ module.exports = {
   async run(client,message) {
     const {MessageEmbed}=require("discord.js")
     const embed = new MessageEmbed()
-    .setDescription("[Estas invitado a mi casa :D](https://discord.gg/fwGj3ug)")
+    .setDescription("[Estas invitado a mi casa :D](https://discord.gg/MhKWCTun6w)")
     .setColor("RANDOM")
     message.channel.send(embed)
   }

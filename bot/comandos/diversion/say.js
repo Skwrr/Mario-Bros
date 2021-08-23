@@ -34,6 +34,7 @@ module.exports = {
 			',net',
 			',io'
 		];
+		
 		let texto = args.join(' ');
 		if (!message.channel.permissionsFor(client.user).has('MANAGE_MESSAGES'))
 			return message.reply('No puedo borrar tus mensajes');
@@ -47,10 +48,11 @@ module.exports = {
 				message.delete();
 			}
 			if(links.some(pass => message.content.toLowerCase().includes(pass))) return message.reply("No puedes enviar ningún link")
+			if(message.mentions.roles.first() || message.guild.roles.cache.some(role => message.content.includes(role.id))) return message.reply("No puedes mencionar roles")
 			message.delete()
 		} else {
 			message.author.send(
-				'Tienes permisos de Manage_Messages, así que, tienes un bypass para los links y el @everyone/@here'
+				'Tienes permisos de Manage_Messages, así que, tienes un bypass para los links y el @everyone/@here y roles'
 			);
 		}
 

@@ -10,6 +10,7 @@ let db = require("megadb")
 let warns = new db.crearDB("warns");
 
 let usuario = message.mentions.members.first()
+if(usuario.id === message.author.id) return message.reply("No puedes avisarte a ti mismo")
 if(!warns.has(`${message.guild.id}.kicks`)){
   await warns.establecer(`${message.guild.id}.kicks`, 3)
 }
@@ -75,7 +76,7 @@ const warnings = await warns.get(`${message.guild.id}.${usuario.id}`)
 
 let razon = args.slice(1).join(' ')
 if(!razon) razon = 'Razon no especificada'
-if(!message.member.permissions.has('MANAGE_MESSAGES')) return message.channel.send('No tienes permisos para ejecutar este comando')
+if(!message.member.permissions.has('KICK_MEMBERS')) return message.channel.send('No tienes permisos para ejecutar este comando')
 if(razon.length > 1024) return message.reply('La razón no puede exceder los 1024 caracteres') 
 if(!warns.tiene(`${message.guild.id}.${usuario.id}`)){warns.establecer(`${message.guild.id}.${usuario.id}`, 0)
 }
@@ -91,6 +92,11 @@ message.channel.send(embed);
 usuario.send(`Hola! Vine a informarte que fuiste avisado en el servidor ${message.guild.name} por la razón: ${razon}`).catch(e => e)
 const customwarns = await warns.get(`${message.guild.id}.kicks`)
 if(warnings >= customwarns){
+  if(!message.guild.me.permissions.has("KICK_MEMBERS")) {
+    message.reply("No tengo permisos para expulsa usuarios, pero el usuario ya ha alcanzado el máximo de avisos")
+    warns.set(`${message.guild.id}.${usuario.id}`,0)
+    return true
+  }
   message.guild.member(usuario).kick(`Alcanzar ${customwarns} warns`)
   warns.set(`${message.guild.id}.${usuario.id}`, 0)
   message.channel.send("Se ha kikeado al usuario **"+usuario.username+"** por alcanzar **"+warnings+"** warns")

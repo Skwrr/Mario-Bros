@@ -9,6 +9,10 @@ module.exports = {
   const db = require("megadb")
   const money = new db.crearDB("economy")
   let agregar = args[0]
+  if(!money.has(`${message.author.id}`)) { 
+  money.set(`${message.author.id}.cash`, 0)
+  money.set(`${message.author.id}.bank`, 0)
+}
   let max = await money.get(`${message.author.id}.cash`)
   if(!agregar) return message.reply("Escriba algo de dinero para agregar al banco internacional")
   if(agregar === "all"){

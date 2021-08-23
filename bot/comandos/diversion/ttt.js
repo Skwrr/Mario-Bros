@@ -17,7 +17,7 @@ module.exports = {
 
     if(!usuario) return message.reply("Debes mencionar a un usuario")
     if(usuario.id === message.author.id) return message.reply("No puedes jugar contra tí, puedes jugar solo si me mencionas")
-    if(usuario.id === client.user.id) {
+    if(usuario.id === client.user.id) return message.reply("Yo? No se jugar :(") /*{
       const partida = new tresenraya.partida({ jugadores: [message.author.id, usuario.id] });
 
     const embed = new Discord.MessageEmbed()
@@ -119,10 +119,12 @@ module.exports = {
         ficha = "o"
       }
       fichapos = AI.getmove(partida.tablero.array, ficha)
+      let fichaposs = partida.mejorPos(ficha)
       setTimeout(() => {
         console.log(ficha)
         console.log(fichapos)
-        if(partida.disponible(fichapos)) partida.elegir(fichapos)
+        console.log(fichaposs)
+        if(partida.disponible(fichaposs)) partida.elegir(fichaposs)
         embed.setDescription(partida.tablero.string)
         embed.setTitle(`Turno de ${client.users.resolve(partida.turno.jugador).username} [${partida.turno.ficha}]`)
         e.edit(embed);
@@ -130,7 +132,7 @@ module.exports = {
     })
         })
         return
-    }else{
+    }else{*/
     message.channel.send(`<@${usuario.id}> aceptas jugar una partida al 3 en raya contra <@${message.author.id}>?`).then(async me => {
       await me.react('👍')
       await me.react('👎')
@@ -237,11 +239,10 @@ module.exports = {
       embed.setDescription(partida.tablero.string)
       embed.setTitle(`Turno de ${client.users.resolve(partida.turno.jugador).username} [${partida.turno.ficha}]`)
       e.edit(embed);
-    })
-        })
+            })
+          })
         }
       })
     })
-  }
   }
 }

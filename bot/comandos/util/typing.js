@@ -2,7 +2,7 @@ module.exports = {
   name: "typing",
   description: "Test",
   use: "",
-  category: 'diversion',
+  category: 'util',
   alias: [],
   async run(client, message, args) {
     const Discord = require("discord.js")

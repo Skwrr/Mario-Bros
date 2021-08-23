@@ -2,7 +2,7 @@ module.exports = {
   name: "t", 
   description: "Genera un mensaje con el formato <t:>", 
   use: "(Time1 in ms) [Time2 in ms] [act(\"+\"/\"-\"]", 
-  category: "diversion", 
+  category: "util", 
   alias: ["time"], 
   async run(client, message, args){
     const {t} = require("../creador/eval")

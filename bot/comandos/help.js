@@ -49,10 +49,13 @@ module.exports = {
 
       let personalizadoscmd = client.comandos.filter(c => c.category == 'personalizados').map(e => e.name)
 
-      let totalcmdc = ayudacmd.length+betacmdc.length+betaccmdc.length+contraseñascmd.length+creadorcmd.length+diversioncmd.length+economiacmd.length+moderacioncmd.length+nivelescmd.length+personalizadoscmd.length
+      let utilcmd = client.comandos.filter(c => c.category == 'util').map(e => e.name)
+
+      let totalcmdc = ayudacmd.length+betacmdc.length+betaccmdc.length+contraseñascmd.length+creadorcmd.length+diversioncmd.length+economiacmd.length+moderacioncmd.length+nivelescmd.length+personalizadoscmd.length+utilcmd.length
 
       data.push('Aquí tienes una lista de todos mis comandos');
 	    data.push(`Puedes escribir ${prefix}help [commandName] para más información`);
+      let premium = client.comandos.filter(c => c.premium == true).map(e => e.name)
       
       const embed = new Discord.MessageEmbed()
       .setTitle(data[0])
@@ -67,6 +70,8 @@ module.exports = {
       .addField(`Musica [${musicacmd.length}]`, `\`${musicacmd.join("\` - \`")}\``)
       .addField(`Niveles [${nivelescmd.length}]`, `\`${nivelescmd.join("\` - \`")}\``)
       .addField(`Personalizados [${personalizadoscmd.length}]`, `\`${personalizadoscmd.join("\` - \`")}\``)
+      .addField(`Utiles [${utilcmd.length}]`, `\`${utilcmd.join("\` - \`")}\``)
+      .addField(`Premiums [${premium.length}]`, `\`${premium.join("\` - \`")}\``)
       .addField(`Comandos Totales`, totalcmdc)
       .setFooter(data[1], client.user.displayAvatarURL({dynamic: true, size: 1024}))
       .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true, size: 1024}))
@@ -118,7 +123,10 @@ module.exports = {
 
       let personalizadoscmd = client.comandos.filter(c => c.category == 'personalizados').map(e => e.name)
 
-      let totalcmdc = ayudacmd.length+betacmdc.length+betaccmdc.length+contraseñascmd.length+creadorcmd.length+diversioncmd.length+economiacmd.length+moderacioncmd.length+nivelescmd.length+personalizadoscmd.length
+      let utilcmd = client.comandos.filter(c => c.category == 'util').map(e => e.name)
+
+      let totalcmdc = ayudacmd.length+betacmdc.length+betaccmdc.length+contraseñascmd.length+creadorcmd.length+diversioncmd.length+economiacmd.length+moderacioncmd.length+nivelescmd.length+personalizadoscmd.length+utilcmd.length
+      let premium = client.comandos.filter(c => c.premium == true).map(e => e.name)
       const embed = new Discord.MessageEmbed()
       .setTitle('Aqui tienes una lista de todos mis comandos')
       .addField(`Ayuda [${ayudacmd.length}]`, `\`${ayudacmd.join("\` - \`")}\``)
@@ -132,6 +140,8 @@ module.exports = {
       .addField(`Musica [${musicacmd.length}]`, `\`${musicacmd.join("\` - \`")}\``)
       .addField(`Niveles [${nivelescmd.length}]`, `\`${nivelescmd.join("\` - \`")}\``)
       .addField(`Personalizados [${personalizadoscmd.length}]`, `\`${personalizadoscmd.join("\` - \`")}\``)
+      .addField(`Utiles [${utilcmd.length}]`, `\`${utilcmd.join("\` - \`")}\``)
+      .addField(`Premiums [${premium.length}]`, `\`${premium.join("\` - \`")}\``)
       .addField(`Comandos Totales`, totalcmdc)
       .setFooter(data[1], client.user.displayAvatarURL({dynamic: true, size: 1024}))
       .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true, size: 1024}))
@@ -166,12 +176,8 @@ module.exports = {
     if (command.description) embed.addField(`**Descripción**`, command.description)
     if (command.use) embed.addField(`**Uso**`, prefix+command.name+" "+command.use)
     if (command.category) embed.addField(`**Categoría**`, mayuscula(command.category))
-    if (command.premium && command.premium === true) {
-      embed.addField(`**Premium?**`, "Sí")
-    }else{
-      embed.addField(`**Premium?**`, "No")
-    }
-
+    if (command.premium && command.premium === true) embed.addField(`**Premium?**`, "Sí")
+    else embed.addField(`**Premium?**`, "No")
     message.channel.send(embed);
   }
 }
