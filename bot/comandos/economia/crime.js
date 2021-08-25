@@ -35,11 +35,11 @@ module.exports = {
   .setColor("RED")
 
   if(p < 100){
-    message.channel.send(rl)
+    message.channel.send({embeds: [rl]})
     await money.restar(`${message.author.id}.cash`, dg)
     return
   }else{
-    message.channel.send(rw)
+    message.channel.send({embeds: [rw]})
     await money.sumar(`${message.author.id}.cash`, dg)
     return
   }

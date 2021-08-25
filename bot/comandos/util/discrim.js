@@ -17,8 +17,7 @@ module.exports = {
         if(embed.fields.length >= 24) e.push(user.id)
       })
       if(e.length > 0) embed.addField("Hay más usuarios!", `${e.length} usuarios más`)
-      console.log(e)
-      message.channel.send(embed)
+      message.channel.send({embeds: [embed]})
       }catch(error) {
         return message.reply("Hay demasiados usuarios con ese tag o no hay ninguno")
       }
@@ -32,8 +31,7 @@ module.exports = {
         if(embed.fields.length >= 24) e.push(user.id)
       })
       if(e.length > 0) embed.addField("Hay más usuarios!", `${e.length} usuarios más`)
-      console.log(e)
-      message.channel.send(embed)
+      message.channel.send({embeds: [embed]})
       }catch(error) {
         return message.reply("Hay demasiados usuarios con ese tag o no hay ninguno")
       }

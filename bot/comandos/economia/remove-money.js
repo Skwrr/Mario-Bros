@@ -24,7 +24,7 @@ module.exports = {
     }
     if(c > money.get(`${j.id}.${cb}`)) return message.reply("No puedes quitarle mas dinero del que tiene")
     await money.restar(`${j.id}.${cb}`, c)
-    message.channel.send("Has esyablecido correctamente "+c+"$ a "+j+" en "+cb)
+    message.channel.send("Has establecido correctamente "+c+"$ a "+j+" en "+cb)
   }else{
     message.reply("Escribe `cash` o `bank`, no "+cb)
     return

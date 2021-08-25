@@ -20,7 +20,7 @@ module.exports = {
     .setFooter(message.guild.name, message.guild.iconURL)
     .setTimestamp()
     .setColor(0x6766cc);
-  const msg = await message.channel.send(embed);
+  const msg = await message.channel.send({embeds: [embed]});
   await msg.react("611203741441327117");
   await msg.react("611200731059322909");
 }

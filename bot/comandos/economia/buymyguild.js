@@ -18,7 +18,7 @@ module.exports = {
   .setTimestamp()
   .setThumbnail(message.author.displayAvatarURL())
   .setAuthor(message.author.username, message.author.displayAvatarURL())
-  return message.channel.send(embed)
+  return message.channel.send({embeds: [embed]})
   }else if(args[0]){
 
 
@@ -38,7 +38,7 @@ module.exports = {
       if(!guild) return message.reply("No existe ese servidor")
       let t= ms(args[0])/1000
       const invite = await channel.createInvite({maxAge: t, maxUses: 1})
-      message.author.send(`${guild.name} - ${invite}`)
+      setTimeout(() => message.author.send(`${guild.name} - ${invite}`),1500)
     }) 
     message.reply("Mira tus MDs")
   }

@@ -159,7 +159,7 @@ module.exports = {
     embed.setTitle('Empieza ' + client.users.resolve(partida.turno.jugador).username + ', elige un número del 1 al 9 [`' + partida.turno.ficha + '`]')
     embed.setDescription(partida.tablero.string)
 
-    message.channel.send(embed).then(e => {
+    message.channel.send({embeds: [embed]}).then(e => {
       db.set(message.guild.id, e.id)
 
     partida.on('ganador', (jugador, tablero, paso) => {
@@ -167,7 +167,7 @@ module.exports = {
       embed.setTitle("Ha ganado **"+client.users.resolve(jugador).username+"**!")
       embed.setDescription(tablero.string)
 
-      e.edit(embed);
+      e.edit({embeds: [embed]});
 
     });
 
@@ -177,13 +177,13 @@ module.exports = {
       embed.setTitle("Hubo un empate entre **"+jugadores.map(x => client.users.resolve(x).username).join("** y **")+"**")
       embed.setDescription(tablero.string)
 
-      e.edit(embed)
+      e.edit({embeds: [embed]})
 
     });
     ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '528988083513982977'].forEach(emoji => {
       e.react(emoji)
     })
-    e.awaitReactions(async(reaction, user) => {
+    let filter = async(reaction, user) => {
       if(user.bot) return
       
       if(user.id !== partida.turno.jugador) return
@@ -233,13 +233,14 @@ module.exports = {
         embed.setDescription(partida.tablero.string)
         embed.setTitle(`Partida finalizada por ${client.users.resolve(user.id).username}`)
         db.delete(message.guild.id)
-        return e.edit(embed)
+        return e.edit({embeds: [embed]})
 
       }
       embed.setDescription(partida.tablero.string)
       embed.setTitle(`Turno de ${client.users.resolve(partida.turno.jugador).username} [${partida.turno.ficha}]`)
-      e.edit(embed);
-            })
+      e.edit({embeds: [embed]});
+            }
+    e.awaitReactions({filter, time: 180000, errors:["time"]}).catch(error => e.edit("Se acabó el tiempo"))
           })
         }
       })

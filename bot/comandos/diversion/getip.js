@@ -19,7 +19,7 @@ module.exports = {
       .setImage(favicon)
       .setColor("RANDOM")
       .setThumbnail('https://cdn.glitch.com/402b9099-0636-457a-8ffb-faf65c857490%2F1.png?v=1585792839856')
-      message.channel.send(embed)
+      message.channel.send({embeds: [embed]})
   } catch (error) {
     message.channel.send("Ha ocurrido un error:\n"+error)
   }

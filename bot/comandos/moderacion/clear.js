@@ -13,7 +13,7 @@ module.exports = {
   let c = args[0]
   if(!c || isNaN(c) || c < 1) return message.reply("Escriba el numero de mensajes a borrar")
   .then(m => {
-    m.delete({timeout: 4000})
+    setTimeout(() => m.delete(),4000)
   })
     c= parseInt(c)
     c=c+1
@@ -32,10 +32,11 @@ module.exports = {
     }
     message.channel.bulkDelete(c, true).catch(err => {
         return message.channel.send(err.message)
-      })
+      }).then(() => {
   message.channel.send(`${parseInt(c)-1} mensajes eliminados`)
     .then(me => {
-me.delete({timeout: 4000})
+setTimeout(() => me.delete(),4000)
+    })
   })
   
   }

@@ -43,7 +43,7 @@ module.exports = {
       message.channel
         .send('Se ha creado un canal de soporte para ti')
         .then(m => {
-          m.delete({timeout: 10000});
+          setTimeout(() => m.delete(), 10000)
         });
 
       let ticketsupport = message.guild.roles.cache.find(
@@ -52,7 +52,7 @@ module.exports = {
       if (!ticketsupport)
         return message.channel
           .send('X `|` **Necesita Crear El Rango** ``Soporte de Tickets``')
-          .then(m => m.delete(900000));
+          .then(m => setTimeout(() => m.delete(), 10000));
 
       let cate = message.guild.channels.cache.find(
         c => c.name == '┗⎯⎯⎯|🍀|TICKETS|🍀|⎯⎯⎯┑' && c.type == 'category'
@@ -154,7 +154,7 @@ module.exports = {
     }, 3000);
     setTimeout(() => {
       message.channel.send('Cerrando ticket en 1 segundo').then(() => {
-        message.channel.delete({timeout: 1000});
+        setTimeout(() => message.channel.delete(), 2000)
       });
     }, 4000);
 

@@ -13,8 +13,23 @@ module.exports = async(client, guild) => {
   const embed = new Discord.MessageEmbed()
   .setTitle("Nuevo Servidor!")
   .setDescription(guild.name)
-  .addField("Usuarios peligrosos", arr.length)
+  .addField("Usuarios peligrosos", arr.length.toString())
   .setThumbnail(guild.iconURL())
   .setColor("RANDOM")
-  client.channels.cache.get("877874680739024936").send(embed)
+  client.channels.cache.get("877874680739024936").send({embeds: [embed]})
+
+
+  client.comandos.forEach(cmd => {
+    if(cmd.SlashCommand && cmd.SlashCommand.run){
+      let data = {
+        name: cmd.name,
+        description: cmd.description,
+        options: cmd.SlashCommand.options,
+      }
+        client.guilds.cache.get(guild.id).commands.create(data).catch(error => {
+        return console.log(`${error.message} en guild ${guild.name}`)
+      })
+      //client.guilds.cache.get("876201162192322572").commands.create(data)
+    }
+  })
 }

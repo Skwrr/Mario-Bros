@@ -13,7 +13,6 @@ module.exports = {
 				message.content.toLowerCase().includes('@here')
 			) {
 				return message.reply('No puedes mencionar `@ everyone` ni `@ here`');
-				message.delete();
 			}
 			if(links.some(pass => message.content.toLowerCase().includes(pass))) return message.reply("No puedes enviar ningún link")
 			if(message.mentions.roles.first() || message.guild.roles.cache.some(role => message.content.includes(role.id))) return message.reply("No puedes mencionar roles")
@@ -22,11 +21,11 @@ module.exports = {
 				'Tienes permisos de Manage_Messages, así que, tienes un bypass para los links y el @everyone/@here y roles'
 			);
 		}
-    message.delete()
       if(!args[0]) return message.reply("Debes escribir algo para decir").then(y => y.delete({timeout: 2000}))
       let { webhook: wh, sendWebhook: sw } = require("webhookmgr")
       new wh(message, message.author.username, message.author.displayAvatarURL()).then(async webhook => {
-        await sw(webhook, args[0], true)
+        await sw(webhook, args.join(" "), true)
+        message.delete()
       })
   }
 }

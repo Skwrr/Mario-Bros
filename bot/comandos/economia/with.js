@@ -43,6 +43,6 @@ module.exports = {
   .addField("En el banco:", bankf)
   .setTimestamp()
   .setColor("RANDOM")
-  message.channel.send(embed)
+  message.channel.sendEmbed(embed)
 }
 }

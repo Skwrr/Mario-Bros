@@ -6,7 +6,7 @@ module.exports = {
   alias: [],
   async run(client, message, args) {
     const Discord = require("discord.js")
-  let ping = Math.floor(message.client.ws.ping);
+  let ping = Math.floor(client.ws.ping);
 
     message.channel.send(":ping_pong: Pong!").then(m => {
       m.edit(
@@ -14,6 +14,6 @@ module.exports = {
           Date.now() - m.createdTimestamp
         )} ms\`\n:satellite_orbital: Ping DiscordAPI: \`${ping} ms\``
       );
-    }, 1000);
+    });
   }
 }

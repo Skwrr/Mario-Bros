@@ -14,15 +14,15 @@ module.exports = {
     .setColor("RANDOM")
     .setAuthor("Info del bot", client.user.avatarURL())
     .addField("`Dueño`", `${client.users.resolve("466241681654808576").tag}`)
-    .addField("`Libreria`", `${Discord.version}`) 
+    .addField("`Version DiscordJS`", `${Discord.version}`) 
     .addField("`Memoria libre`", `${memoria.max}`, true)
     .addField("`Memoria usada`", memoria.used, true)
     .addField("`Uptime`", `${uptime}`)
     .addField("`Servidores`", `${client.guilds.cache.size}`)
     .addField("`Usuarios`", `${client.users.cache.size}`)
     .addField("`Canales`", `${client.channels.cache.size}`)
-    .addField("`Conexiones a voz`", `${client.voice.connections.size}`)
+    .addField("`Conexiones a voz`", `${client.voice.adapters.size}`)
     
-    message.channel.send(embed);
+    message.channel.send({embeds: [embed]});
   }
 }

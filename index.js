@@ -1,7 +1,7 @@
 //El primer bot que hice
 console.clear();
 const Discord = require('discord.js');
-const client = new Discord.Client({ intents: '32767'});
+const client = new Discord.Client({ intents: '32767', allowedMentions: {parse: ["users","roles"],repliedUser: true}});
 let fs = require('fs');
 let app = require('express');
 require('dotenv').config();
@@ -9,88 +9,79 @@ require('moment-duration-format')
 
 client.comandos = new Discord.Collection();
 
-const distube = require('distube');
+const {DisTube: distube} = require('distube');
 client.distube = new distube(client, {
-	emitNewSongonly: true,
-	searchSongs: false,
+	searchSongs: 0,
 	leaveOnStop: true,
 	leaveOnFinish: false,
 	leaveOnEmpty: false
 });
 
-client.on("clickButton", btn => {
-  btn.reply.defer()
-})
-client.distube.on('addList', (message, playlist) => {
+client.distube.on('addList', (queue, playlist) => {
 	const embed = new Discord.MessageEmbed()
 		.setTitle('Nueva `PlayList` añadida')
 		.setDescription(
 			playlist.name + ' | ' + playlist.songs.length + ' canciones'
 		)
-		.setFooter(`Añadido por ${message.author.tag}`)
+		.setFooter(`Añadido por ${song.user.tag}`)
 		.setTimestamp()
-		.setThumbnail(message.guild.iconURL())
+		.setThumbnail(song.member.guild.iconURL())
 		.setAuthor(
-			message.author.tag,
-			message.author.displayAvatarURL({ dynamic: true, size: 1024 })
+			song.user.tag,
+			song.user.displayAvatarURL({ dynamic: true, size: 1024 })
 		)
 		.setColor('RANDOM');
 	for (let i = 0; i < parseInt(playlist.songs.length) - 1; i++) {
 		embed.addField(
 			playlist.songs[i].name,
 			`${playlist.songs[i].formatedDuration}`
-		);
+		)
 	}
-	message.channel.send(embed);
+	queue.textChannel.send({embeds: [embed]});
 });
 
-client.distube.on('addSong', (message, song) => {
+client.distube.on('addSong', (queue, song) => {
+  console.log(queue)
 	const embed = new Discord.MessageEmbed()
 		.setTitle('Nueva `Canción` añadida')
 		.setDescription(
-			client.distube.getQueue(message).songs[
-				parseInt(client.distube.getQueue(message).songs.length) - 1
-			].name + ` | ${song.formattedDuration}`
+			`${song.name} | ${song.formattedDuration}`
 		)
-		.setFooter(`Añadido por ${message.author.username}`)
+		.setFooter(`Autor de la cnación ${song.user.username}`)
 		.setTimestamp()
-		.setThumbnail(message.guild.iconURL())
+		.setThumbnail(song.member.guild.iconURL())
 		.setAuthor(
-			message.author.tag,
-			message.author.displayAvatarURL({ dynamic: true, size: 1024 })
+			song.user.tag,
+			song.user.displayAvatarURL({ dynamic: true, size: 1024 })
 		)
 		.setColor('RANDOM');
-	message.channel.send(embed);
+	queue.textChannel.send({embeds: [embed]});
 });
 
-client.distube.on('playSong', (message, song) => {
+client.distube.on('playSong', (queue, song) => {
 	if (
-		client.distube.getQueue(message).repeatMode === 1 ||
-		client.distube.getQueue(message).repeatMode === 2
+		queue.repeatMode === 1 ||
+		queue.repeatMode === 2
 	)
 		return;
-	message.channel.send(
+	queue.textChannel.send(
 		'Reproduciendo ahora: **' +
-			client.distube.getQueue(message).songs[
-				parseInt(client.distube.getQueue(message).songs.length) - 1
-			].name +
+			song.name +
 			'** | ' +
 			song.formattedDuration
 	);
 });
 
-client.distube.on('playList', (message, playlist) => {
-	message.channel.send(
+client.distube.on('playList', (queue, playlist) => {
+	queue.textChannel.send(
 		'Reproduciendo playlist: **' +
-			client.distube.getQueue(message).songs[
-				parseInt(client.distube.getQueue(message).songs.length) - 1
-			].name +
+			playlist.name +
 			'**'
 	);
 });
 
-client.distube.on('error', (message, error) => {
-	message.channel.send(error.message);
+client.distube.on('error', (channel, error) => {
+	channel.send(error.message);
 });
 
 function login(t) {
@@ -161,3 +152,19 @@ login()
 		console.error('Error al iniciar sesión: ' + err);
 		process.exit();
 	});
+
+
+
+
+
+
+
+
+
+// Anti apagos
+process.on("unhandledRejection", error => {
+  console.error(error);
+
+  if (error.requestData?.json) console.error(require("util").inspect(error.requestData.json, { depth: 5 }));
+
+})

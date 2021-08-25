@@ -11,10 +11,10 @@ module.exports = {
   message.reply("Seguro que quieres nukear este canal?").then(async m => {
     await m.react("✅")
     await m.react("❌")
-    m.awaitReactions((reaction, user) => {
+    let filter = (reaction, user) => {
       if(user.id !== message.author.id) return
       if(reaction.emoji.name === "❌"){
-        message.channel.send("Solicitud cancelada").then(a => a.delete({timeout: 5000}))
+        message.channel.send("Solicitud cancelada").then(a => setTimeout(() => a.delete(),5000))
         m.delete()
         return
       }else if(reaction.emoji.name === "✅"){ 
@@ -26,7 +26,8 @@ module.exports = {
       }else{
         return
       }
-    })
+    }
+    m.awaitReactions({filter, max: 1, time: 20000, errors: ['time']}).catch(error => m.edit("Se ha acabado el tiempo!"))
   })
 }
 }

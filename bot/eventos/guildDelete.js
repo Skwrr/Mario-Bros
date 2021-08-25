@@ -8,5 +8,5 @@ module.exports = async(client, guild) => {
   .addField(guild.members.cache.size+" usuarios", "Me uní el <t:"+Math.floor(Number(guild.joinedAt)/1000)+">")
   .setThumbnail(guild.iconURL())
   .setColor("RANDOM")
-  client.channels.resolve("877874680739024936").send(embed)
+  client.channels.resolve("877874680739024936").send({embeds: [embed]})
 }

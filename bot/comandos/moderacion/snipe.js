@@ -16,13 +16,13 @@ module.exports = {
       .setColor("RANDOM")
       .setTimestamp()
       .setThumbnail(snip.authorav)
-      message.channel.send(embed)
+      message.channel.send({embeds:[embed]})
       client.snipes.delete(message.channel.id)
     } catch (error) {
       let embed = new Discord.MessageEmbed()
       .setTitle("No hay ningún mensaje eliminado recientemente")
       .setColor("RANDOM")
-      message.channel.send(embed)
+      message.channel.send({embeds:[embed]})
     }
   }
 }

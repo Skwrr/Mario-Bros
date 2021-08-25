@@ -1,3 +1,12 @@
 {
-  "files": {}
+  "files": {
+    "bot/comandos/creador/infoall.js": [
+      {
+        "id": "fca6c148-8ef7-426a-a050-4f63788084ce",
+        "line": 43,
+        "version": 1104,
+        "index": 1970
+      }
+    ]
+  }
 }

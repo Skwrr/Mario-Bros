@@ -28,7 +28,7 @@ if(args[0] === "get"){
   .addField('Usuario:', `<@${usuario.id}>`)
   .addField('Cantidad de sanciones:', `${warneos}`)
   .setColor('RANDOM')
-  message.channel.send(embed);
+  message.channel.send({embeds:[embed]});
   return true
   }
   let embed = new Discord.MessageEmbed()
@@ -36,7 +36,7 @@ if(args[0] === "get"){
   .addField('Usuario:', `<@${usuario.id}>`)
   .addField('Cantidad de sanciones:', `${warneos}`)
   .setColor('RANDOM')
-  message.channel.send(embed);
+  message.channel.send({embeds:[embed]});
   return true
 }
 
@@ -51,7 +51,7 @@ if(args[0] === "clear"){
   .addField('Usuario:', `<@${usuario.id}>`)
   .addField('Cantidad de sanciones borradas:', `${warneos}`)
   .setColor('RANDOM')
-  message.channel.send(embed);
+  message.channel.send({embeds:[embed]});
   return true
   }
 
@@ -65,7 +65,7 @@ if(args[0] === "set"){
   .addField('Antiguos avisos antes del kikeo:', `${wbk}`)
   .addField('Nuevos avisos antes del kikeo:', `${args[1]}`)
   .setColor('RANDOM')
-  message.channel.send(embed);
+  message.channel.send({embeds: [embed]});
   warns.set(`${message.guild.id}.kicks`, `${args[1]}`)
   return true
   }
@@ -88,7 +88,7 @@ let embed = new Discord.MessageEmbed()
 .addField('Autor de la sanción:', `<@${message.author.id}>`)
 .addField('Razón:', razon)
 .setColor('RANDOM')
-message.channel.send(embed);
+message.channel.send({embeds: [embed]});
 usuario.send(`Hola! Vine a informarte que fuiste avisado en el servidor ${message.guild.name} por la razón: ${razon}`).catch(e => e)
 const customwarns = await warns.get(`${message.guild.id}.kicks`)
 if(warnings >= customwarns){

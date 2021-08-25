@@ -17,8 +17,8 @@ module.exports = {
   .setTitle(`Dinero de ${dineroautor.username}`)
   .setColor("RANDOM")
   .setDescription("Economia Internacional")
-  .addField('En el bolsillo:', cash)
-  .addField('En el banco:', bank)
-  message.channel.send(embed)
+  .addField('En el bolsillo:', cash.toString())
+  .addField('En el banco:', bank.toString())
+  message.channel.send({embeds: [embed]})
 }
 }

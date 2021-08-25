@@ -10,11 +10,11 @@ module.exports = {
     const Discord = require("discord.js")
   message.delete()
   if (!args.join(" ")) return message.channel.send("Escriba la sugerencia a enviar").then(m => {
-    m.delete(6000)
+    setTimeout(() => m.delete(), 6000)
   })
   let canaldesuggestion = await suggest.obtener(message.guild.id)
   if(!canaldesuggestion || canaldesuggestion === null) return message.channel.send(":x: | El canal de sugerencias no está establecido, contacte con un admin o si usted es moderador, escriba en el canal de sugerencias mb.setsuggestions`").then(m => {
-    m.delete({timeout: 6000})
+    setTimeout(() => m.delete(), 6000)
   })
   let suggestionembed = new Discord.MessageEmbed()
   .setTitle("*Sugerencia nueva :D*")
@@ -22,7 +22,7 @@ module.exports = {
   .setFooter(`Sugerencia de ${message.author.username}`)
   .setColor("RANDOM")
   let cds = message.guild.channels.cache.get(canaldesuggestion)
-  cds.send(suggestionembed).then(async m => {
+  cds.send({embeds: [suggestionembed]}).then(async m => {
     await m.react("👍")
     await m.react("👎")
   })

@@ -30,8 +30,7 @@ module.exports = {
       .setColor("RANDOM")
       .setTimestamp()
       .setThumbnail(message.guild.iconURL())
-      message.channel.send(embed)
-      message.channel.send(embed2)
+      message.channel.send({embeds: [embed, embed2]})
     }catch(err){
       message.channel.send(err.message)
     }

@@ -24,7 +24,7 @@ module.exports = {
         .setFooter("Deseas devolver el premium por alguna razón? Puedes deshacerte de el con \`mb.premium leave\`")
         .setTimestamp()
         .setThumbnail(message.guild.iconURL())
-        message.channel.send(embed)
+        message.channel.send({embeds: [embed]})
       }else{
         message.reply("Ese argumento no es valido")
       }

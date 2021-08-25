@@ -19,7 +19,7 @@ module.exports = {
     .setDescription(confesion)
     .setColor("RANDOM")
     .setFooter("Confesion de Anonimo")
-    message.guild.channels.cache.get(canal).send(embed).catch(() => {
+    message.guild.channels.cache.get(canal).send({embeds: [embed]}).catch(() => {
       message.channel.send("Hubo un error y no se pudo enviar la confesión, asegurese de que ha establecido el canal de confesiones con el comando `mb.setconfessions`")
     })
     return true
@@ -30,7 +30,7 @@ module.exports = {
     .setDescription(confesion)
     .setColor("RANDOM")
     .setFooter(`Confesion de ${message.author.username}`)
-    message.guild.channels.cache.get(canal).send(embed).catch(() => {
+    message.guild.channels.cache.get(canal).send({embeds: [embed]}).catch(() => {
       message.channel.send("Hubo un error y no se pudo enviar la confesión, asegurese de que ha establecido el canal de confesiones con el comando `s/setconfessions`")
     })
     return true

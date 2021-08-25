@@ -42,8 +42,7 @@ message.channel.send({embed: {
 
   let i = 0;
   let i2 = 10;
-
-  a.awaitReactions((reaction, user) => {
+  let filter = (reaction, user) => {
     if(user.id !== message.author.id) return
     
   
@@ -112,7 +111,8 @@ message.channel.send({embed: {
       }})   
       }
       }
-})
+}
+  a.awaitReactions({filter})
   })
 }
 }

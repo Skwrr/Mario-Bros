@@ -73,7 +73,7 @@ module.exports = {
     const edit = new Discord.MessageEmbed()
     .setDescription(":stopwatch: Evaluando...")
     .setColor("#7289DA")
-    message.channel.send(edit).then(async msg => {
+    message.channel.send({embeds: [edit]}).then(async msg => {
       try {
         let code = args.join(" ");
         let evalued = await eval(`(async() => {${code}})()`);
@@ -95,7 +95,8 @@ module.exports = {
           .addField(":stopwatch: Tiempo", `\`\`\`fix\n${Date.now() - tiempo1}ms\n\`\`\``, true)
           .setColor("#7289DA")
           msg.edit({
-            embed: embed
+            content: "** **",
+            embeds: [embed]
           });
                 
         
@@ -111,7 +112,8 @@ module.exports = {
           .addField(":stopwatch: Tiempo", `\`\`\`fix\n${Date.now() - tiempo1}ms\n\`\`\``, true)
           .setColor("#7289DA")
           msg.edit({
-            embed: embed
+            content: "** **",
+            embeds: [embed]
           });
         }
       } catch (err) {          
@@ -123,7 +125,8 @@ module.exports = {
         .addField(":file_folder: Tipo", `\`\`\`js\nError\n\`\`\``)
         .setColor("RED")
         msg.edit({
-            embed: embed
+            content: "** **",
+            embeds: [embed]
           });
       }
     })

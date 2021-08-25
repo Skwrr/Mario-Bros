@@ -19,14 +19,14 @@ module.exports = {
   .setDescription("Debes poner una cantidad de dinero para apostar.\nEl mínimo de dinero para apostar es de **100** <a:dollar:768550312604336188>") 
   .setColor("RED")
 
- if(!mor) return message.channel.send(din)
+ if(!mor) return message.channel.sendEmbed(din)
  
 const minimo = new Discord.MessageEmbed()
   .setAuthor(user.username, message.author.displayAvatarURL())
   .setDescription("No puedes apostar menos de **100** <a:dollar:768550312604336188> ")
   .setColor("RED")
 
-  if(mor <= 99) return message.channel.send(minimo) 
+  if(mor <= 99) return message.channel.sendEmbed(minimo) 
 
  if(!dinero.tiene(`${user.id}`)){
    dinero.establecer(`${user.id}.cash`, 0)
@@ -39,7 +39,7 @@ const minimo = new Discord.MessageEmbed()
       .setAuthor(user.username, message.author.displayAvatarURL())
       .setDescription(`Solo puedes apostar dinero.`) 
       .setColor("RED")
-      message.channel.send(nonum) 
+      message.channel.sendEmbed(nonum) 
 
       return; 
   }
@@ -49,7 +49,7 @@ const minimo = new Discord.MessageEmbed()
       .setAuthor(user.username, message.author.displayAvatarURL())
       .setDescription("No tienes suficiente dinero.") 
       .setColor("RED")
-      message.channel.send(nomo)
+      message.channel.sendEmbed(nomo)
 
       return; 
 } 
@@ -62,7 +62,7 @@ const color = new Discord.MessageEmbed()
 .setDescription(":duck: Debes elegir un color entre `rojo` o `negro`")
 .setColor("RED")
 
-message.channel.send(color)
+message.channel.sendEmbed(color)
 }
  else if(co === "rojo" || co === "negro"){
  var cro = ["rojo","negro"] 
@@ -79,7 +79,7 @@ if(co === "rojo"){
   .setDescription(`La bola cayó en el color **rojo**\n\nDinero ganado: **${gan}** <a:dollar:768550312604336188>`)
   .setColor("#FFFDFD")
 
-return message.channel.send(`<@${message.author.id}>`), message.channel.send(ganaste)
+return message.reply({embeds: [ganaste]})
 }
 
  if(dinero.tiene(`${user.id}`)) 
@@ -90,7 +90,7 @@ const perdiste = new Discord.MessageEmbed()
 .setDescription(`La bola cayó en el color **rojo**\n\nDinero perdido: **${mor}** <a:dollar:768550312604336188>`)
 .setColor("RED")
 
-message.channel.send(perdiste) 
+message.channel.sendEmbed(perdiste) 
 
 return; 
 }
@@ -106,7 +106,7 @@ if(co === "negro"){
   .setDescription(`La bola cayó en el color **negro**\n\nDinero ganado: **${gan}** <a:dollar:768550312604336188>`)
   .setColor("#FFFDFD")
   
-return message.channel.send(ganaste2) 
+return message.channel.sendEmbed(ganaste2) 
 }
  if(dinero.tiene(`${user.id}`)) 
    dinero.restar(`${user.id}.cash`, mor)
@@ -117,7 +117,7 @@ const perdiste2 = new Discord.MessageEmbed()
 .setDescription(`La bola cayó en el color **negro**\n\nDinero perdido: **${mor}** <a:dollar:768550312604336188>`)
 .setColor("RED")
 
-message.channel.send(perdiste2)
+message.channel.sendEmbed(perdiste2)
 
 return; 
 }
@@ -129,7 +129,7 @@ return;
     .setDescription("Solo puedes poner `rojo` o `negro`.") 
     .setColor("RED")
 
-    message.channel.send(solop)
+    message.channel.sendEmbed(solop)
 
 }
  

@@ -8,6 +8,10 @@ module.exports = async(client, message) => {
     }
     return true
   }
+  if(!message.channel.sendEmbed) message.channel.sendEmbed = function se(embed) {
+    if (!embed) throw new TypeError("No se puede enviar un embed vacío")
+    return message.channel.send({embeds: [embed]})
+  }
 
   
 
@@ -16,8 +20,8 @@ module.exports = async(client, message) => {
   let counting = new db.crearDB("counting")
   let blg = new db.crearDB("blacklistglobal")
 
-  if(client.distube.getQueue(message)){
-    if(client.distube.getQueue(message).autoplay === true) client.distube.toggleAutoplay(message)
+  if(client.distube.getQueue(message.guildId)){
+    if(client.distube.getQueue(message.guildId).autoplay === true) client.distube.toggleAutoplay(message)
   }
   
 
@@ -61,7 +65,7 @@ module.exports = async(client, message) => {
   if (message.channel.name == "userphone") {
     if(message.content.startsWith(prefix)){
 
-    message.channel.send("Aqui no puedes escribir ningun comando").then(m => m.delete({timeout: 4000}))
+    message.channel.send("Aqui no puedes escribir ningun comando").then(m => setTimeout(() => m.delete(), 4000))
     return message.delete()
     }
     message.delete();
@@ -98,13 +102,13 @@ module.exports = async(client, message) => {
         message
           .reply("No se permiten invitaciones en este servidor.")
           .then(response => {
-            response.delete({timeout:5000});
+            setTimeout(() => response.delete(), 5000)
           });
 
       } else {
 
         canal.forEach(m => {
-          client.channels.cache.get(m.id).send(embed);
+          client.channels.cache.get(m.id).send({embeds: [embed]});
         }); 
       } 
     }
@@ -140,12 +144,13 @@ module.exports = async(client, message) => {
     .setDescription("Del 1 al 5 como me valorarías")
     .setColor("RANDOM")
     let num = Math.floor(Math.random() * 100)
-    if(num <= 5) message.channel.send(embed).then(y => {
+    if(num <= 5) message.channel.send({embeds: [embed]}).then(y => {
       [ '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣' ].forEach(em => y.react(em))
-      y.awaitReactions((r,u) => {
+      let filter = (r,u) => {
         if(u.id !== message.author.id) return
         if(u.bot) return
-        y.channel.send(embed.setDescription("Gracias por valorarme, has sido el afortunado de obtener este mensaje de un 5% de probabilidad"))
+        embed.setDescription("Gracias por valorarme, has sido el afortunado de obtener este mensaje de un 5% de probabilidad")
+        y.channel.send({embeds: [embed]})
         y.delete()
         let valorationdb = require("megadb")
         valorationdb = new valorationdb.crearDB("valoration")
@@ -163,8 +168,26 @@ module.exports = async(client, message) => {
           valorationdb.sumar("total.valoration", value)
         }
         return
-      })
+      }
+      y.awaitReactions({filter, time: 30000, errors:['time']}).catch(error => y.edit("Se acabó el tiempo"))
     })
-    cmd.run(client, message, args, db, Discord)
+    try{
+      if(cmd.SlashCommand && cmd.SlashCommand.run) {
+        message.channel.send("Este comando es ahora un SlashCommand, puedes volver a invitar al bot si no ves los SlashCommand")
+        const Discord = require("discord.js") 
+        let btn = new Discord.MessageButton()
+        .setLabel("Invite")
+        .setStyle("LINK")
+        .setURL("https://discord.com/api/oauth2/authorize?client_id=662995691164925973&permissions=8&scope=bot%20applications.commands")
+        message.channel.send({content: "Aquí tienes mi invitación", components: [new Discord.MessageActionRow().addComponents(btn)]}).then(m => {
+          let filter = (btn) => btn.deferUpdate()
+          m.awaitMessageComponent({filter, componentTpye: "BUTTON"})
+        })
+        return true
+      }
+      cmd.run(client, message, args, db, Discord)
+    }catch(error) {
+      console.log(error.stack)
+    }
   }
-};
+}

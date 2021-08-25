@@ -48,7 +48,7 @@ module.exports = {
         .setTitle("Error")
         .setColor("RANDOM")
         .setDescription(error);
-        message.channel.send(embed2)
+        message.channel.send({embeds: [embed2]})
       }
       return
     }
@@ -80,7 +80,7 @@ module.exports = {
       .setTitle("Error")
       .setColor("RANDOM")
       .setDescription(error);
-      message.channel.send(embed2)
+      message.channel.send({embeds: [embed2]})
     }
   }
 }

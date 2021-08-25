@@ -27,6 +27,6 @@ module.exports = {
   .setTimestamp()
   .setAuthor(usuario.username, usuario.displayAvatarURL())
 
-  message.channel.send(rank)
+  message.channel.send({embeds:[rank]})
 }
 }

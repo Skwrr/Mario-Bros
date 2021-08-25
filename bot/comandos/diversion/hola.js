@@ -5,7 +5,12 @@ module.exports = {
   category: 'diversion',
   alias: [],
   async run(client, message, args) {
-    const Discord = require("discord.js")
-  message.channel.send("hola :3");
-}
+    message.channel.send("Este comando es ahora un SlashCommand, puedes volver a invitar al bot si no ves los SlashCommand")
+    require("../ayuda/invite").run(client, message)
+  },
+  SlashCommand: {
+    async run(client, message){
+      message.reply("hola :3")
+    }
+  }
 }

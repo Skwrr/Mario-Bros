@@ -16,6 +16,6 @@ module.exports = {
       allow: ["VIEW_CHANNEL"]
     }
   ])
-  message.channel.send("Canal revelado 👀").then(m => m.delete({timeout: 5000}))
+  message.channel.send("Canal revelado 👀").then(m => setTimeout(() => m.delete(), 5000))
 }
 }

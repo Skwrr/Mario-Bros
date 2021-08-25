@@ -5,10 +5,8 @@ module.exports = {
   category: 'ayuda',
   alias: [],
   async run(client,message) {
-    const {MessageEmbed}=require("discord.js")
-    const embed = new MessageEmbed()
-    .setDescription("[Estas invitado a mi casa :D](https://discord.gg/MhKWCTun6w)")
-    .setColor("RANDOM")
-    message.channel.send(embed)
+    const {MessageEmbed, MessageButton, MessageActionRow}=require("discord.js")
+    let row = new MessageActionRow().addComponents(new MessageButton().setStyle("LINK").setLabel("Estás invitado a mi servidor de soporte").setURL("https://discord.gg/MhKWCTun6w"))
+    message.channel.send({content: "** **", components: [row]})
   }
 }

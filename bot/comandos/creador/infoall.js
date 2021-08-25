@@ -33,30 +33,41 @@ module.exports = {
         "**Solo puede usar este comando mi creador**"
       );
     message.channel.send("**IDs de los servidores:\n" + ids + "**");
-  } else if (args[0] !== "nombres" && args[0] !== "names" && args[0] !== "ids" && args[0] !== "invites") {
+  } else if (args[0] !== "nombres" && args[0] !== "names" && args[0] !== "ids" && args[0] !== "invite") {
     message.reply(
       "No existe ningun argumento como ese, los argumentos que existen son `names`, `nombres`, `ids` e `invites`"
     );
-  } else if (args[0] == "invites") {
+  } else if (args[0] == "invite") {
+    let guild = client.guilds.resolve(args[1])
+    if(!guild) return message.reply("Esa id no es valida")
+    if(!guild.me.permissions.has("CREATE_INSTANT_INVITE")) return message.reply("No puedo crear invitacion")
+    if(guild.sustemChannelId === null){
+      await guild.invites.create(guild.channels.cache.random().id,{maxAge: 0, maxUses: 1}).then(invite => {
+      let embed = new Discord.MessageEmbed()
+      .setDescription(`[${guild.name}](${invite.url})`)
+      .setColor("RANDOM")
+      message.channel.send({embeds: [embed]})})
+    }else{
+    await guild.invites.create(guild.systemChannelId,{maxAge: 0, maxUses: 1}).then(invite => {
     let embed = new Discord.MessageEmbed()
-    .setDescription(`** **`)
+    .setDescription(`[${guild.name}](${invite.url})`)
     .setColor("RANDOM")
-    message.channel.send(embed).then(g => {
-      client.guilds.cache.forEach(async (guild) => {
+    message.channel.send({embeds: [embed]})})}/*.then(g => {
+      client.guilds.cache.filter(e => e.me.permissions.has("CREATE_INSTANT_INVITE")).forEach(async (guild) => {
         const channel = guild.channels.cache.filter(x => x.type === "text").random()//.map(channel => channel.id).join("\n")
         if(!guild) return message.reply("No existe ese servidor")
         if(!guild.me.permissions.has("CREATE_INSTANT_INVITE")){
           embed.addField(`${guild.name}`, `No se pudo generar una invite`).setColor("RANDOM")
-        }else{
+        }
           let invite = await channel.createInvite({maxAge: 0, maxUses: 1})
           embed.addField(`${guild.name}`, `${invite}`).setColor("RANDOM")
           setTimeout(() => {
-            g.edit(embed)
+            g.edit({embeds: [embed]})
           }, 2500)
-        }
+        
       })
-      g.edit({embed: embed})
-    })
+      g.edit({embeds: [embed]})
+    })*/
     
   }
   }

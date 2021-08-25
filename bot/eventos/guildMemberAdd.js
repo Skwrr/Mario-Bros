@@ -3,7 +3,7 @@ module.exports = async(client, member) => {
   const Discord = require("discord.js")
   let db = require("megadb")
   db = new db.crearDB("bienvenidas")
-  let wlcch = db.get(member.guild.id)
+  let wlcch = await db.get(member.guild.id)
   let arr = []
   const ms = require("@fabricio-191/ms")
   const isMalicious = await mmdb.findElementByID(member.id);
@@ -18,12 +18,12 @@ module.exports = async(client, member) => {
   let channel = guild.channels.resolve(wlcch)
   channel.send("Bienvenido!",embed)*/
   if(!wlcch) return
-  else client.channels.fetch(wlcch).then(ch => ch.send(embed))
+  else client.channels.fetch(wlcch).then(ch => ch.send({embeds: [embed]}))
 
   if (isMalicious) {
     arr.push(member.guild.members.resolve(isMalicious.id).tag)
     if(!wlcch) return
-    else client.channels.resolve(wlcch).send(`Usuario Malicioso:\nID: ${isMalicious.id}\nReason: ${isMalicious.razon}\nProof: ${isMalicious.prueba}`);
+    else client.channels.fetch(wlcch).then(ch => ch.send(`Usuario Malicioso:\nID: ${isMalicious.id}\nReason: ${isMalicious.razon}\nProof: ${isMalicious.prueba}`))
   }
   if(member.guild.id === "876201162192322572"){
     if(member.user.bot){

@@ -53,7 +53,7 @@ trabajo = trabajo[Math.floor(Math.random() * trabajo.length)]
   setTimeout(function(){
     cn.delete(message.author.id)
   }, 15000)
-    message.channel.send(embed)
+    message.channel.sendEmbed(embed)
 
 }
 }

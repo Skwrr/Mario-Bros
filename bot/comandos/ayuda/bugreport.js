@@ -22,7 +22,7 @@ module.exports = {
       if (!args[1]) return message.channel.send("Escriba una id")
       client.users.cache.get(args[1]).send('Su reporte fue atendido correctamente y fue arreglado, gracias por reportarlo :)')
       message.channel.send("<:gapple:611203741441327117>").then(m => {
-        m.delete({timeout: 5000})
+        setTimeout(() => m.delete(), 5000)
       })
       return
     }
@@ -37,19 +37,19 @@ module.exports = {
     const bl = blbr.has(message.author.id)
     if (bl) {
       return message.reply("Estas en la lista negra de usar este comando por mal-usarlo").then(m => {
-        m.delete({timeout: 2000})
+        setTimeout(() => m.delete(), 2000)
       })
     } else {
       if (!bug) return message.channel.send('Escriba el bug').then(m => {
-        m.delete({timeout: 2000})
+        setTimeout(() => m.delete(), 2000)
       })
       const embed = new Discord.MessageEmbed()
       .setDescription(`Reporte de ${message.author.username}#${message.author.discriminator}`)
       .setColor("RANDOM")
       .addField(`${bug}`, `${message.author.id}`)
-      client.channels.resolve('878389543458451477').send(embed)
+      client.channels.resolve('878389543458451477').send({embeds: [embed]})
       message.channel.send("Su reporte de un bug ha sido enviado correctamente").then(m => {
-        m.delete({timeout: 5000})
+        setTimeout(() => m.delete(), 5000)
       })
     }
   

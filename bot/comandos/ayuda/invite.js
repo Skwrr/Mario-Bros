@@ -6,11 +6,13 @@ module.exports = {
   alias: [],
   async run(client, message, args) {
     const Discord = require("discord.js") 
-    const embed = new Discord.MessageEmbed()
-    .setDescription("[Aqui tienes mi invitacion](https://discordapp.com/api/oauth2/authorize?client_id=662995691164925973&permissions=8&scope=bot)")
-    .setColor("RANDOM");
-    await message.channel.send({
-      embed: embed
-    });
+    let btn = new Discord.MessageButton()
+    .setLabel("Invite")
+    .setStyle("LINK")
+    .setURL("https://discord.com/api/oauth2/authorize?client_id=662995691164925973&permissions=8&scope=bot%20applications.commands")
+    message.channel.send({content: "Aquí tienes mi invitación", components: [new Discord.MessageActionRow().addComponents(btn)]}).then(m => {
+      let filter = (btn) => btn.deferUpdate()
+      m.awaitMessageComponent({filter, componentTpye: "BUTTON"})
+    })
   }
 }
