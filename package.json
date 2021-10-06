@@ -1,5 +1,5 @@
 {
-  "name": "Mario-Bros",
+  "name": "Krypton",
   "version": "5.6.0",
   "description": "Mi primer bot",
   "main": "index.js",
@@ -12,22 +12,25 @@
   "license": "ISC",
   "dependencies": {
     "@discordjs/builders": "^0.5.0",
-    "@discordjs/opus": "^0.3.3",
     "@discordjs/rest": "0.1.0-canary.0",
     "@discordjs/voice": "^0.6.0",
+    "@discordjs/opus": "^0.3.3",
     "@fabricio-191/ms": "^1.2.0-2",
     "ai-tic-tac-toe": "^1.1.1",
     "anti-link-discord": "^1.0.4",
     "array-lib": "^0.2.0",
+    "ascii-table": "0.0.9",
+    "avconv": "^3.1.0",
     "beautify": "0.0.8",
     "canvas": "^2.8.0",
+    "connect4-checker": "^1.0.3",
     "discord-api-types": "^0.22.0",
     "discord-backup": "^3.0.1",
     "discord-cards": "^1.2.4",
     "discord-tts": "^1.0.3",
     "discord.js": "^13.1.0",
     "discordimgs": "^1.4.0",
-    "distube": "^3.0.0-beta.36",
+    "distube": "^3.0.0-beta.39",
     "dotenv": "^8.2.0",
     "easy-password-gen": "^2.1.0",
     "easyembeds": "^2.3.2",
@@ -36,7 +39,8 @@
     "express-session": "^1.17.2",
     "ffmpeg": "0.0.4",
     "ffmpeg-static": "^4.4.0",
-    "fresaapi": "^0.2.3",
+    "ffprobe": "^1.1.2",
+    "image-size": "^1.0.0",
     "jspaste": "^7.0.0",
     "libsodium-wrappers": "^0.7.9",
     "manage-maliciousdb": "^1.1.0",
@@ -47,33 +51,35 @@
     "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2",
     "ms": "^2.1.3",
+    "node-fetch": "^2.6.2",
     "node-webshot": "^1.0.4",
     "notevil": "^1.3.3",
     "opusscript": "0.0.7",
     "passport": "^0.4.1",
     "passport-discord": "^0.1.4",
+    "pastebin-ts": "^1.2.0",
     "ping-monitor": "^0.5.0",
     "printscreen": "^1.2.1",
-    "puppeteer": "^10.1.0",
     "request": "^2.88.2",
     "sleep": "^6.3.0",
     "tresenraya": "0.0.7",
-    "underscore": "^1.13.1",
-    "webhookmgr": "^1.2.4",
+    "url": "^0.11.0",
+    "webhookmgr": "^1.3.2-v002-testing",
     "webpage": "^0.3.0",
+    "webshot": "^0.18.0",
     "youtube-search": "^1.1.6",
     "yt-search": "^2.8.0",
     "ytdl-core": "^4.9.1"
   },
-  "devDependencies": {
-    "node": "^16.6.1"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SEPOXCRAFT/Mario-Bros.git"
+    "url": "git+https://github.com/SEPOXCRAFT/Krypton.git"
   },
   "bugs": {
-    "url": "https://github.com/SEPOXCRAFT/Mario-Bros/issues"
+    "url": "https://github.com/SEPOXCRAFT/Krypton/issues"
   },
-  "homepage": "https://github.com/SEPOXCRAFT/Mario-Bros#readme"
+  "homepage": "https://github.com/SEPOXCRAFT/Krypton#readme",
+  "devDependencies": {
+    "node": "^16.10.0"
+  }
 }

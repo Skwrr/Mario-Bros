@@ -11,9 +11,7 @@ module.exports = {
     let db = require("megadb")
     db = new db.memoDB("ticktactoegames")
 
-    const AI = require("ai-tic-tac-toe")
-
-    if(db.has(message.guild.id)) return message.reply("Ya hay una partida en curso")
+    if(db.has(message.channel.id)) return message.reply("Ya hay una partida en curso en este canal")
 
     if(!usuario) return message.reply("Debes mencionar a un usuario")
     if(usuario.id === message.author.id) return message.reply("No puedes jugar contra tí, puedes jugar solo si me mencionas")
@@ -136,7 +134,7 @@ module.exports = {
     message.channel.send(`<@${usuario.id}> aceptas jugar una partida al 3 en raya contra <@${message.author.id}>?`).then(async me => {
       await me.react('👍')
       await me.react('👎')
-      me.awaitReactions((r, u) => {
+      let filter = (r,u) => {
         if(u.bot) return
         if(u.id !== usuario.user.id) return
         if(r.emoji.name === '👎') {
@@ -243,6 +241,10 @@ module.exports = {
     e.awaitReactions({filter, time: 180000, errors:["time"]}).catch(error => e.edit("Se acabó el tiempo"))
           })
         }
+      }
+      
+      me.awaitReactions({filter, time: 40000}).catch(err => {
+        me.edit("Se acabó el tiempo")
       })
     })
   }

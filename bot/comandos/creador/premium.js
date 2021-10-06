@@ -44,17 +44,17 @@ module.exports = {
         message.reply("Ese servidor ya es premium")
         return
       }
-      let cate = guild.channels.cache.find(c => c.name == "anuncios" && c.type == "text");
+      let cate = guild.channels.cache.find(c => c.name == "anuncios" && c.type == "GUILD_TEXT");
       if (!cate) {
     guild.channels.create("anuncios", {
-      type: "text"
+      type: "GUILD_TEXT"
     }).then(c => {
-      c.send("Hola! Vengo a avisar que tu servidor ha sido activado como premium ¡FELICIDADES!\nContacta con mi creador para recibir la recompensa")
+      c.send("Hola! Vengo a avisar que tu servidor ha sido activado como premium ¡FELICIDADES!\nAhora puedes usar mis comandos premium")
       return gp.set(sv, "true")
       return
     })
       }
-      cate.send("Hola! Vengo a avisar que tu servidor ha sido activado como premium ¡FELICIDADES!\nContacta con mi creador para recibir la recompensa")
+      cate.send("Hola! Vengo a avisar que tu servidor ha sido activado como premium ¡FELICIDADES!\nAhora puedes usar mis comandos premium")
       gp.set(sv, "true")
     
   }else if(args[0] === 'remove' || args[0] === 'delete' || args[0] === 'borrar'){
@@ -86,10 +86,10 @@ module.exports = {
         message.reply("Ese servidor no es premium")
         return
       }
-      let cate = guild.channels.cache.find( c => c.name == "anuncios" && c.type == "text");
+      let cate = guild.channels.cache.find( c => c.name == "anuncios" && c.type == "GUILD_TEXT");
       if (!cate) {
     guild.channels.create("anuncios", {
-      type: "text"
+      type: "GUILD_TEXT"
     }).then(c => {
       c.send("Hola! Siento mucho decir esto, pero tu servidor ya no es premium")
       return gp.delete(sv)

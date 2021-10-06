@@ -8,7 +8,7 @@ module.exports = {
   async run(client, message, args) {
     const db = require("megadb")
     let prefix = new db.crearDB("prefixes").get(message.guild.id)
-    if (prefix == null || prefix == undefined) prefix = "mb."
+    if (prefix == null || prefix == undefined) prefix = "k!"
     const serverQueue = client.distube.getQueue(message)
     const Discord = require("discord.js")
     if(!message.member.voice.channel) return message.reply("Debes estar en un canal de voz para ejecutar este comando")

@@ -76,7 +76,7 @@ if(co === "rojo"){
 
   const ganaste = new Discord.MessageEmbed() 
   .setAuthor(user.username, message.author.displayAvatarURL())
-  .setDescription(`La bola cayó en el color **rojo**\n\nDinero ganado: **${gan}** <a:dollar:768550312604336188>`)
+  .setDescription(`La bola cayó en el color **rojo**\n\nDinero ganado: **${gan.toString()}** <a:dollar:768550312604336188>`)
   .setColor("#FFFDFD")
 
 return message.reply({embeds: [ganaste]})
@@ -87,7 +87,7 @@ return message.reply({embeds: [ganaste]})
 
 const perdiste = new Discord.MessageEmbed()
 .setAuthor(user.username, message.author.displayAvatarURL())
-.setDescription(`La bola cayó en el color **rojo**\n\nDinero perdido: **${mor}** <a:dollar:768550312604336188>`)
+.setDescription(`La bola cayó en el color **rojo**\n\nDinero perdido: **${mor.toString()}** <a:dollar:768550312604336188>`)
 .setColor("RED")
 
 message.channel.sendEmbed(perdiste) 
@@ -103,7 +103,7 @@ if(co === "negro"){
 
   const ganaste2 = new Discord.MessageEmbed()
   .setAuthor(user.username, message.author.displayAvatarURL())
-  .setDescription(`La bola cayó en el color **negro**\n\nDinero ganado: **${gan}** <a:dollar:768550312604336188>`)
+  .setDescription(`La bola cayó en el color **negro**\n\nDinero ganado: **${gan.toString()}** <a:dollar:768550312604336188>`)
   .setColor("#FFFDFD")
   
 return message.channel.sendEmbed(ganaste2) 
@@ -114,7 +114,7 @@ return message.channel.sendEmbed(ganaste2)
 
 const perdiste2 = new Discord.MessageEmbed()
 .setAuthor(user.username, message.author.displayAvatarURL())
-.setDescription(`La bola cayó en el color **negro**\n\nDinero perdido: **${mor}** <a:dollar:768550312604336188>`)
+.setDescription(`La bola cayó en el color **negro**\n\nDinero perdido: **${mor.toString()}** <a:dollar:768550312604336188>`)
 .setColor("RED")
 
 message.channel.sendEmbed(perdiste2)

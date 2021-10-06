@@ -80,17 +80,28 @@ module.exports = {
         let tipo = typeof evalued||"Tipo no encontrado."
         if (typeof evalued !== 'string') evalued = require('util').inspect(evalued, { depth: 0, maxStringLength: 2000});
         let txt = "" + evalued;
-    
 
+        if(code.length > 1024){
+          require("beautify")(args.join(" "), {format: 'js'})
+          const embed = new Discord.MessageEmbed()
+          .addField(":inbox_tray: Entrada", `\`\`\`js\n${code}\n\`\`\``)
+          .addField(":outbox_tray: Salida", `\`${txt.replace(client.token, "No quieres saber eso.")}`)
+          .addField(":file_folder: Tipo", `\`\`\`js\n${mayuscula(tipo)}\n\`\`\``, true)
+          .addField(":stopwatch: Tiempo", `\`\`\`fix\n${Date.now() - tiempo1}ms\n\`\`\``, true)
+          .setColor("#7289DA")
+          msg.edit({
+            content: "** **",
+            embeds: [embed]
+          });
+        }
     
-        if (txt.length > 1048) {
-
-          let link = await jsp.publicar(`- - - - Eval - - - -\n\n${txt.replace(client.token, "Wow, un token")}`)
+        if (txt.length > 1024) {
+          let link = await jsp.publicar(txt)
             
             require("beautify")(args.join(" "), {format: 'js'})
           const embed = new Discord.MessageEmbed()
-          .addField(":inbox_tray: Entrada", `\`\`\`js\n${code}\n\`\`\``)
-          .addField(":outbox_tray: Salida", `\`El codigo es muy largo, link:\` ${link.url}`)
+          .addField(":inbox_tray: Entrada", `\`\`\`js\nreturn "El codigo es muy largo"\n\`\`\``)
+          .addField(":outbox_tray: Salida", `\`\`\`js\n${txt.replace(client.token, "No quieres saber eso.")}\n\`\`\``)
           .addField(":file_folder: Tipo", `\`\`\`js\n${mayuscula(tipo)}\n\`\`\``, true)
           .addField(":stopwatch: Tiempo", `\`\`\`fix\n${Date.now() - tiempo1}ms\n\`\`\``, true)
           .setColor("#7289DA")
@@ -116,7 +127,7 @@ module.exports = {
             embeds: [embed]
           });
         }
-      } catch (err) {          
+      } catch (err) {
         let code = args.join(" ")
         const embed = new Discord.MessageEmbed()
         .setAuthor("Error en el eval", client.user.displayAvatarURL({dynamic : true}))

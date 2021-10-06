@@ -9,29 +9,29 @@ module.exports = {
 
   let userm = message.mentions.members.first() || message.guild.members.resolve(args[0])
       if (!userm) {
-        var user = message.author
+        var user = message.member
 
         const flags = await message.author.fetchFlags()
         const userFlags = flags.toArray()
 
         const embed = new Discord.MessageEmbed()
-          .setThumbnail(user.displayAvatarURL())
-          .setAuthor(user.username + "#" + user.discriminator, user.displayAvatarURL({dynamic: true, size: 1024}))
+          .setThumbnail(user.user.displayAvatarURL())
+          .setAuthor(user.user.username + "#" + user.user.discriminator, user.user.displayAvatarURL({dynamic: true, size: 1024}))
           .addField(
             "Jugando a",
-            user.presence.game != null ? user.presence.game.name : "Nada",
+            user.presence?.game != null ? user.presence?.game.name : "Nada",
             true
           )
           .addField("ID", user.id)
-          .addField("Estado", user.presence.status)
+          .addField("Estado", ":"+user.presence?.status.toString()+":" || "Desconectado")
           .addField("Insignias", userFlags.join("\n"))
-          .addField("Apodo", message.member.nickname || "No tiene")
-          .addField("Cuenta Creada", "<t:"+Math.floor(Number(user.createdAt/1000))+">")
-          .addField("Fecha de Ingreso", "<t:"+Math.floor(Number(message.member.joinedAt/1000))+">")
-          .addField("Roles", message.member.roles.cache.map(roles => `\`${roles.name}\``).join(", "))
+          .addField("Apodo", user.nickname || "No tiene")
+          .addField("Cuenta Creada", "<t:"+Math.floor(Number(user.user.createdAt/1000))+">")
+          .addField("Fecha de Ingreso", "<t:"+Math.floor(Number(user.joinedAt/1000))+">")
+          .addField("Roles", user.roles.cache.map(roles => `\`${roles.name}\``).join(", "))
           .setColor(0x66b3ff);
 
-        message.channel.send({ embed });
+        message.channel.send({ embeds: [embed] });
       } else {
         const flags = await userm.user.fetchFlags()
         const userFlags = flags.toArray()
@@ -52,11 +52,11 @@ module.exports = {
           )
           .addField(
             "Jugando a",
-            userm.presence.game != null ? userm.presence.game.name : "Nada",
+            userm.presence?.game != null ? userm.presence?.game.name : "Nada",
             true
           )
           .addField("ID", userm.id)
-          .addField("Estado", userm.presence.status)
+          .addField("Estado", ":"+userm.presence?.status.toString()+":" || "Desconectado")
           .addField("Insignias", userFlags.join("\n") || "No tiene")
           .addField("Apodo", userm.nickname || "No tiene")
           .addField("Cuenta Creada", "<t:"+Math.floor(Number(userm.user.createdAt/1000))+">")
@@ -65,7 +65,7 @@ module.exports = {
           .addField(`Ultimo mensaje`, result)
           .setColor(0x66b3ff);
 
-        message.channel.send({ embed });
+        message.channel.send({ embeds: [embed] });
       }
 }
 }

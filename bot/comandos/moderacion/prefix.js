@@ -10,7 +10,7 @@ module.exports = {
   let prefixdb = new db.crearDB("prefixes");
   var prefix = prefixdb.has(message.guild.id)
     ? await prefixdb.get(message.guild.id)
-    : "mb.";
+    : "k!";
 
     let premium = new db.crearDB("premium")
 if(!premium.has(message.guild.id)) return message.reply("No puedes ejecutar este comando, es solo para servidores premium")
@@ -24,12 +24,12 @@ let nuevoprefix = args[0]
     );
     message.channel.send("**Cambiando prefix...**").then(m => {
     prefixdb
-      .set(message.guild.id, 'mb.')
+      .set(message.guild.id, 'k!')
       .catch(e => {
         m.edit("**Ha ocurrido un error y no se pudo cambiar el prefix.**"+e.stack);
       })
       .then(() => {
-        m.edit('**Prefix cambiado a `mb.`**');
+        m.edit('**Prefix cambiado a `k!`**');
       });
   });
        return true

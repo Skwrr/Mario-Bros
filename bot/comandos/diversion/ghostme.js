@@ -21,7 +21,7 @@ module.exports = {
 				'Tienes permisos de Manage_Messages, así que, tienes un bypass para los links y el @everyone/@here y roles'
 			);
 		}
-      if(!args[0]) return message.reply("Debes escribir algo para decir").then(y => y.delete({timeout: 2000}))
+      if(!args[0]) return message.reply("Debes escribir algo para decir").then(y => setTimeout(() => y.delete(),2000))
       let { webhook: wh, sendWebhook: sw } = require("webhookmgr")
       new wh(message, message.author.username, message.author.displayAvatarURL()).then(async webhook => {
         await sw(webhook, args.join(" "), true)

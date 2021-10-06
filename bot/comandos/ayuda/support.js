@@ -55,14 +55,14 @@ module.exports = {
           .then(m => setTimeout(() => m.delete(), 10000));
 
       let cate = message.guild.channels.cache.find(
-        c => c.name == '┗⎯⎯⎯|🍀|TICKETS|🍀|⎯⎯⎯┑' && c.type == 'category'
+        c => c.name == '┗⎯⎯⎯|🍀|TICKETS|🍀|⎯⎯⎯┑' && c.type == 'GUILD_CATEGORY'
       );
       if (!cate)
         return message.guild.channel.create('┗⎯⎯⎯|🍀|TICKETS|🍀|⎯⎯⎯┑', {
-          type: 'category'
+          type: 'GUILD_CATEGORY'
         });
       message.guild.channels.create(supportnamech, {
-          type: 'text',
+          type: 'GUILD_TEXT',
           permissionOverwrites: [
             {
               id: everyone.id,
@@ -137,7 +137,7 @@ module.exports = {
       return message.reply('No tienes permiso para cerrar un ticket');
 
     let cate = message.guild.channels.cache.find(
-      c => c.name == '┗⎯⎯⎯|🍀|TICKETS|🍀|⎯⎯⎯┑' && c.type == 'category'
+      c => c.name == '┗⎯⎯⎯|🍀|TICKETS|🍀|⎯⎯⎯┑' && c.type == 'GUILD_CATEGORY'
     );
     if (!message.channel.parent || message.channel.parent.id != cate.id)
       return message.channel.send('Este canal no es un ticket');

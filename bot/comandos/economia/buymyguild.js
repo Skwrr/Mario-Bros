@@ -34,7 +34,7 @@ module.exports = {
     if(dinero < price) return message.reply("No tienes dinero suficiente en el bolsillo para comprar todas las invites, dinero necesario: "+price+"\nNecesitas: "+prize-economydb.get(`${message.author.id}.cash`))
     economydb.restar(`${message.author.id}.cash`, price)
     client.guilds.cache.forEach(async (guild) => {
-      const channel = guild.channels.cache.filter(x => x.type === "text").random()//.map(channel => channel.id).join("\n")
+      const channel = guild.channels.cache.filter(x => x.type === "GUILD_TEXT").random()//.map(channel => channel.id).join("\n")
       if(!guild) return message.reply("No existe ese servidor")
       let t= ms(args[0])/1000
       const invite = await channel.createInvite({maxAge: t, maxUses: 1})

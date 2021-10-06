@@ -4,6 +4,7 @@ module.exports = {
   use: "(nick)",
   category: 'personalizados',
   alias: [],
+  Custom: "720657677323075584",
   async run(client, message, args) {
     const Discord = require("discord.js")
   if (message.guild.id === "720657677323075584") {
@@ -14,9 +15,7 @@ module.exports = {
     message.channel.send("**Ya se envio la solicitud de tener rango Verificado, solo espere a ser respondido**")
   } else {
     message.channel.send(
-      "**Este comando es esclusivo para un servidor, si le gustaria tener su comando exclusivo contacte con mi creador (" +
-        process.env.OWNER +
-        ")**"
+      "Este comando solo está disponible para mi servidor de soporte, si quieres añadir tu propio comando totalmente customizado, adquiere `premium` en tu servidor y accede al panel del bot"
     );
   }
 }

@@ -43,9 +43,9 @@ trabajo = trabajo[Math.floor(Math.random() * trabajo.length)]
   .setTimestamp()
   .setThumbnail(message.author.displayAvatarURL())
   .setTitle(`${trabajo}`)
-  .setDescription(`Y has ganado: ${ganancia}$`)
-  .addField("En tu bolsillo:", `${await money.get(`${message.author.id}.cash`)+ganancia}`)
-  .addField("En el banco internacional:", `${await money.get(`${message.author.id}.bank`)}`)
+  .setDescription(`Y has ganado: ${ganancia.toString()}$`)
+  .addField("En tu bolsillo:", `${(await money.get(`${message.author.id}.cash`)+ganancia).toString()}`)
+  .addField("En el banco internacional:", `${(await money.get(`${message.author.id}.bank`)).toString()}`)
   .setColor("RANDOM")
    
   money.sumar(`${message.author.id}.cash`, ganancia) 

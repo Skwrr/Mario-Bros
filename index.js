@@ -1,5 +1,20 @@
 //El primer bot que hice
 console.clear();
+function getWebsites(){
+  let db = require("megadb")
+  let mdb = new db.crearDB("hosts")
+  let arreglo, arr = []
+  mdb.map(false, x => arreglo = x)
+  arreglo.forEach(e =>
+    arr.push(e)
+  )
+  return arr
+}
+global.websites = getWebsites()
+process.reload = function reload(){
+  setTimeout(() => process.exit(), 1500)
+  return console.log("[BOT Logs] Reloading")
+}
 const Discord = require('discord.js');
 const client = new Discord.Client({ intents: '32767', allowedMentions: {parse: ["users","roles"],repliedUser: true}});
 let fs = require('fs');
@@ -120,18 +135,14 @@ for (const file of fs.readdirSync('./bot/eventos/')) {
 const keepAlive = require('./webpage/index.js');
 const Monitor = require('ping-monitor');
 
-let host = [
-	'https://Host.sergioesquina.repl.co/',
-];
-
 let monitor;
 
 keepAlive();
-host = host.forEach(async id => {
+websites.forEach(async id => {
 	monitor = new Monitor({
 		website: id,
 		title: 'host',
-		interval: 5 // minutes
+		interval: 2 // minutes
 	});
 
 	monitor.on('up', res => {
@@ -144,14 +155,12 @@ host = host.forEach(async id => {
 	monitor.on('error', error => console.error(error));
 });
 
-login()
-	.then(() => {
-		console.log(`Estoy listo, soy ${client.user.tag}`);
-	})
-	.catch(err => {
-		console.error('Error al iniciar sesión: ' + err);
-		process.exit();
-	});
+login().then(() => {
+	console.log(`Estoy listo, soy ${client.user.tag}`);
+}).catch(err => {
+	console.error('Error al iniciar sesión: ' + err);
+	process.exit()
+});
 
 
 

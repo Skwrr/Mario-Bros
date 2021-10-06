@@ -17,7 +17,7 @@ module.exports = {
     try{
       client.distube.play(message, song)
     }catch(err){
-      message.channel.send(err.message)
+      message.reply(err.message)
     }
   }
 }

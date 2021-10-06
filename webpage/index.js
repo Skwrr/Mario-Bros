@@ -23,8 +23,8 @@ passport.use(
     {
       clientID: process.env.Discord_ClientID,
       clientSecret: process.env.Discord_ClientSecret,
-      callbackURL: "https://sepoxcraft48yt.sergioesquina.repl.co" + "/api/callback",
-      scope: "identify",
+      callbackURL: "https://krypton.sergioesquina.repl.co" + "/login",
+      scope: ["identify", "guilds"].join(" "),
     },
     function (accessToken, refreshToken, profile, done) {
       //User logged in yay!
@@ -47,12 +47,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get(
-  '/api/callback',
+  '/login',
   passport.authenticate("discord", {
     failureRedirect: "/",
   }),
   function (req, res) {
-    res.redirect("/");
+    res.redirect("/dashboard");
   }
 );
 
@@ -64,4 +64,4 @@ passport.deserializeUser(function (obj, done) {
   done(null, obj);
 });
 
-app.use(require("./routes"));
+app.use(require("../routes"));

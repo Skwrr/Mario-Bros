@@ -5,9 +5,9 @@ module.exports = {
   use: "",
   category: "util",
   alias: [],
-  async run(client, message, args){
-    let valorationdb = require("megadb")
-    valorationdb = new valorationdb.crearDB("valoration")
+  async run(client, message, args, db){
+    let valorationdb
+    valorationdb = new db.crearDB("valoration")
     let media = Number(await valorationdb.get("total.valoration")) / Number(await valorationdb.get("total.times"))
     let medias
     if(media > 0 && media <= 0.5) medias = "<:estrella:879095495421730837>\nPenoso"
@@ -20,9 +20,10 @@ module.exports = {
     else if(media > 3.5 && media <= 4) medias = "<:estrella:879095495904092200><:estrella:879095495904092200><:estrella:879095495904092200><:estrella:879095495904092200>\nExcelente"
     else if(media > 4 && media <= 4.5) medias = "<:estrella:879095495904092200><:estrella:879095495904092200><:estrella:879095495904092200><:estrella:879095495904092200><:estrella:879095495421730837>\nLo mejor"
     else if(media > 4.5 && media <= 5) medias = "<:estrella:879095495904092200><:estrella:879095495904092200><:estrella:879095495904092200><:estrella:879095495904092200><:estrella:879095495904092200>\nPerfecto"
+    else medias = "? ? ? ? ?\nUnknown Value"
     let embed = new Discord.MessageEmbed()
     .setTitle("Valoración promedio del bot")
-    .setDescription(medias)
+    .setDescription(medias.toString())
     .setTimestamp()
     .setThumbnail(client.user.displayAvatarURL())
     .setColor("RANDOM")
@@ -44,9 +45,10 @@ module.exports = {
       else if(media > 3.5 && media <= 4) medias = "<:estrella:879095495904092200><:estrella:879095495904092200><:estrella:879095495904092200><:estrella:879095495904092200>\nExcelente"
       else if(media > 4 && media <= 4.5) medias = "<:estrella:879095495904092200><:estrella:879095495904092200><:estrella:879095495904092200><:estrella:879095495904092200><:estrella:879095495421730837>\nLo mejor"
       else if(media > 4.5 && media <= 5) medias = "<:estrella:879095495904092200><:estrella:879095495904092200><:estrella:879095495904092200><:estrella:879095495904092200><:estrella:879095495904092200>\nPerfecto"
+      else medias = "? ? ? ? ?\nUnknown Value"
       let embed = new Discord.MessageEmbed()
       .setTitle("Valoración promedio del bot")
-      .setDescription(medias)
+      .setDescription(medias.toString())
       .setTimestamp()
       .setThumbnail(client.user.displayAvatarURL())
       .setColor("RANDOM")

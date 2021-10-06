@@ -1,6 +1,7 @@
 module.exports = async(client, guild) => {
   const mmdb = require('manage-maliciousdb');
   const Discord = require("discord.js")
+  let db = require("megadb")
   let arr = []
   guild.members.cache.forEach(async member => {
     const isMalicious = await mmdb.findElementByID(member);
@@ -32,4 +33,8 @@ module.exports = async(client, guild) => {
       //client.guilds.cache.get("876201162192322572").commands.create(data)
     }
   })
+
+  let config = new db.crearDB("backupconfig"),
+  staffRole = await config.get(guild.id)
+  if(!staffRole) config.set(guild.id, "ADMINISTRATOR")
 }

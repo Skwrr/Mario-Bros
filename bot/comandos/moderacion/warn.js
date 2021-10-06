@@ -1,6 +1,6 @@
 module.exports = {
   name: "warn",
-  description: "Advierte a un usuario (3 warn = kick; mb.warn set (ammount) para establecer otra cantidad maxima)",
+  description: "Advierte a un usuario (3 warn = kick; k!warn set (ammount) para establecer otra cantidad maxima)",
   use: "(get/clear/set/@user) (@user/reason)",
   category: 'moderacion',
   alias: [],

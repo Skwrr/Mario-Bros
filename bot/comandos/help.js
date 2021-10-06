@@ -5,7 +5,7 @@ module.exports = {
   category: 'ayuda',
   alias: ["comandos", "command", "info", "commands", "ayuda"],
   async run(client, message, args, db) {
-    message.channel.send("Este comando es ahora un SlashCommand, puedes volver a invitar al bot si no ves los SlashCommand")
+    message.channel.send("Este comando es ahora un SlashCommand, puedes volver a invitar al bot si no ves los SlashCommand, puedes ver los comandos en mi Dashboard: https://Krypton.sergioesquina.repl.co/") 
     require("./ayuda/invite").run(client, message)
   },
   SlashCommand: {
@@ -22,7 +22,7 @@ module.exports = {
       let db = require("megadb")
       const prefixes = new db.crearDB("prefixes")
       let prefix = await prefixes.get(message.member.guild.id)
-      if(!prefix || prefix === undefined) prefixes.set(message.member.guild.id, 'mb.')
+      if(!prefix || prefix === undefined) prefixes.set(message.member.guild.id, 'k!')
       prefix = await prefixes.get(message.member.guild.id)
 
       const name = message.options.getString("command");
@@ -180,10 +180,8 @@ module.exports = {
 
       embed.setTitle(`**${command.name}**`)
 
-      function mayuscula(string) {
-        string = string.replace(/[^a-z]/gi, '')
-        return string[0].toUpperCase()+string.slice(1)
-      }
+      let {mayuscula} = require("./functions")
+
       if (command.alias && command.alias.length >= 1) embed.addField(`**Alias**`, command.alias.join(', '))
       if (command.description) embed.addField(`**Descripción**`, command.description)
       if (!command.SlashCommand) command.use ? embed.addField(`**Uso**`, prefix+command.name+" "+command.use) : ""
@@ -191,6 +189,8 @@ module.exports = {
       if (command.category) embed.addField(`**Categoría**`, mayuscula(command.category))
       if (command.premium && command.premium === true) embed.addField(`**Premium?**`, "Sí")
       else embed.addField(`**Premium?**`, "No")
+      if (command.SlashCommand) embed.addField(`**SlashCommand?**`, "Sí")
+      else embed.addField(`**SlashCommand?**`, "No")
       message.reply({embeds: [embed]});
     }
   }

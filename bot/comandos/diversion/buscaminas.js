@@ -89,7 +89,7 @@ module.exports = {
 
   let total = tiempo*multiplicador
 
-  return message.channel.send(buscaminas).then(m => {
+  return message.channel.send(buscaminas.toString()).then(m => {
     setTimeout(() => {
       m.edit("Se acabo el tiempo!")
     }, total)

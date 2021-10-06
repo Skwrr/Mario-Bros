@@ -12,7 +12,7 @@ module.exports = {
 
   if (!args[0]) {
     msg.send(
-      "Error || Escribe `mb.pass canjear`para canjearla"
+      "Error || Escribe `k!pass canjear`para canjearla"
     );
   }
 

@@ -1,1 +1,13 @@
-{}
+{
+  "pending": {},
+  "approved": {
+    "662995691164925973": {
+      "autor": "SEPOX48",
+      "invite": "https://discord.com/api/oauth2/authorize?client_id=662995691164925973&permissions=8&scope=bot%20applications.commands",
+      "name": "Krypton",
+      "descripcion": "Bot principal de Krypton's Support",
+      "id": "662995691164925973",
+      "imageurl": "https://cdn.discordapp.com/avatars/662995691164925973/d31c7c6f770d12105fd4a6c2ead27f86.png"
+    }
+  }
+}

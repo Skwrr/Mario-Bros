@@ -1,9 +1,9 @@
 module.exports = async(client, message) => {
   let prefix
-  if(message.channel.type == 'dm'){
-    prefix = `mb.`
+  if(message.channel.type == 'DM'){
+    prefix = `k!`
     if(message.content.startsWith(prefix)){
-      message.channel.send("No puedo ejecutar ningun comando en md, mi prefix predeterminado es `mb.`")
+      message.channel.send("No puedo ejecutar ningun comando en md, mi prefix predeterminado es `k!`")
     return true
     }
     return true
@@ -25,7 +25,7 @@ module.exports = async(client, message) => {
   }
   
 
-  prefix = prefixdb.tiene(message.guild.id) ? await prefixdb.obtener(message.guild.id) : "mb."
+  prefix = prefixdb.tiene(message.guild.id) ? await prefixdb.obtener(message.guild.id) : "k!"
 
 //Args y command
   let args = message.content
@@ -42,7 +42,7 @@ module.exports = async(client, message) => {
   if (message.author.bot) return;
   if(!message.content.toLowerCase().startsWith(prefix)){
     if(message.mentions.users.first()){
-    if(message.mentions.users.first().id === client.user.id) return message.reply("Mi prefix en este servidor es `"+prefix+"`")
+    if(message.mentions.users.first().id === client.user.id && !message.reference) return message.reply("Mi prefix en este servidor es `"+prefix+"`")
     }
   /*if(message.content.toLowerCase().startsWith('sepox')){
     message.channel.send('SEPOXCRAFT48? El que busca gente que le ayude y todos le ignoran?')
@@ -137,7 +137,7 @@ module.exports = async(client, message) => {
     if(cmd.premium && cmd.premium === true){
       const gp = new db.crearDB("premium")
       let premium = gp.has(message.guild.id)
-      if(!premium) return message.reply("Tu servidor no tiene mi caracteristica \`Premium\`, por lo que no puedes usar mis comandos de \`Musica\`")
+      if(!premium) return message.reply("Tu servidor no tiene mi caracteristica \`Premium\`, por lo que no puedes usar mis comandos de \`Premium\`")
     }
     let embed = new Discord.MessageEmbed()
     .setTitle("Valora a "+client.user.username)
@@ -172,20 +172,8 @@ module.exports = async(client, message) => {
       y.awaitReactions({filter, time: 30000, errors:['time']}).catch(error => y.edit("Se acabó el tiempo"))
     })
     try{
-      if(cmd.SlashCommand && cmd.SlashCommand.run) {
-        message.channel.send("Este comando es ahora un SlashCommand, puedes volver a invitar al bot si no ves los SlashCommand")
-        const Discord = require("discord.js") 
-        let btn = new Discord.MessageButton()
-        .setLabel("Invite")
-        .setStyle("LINK")
-        .setURL("https://discord.com/api/oauth2/authorize?client_id=662995691164925973&permissions=8&scope=bot%20applications.commands")
-        message.channel.send({content: "Aquí tienes mi invitación", components: [new Discord.MessageActionRow().addComponents(btn)]}).then(m => {
-          let filter = (btn) => btn.deferUpdate()
-          m.awaitMessageComponent({filter, componentTpye: "BUTTON"})
-        })
-        return true
-      }
       cmd.run(client, message, args, db, Discord)
+      client.commandsran++
     }catch(error) {
       console.log(error.stack)
     }

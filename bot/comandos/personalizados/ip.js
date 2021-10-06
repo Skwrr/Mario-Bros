@@ -4,6 +4,7 @@ module.exports = {
   use: "[set] (newIp)",
   category: 'personalizados',
   alias: [],
+  Custom: "720657677323075584",
   async run(client, message, args) {
     const Discord = require("discord.js")
   let db = require("megadb")
@@ -23,9 +24,7 @@ module.exports = {
     return message.channel.send("No tenes perms")
   } else {
     message.channel.send(
-      "**Este comando es esclusivo para un servidor, si le gustaria tener su comando exclusivo contacte con mi creador (" +
-        process.env.OWNER +
-        ")**"
+      "Este comando solo está disponible para mi servidor de soporte, si quieres añadir tu propio comando totalmente customizado, adquiere `premium` en tu servidor y accede al panel del bot"
     );
   }
 }

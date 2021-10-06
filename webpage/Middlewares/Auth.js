@@ -1,5 +1,5 @@
 const Auth = (req, res, next) => {
-  if (!req.user) return res.redirect('https://sepoxcraft48yt.sergioesquina.repl.co/api/callback')
+  if (!req.user) return res.redirect('https://krypton.sergioesquina.repl.co/login')
   else next();
 };
 

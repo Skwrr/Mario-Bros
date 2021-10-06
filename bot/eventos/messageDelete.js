@@ -5,6 +5,6 @@ module.exports = async(client, message) => {
   client.snipes.set(message.channel.id, {
     author: message.author.tag,
     authorav: message.author.displayAvatarURL({dynamic: true, size: 1024}),
-    content: message
+    content: message.content
   })
 }
