@@ -8,7 +8,7 @@ module.exports = {
     const Discord = require("discord.js")
     let db = require("megadb")
     db = new db.crearDB("bienvenidas")
-    if(!message.member.permissions.has("MANAGE_CHANNELS")) return message.reply("No tienes permisos para ejecutar este comando")
+    if(!message.member.permissions.has("MANAGE_CHANNELS")) return message.reply("No tienes permisos para ejecutar este comando");
     if(args[0] == "channel"){
       if(message.guild.channels.resolve(args[1]).type !== "GUILD_TEXT" || message.mentions.channels.first().type !== "GUILD_TEXT") return message.reply("Debes establecer un canal de texto")
       db.set(message.guild.id+".channel", message.mentions.channels.first().id || args[1])
