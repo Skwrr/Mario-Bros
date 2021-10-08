@@ -34,6 +34,7 @@ module.exports = {
 
   let cashf = await money.get(`${message.author.id}.cash`)
   let bankf = await money.get(`${message.author.id}.bank`)
+  money.set(`${message.author.id}.total`, await money.get(`${message.author.id}.cash`)+await money.get(`${message.author.id}.bank`)) 
 
   const embed = new Discord.MessageEmbed()
   .setThumbnail(message.author.displayAvatarURL())
@@ -41,6 +42,7 @@ module.exports = {
   .setDescription("Sacaste "+sacar.toString()+"$ del banco")
   .addField("En tu bolsillo:", cashf.toString())
   .addField("En el banco:", bankf.toString())
+  .addField("En total:", (await money.get(`${message.author.id}.total`)).toString())
   .setTimestamp()
   .setColor("RANDOM")
   message.channel.sendEmbed(embed)

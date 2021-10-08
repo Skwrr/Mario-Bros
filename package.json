@@ -27,6 +27,7 @@
     "discord-api-types": "^0.22.0",
     "discord-backup": "^3.0.1",
     "discord-cards": "^1.2.4",
+    "discord-shitpost": "^1.1.2",
     "discord-tts": "^1.0.3",
     "discord.js": "^13.1.0",
     "discordimgs": "^1.4.0",

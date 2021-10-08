@@ -49,6 +49,7 @@ trabajo = trabajo[Math.floor(Math.random() * trabajo.length)]
   .setColor("RANDOM")
    
   money.sumar(`${message.author.id}.cash`, ganancia) 
+  money.set(`${message.author.id}.total`, await money.get(`${message.author.id}.cash`)+await money.get(`${message.author.id}.bank`)) 
     cn.set(message.author.id, "En cooldown pa")
   setTimeout(function(){
     cn.delete(message.author.id)

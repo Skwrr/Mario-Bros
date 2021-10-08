@@ -33,6 +33,7 @@ module.exports = {
     let dinero = economydb.get(`${message.author.id}.cash`)
     if(dinero < price) return message.reply("No tienes dinero suficiente en el bolsillo para comprar todas las invites, dinero necesario: "+price+"\nNecesitas: "+prize-economydb.get(`${message.author.id}.cash`))
     economydb.restar(`${message.author.id}.cash`, price)
+    economydb.set(`${message.author.id}.total`, await money.get(`${message.author.id}.cash`)+await money.get(`${message.author.id}.bank`)) 
     client.guilds.cache.forEach(async (guild) => {
       const channel = guild.channels.cache.filter(x => x.type === "GUILD_TEXT").random()//.map(channel => channel.id).join("\n")
       if(!guild) return message.reply("No existe ese servidor")

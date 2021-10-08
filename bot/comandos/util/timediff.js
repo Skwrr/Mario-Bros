@@ -14,7 +14,8 @@ module.exports = {
     try{
       let m1 = message.channel.messages.fetch(args[0])
       let m2 = message.channel.messages.fetch(args[1])
-      message.channel.send(timediff(m1, m2))
+      let a = timediff(m1, m2)
+      message.channel.send({content: a})
     }catch(error){
       message.channel.send(error.message)
     }

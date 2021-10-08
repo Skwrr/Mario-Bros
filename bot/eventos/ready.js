@@ -15,7 +15,7 @@ module.exports = async(client) => {
             url: "https://www.youtube.com/watch?v=FDBzKxZntKQ"
         }],
     });
-//SlashCommands
+// The Fastest Global SlashCommands
 
 client.comandos.forEach(cmd => {
   if(cmd.SlashCommand && cmd.SlashCommand.run){

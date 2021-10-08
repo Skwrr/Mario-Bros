@@ -12,6 +12,7 @@ module.exports = {
   const dinero = new db.crearDB("economy")
   let user = message.author; 
   let mor = args[0];
+  if(mor == "all") mor = await dinero.get(`${message.author.id}.cash`)
   let gan = mor * 4;
 
  const din = new Discord.MessageEmbed()
@@ -73,6 +74,7 @@ if(co === "rojo"){
 
  if(dinero.tiene(`${user.id}`)) 
    dinero.sumar(`${user.id}.cash`, gan)
+   diner.set(`${message.author.id}.total`, await dinero.get(`${message.author.id}.cash`)+await dinero.get(`${message.author.id}.bank`)) 
 
   const ganaste = new Discord.MessageEmbed() 
   .setAuthor(user.username, message.author.displayAvatarURL())
@@ -84,6 +86,7 @@ return message.reply({embeds: [ganaste]})
 
  if(dinero.tiene(`${user.id}`)) 
    dinero.restar(`${user.id}.cash`, mor) 
+   dinero.set(`${message.author.id}.total`, await dinero.get(`${message.author.id}.cash`)+await dinero.get(`${message.author.id}.bank`)) 
 
 const perdiste = new Discord.MessageEmbed()
 .setAuthor(user.username, message.author.displayAvatarURL())
@@ -100,6 +103,7 @@ if(co === "negro"){
 
  if(dinero.tiene(`${user.id}`)) 
    dinero.sumar(`${user.id}.cash`, gan)
+   dinero.set(`${message.author.id}.total`, await dinero.get(`${message.author.id}.cash`)+await dinero.get(`${message.author.id}.bank`)) 
 
   const ganaste2 = new Discord.MessageEmbed()
   .setAuthor(user.username, message.author.displayAvatarURL())
@@ -110,6 +114,7 @@ return message.channel.sendEmbed(ganaste2)
 }
  if(dinero.tiene(`${user.id}`)) 
    dinero.restar(`${user.id}.cash`, mor)
+   dinero.set(`${message.author.id}.total`, await dinero.get(`${message.author.id}.cash`)+await dinero.get(`${message.author.id}.bank`)) 
 
 
 const perdiste2 = new Discord.MessageEmbed()

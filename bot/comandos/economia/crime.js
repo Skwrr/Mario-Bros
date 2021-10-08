@@ -37,10 +37,12 @@ module.exports = {
   if(p < 100){
     message.channel.send({embeds: [rl]})
     await money.restar(`${message.author.id}.cash`, dg)
+    money.set(`${message.author.id}.total`, await money.get(`${message.author.id}.cash`)+await money.get(`${message.author.id}.bank`)) 
     return
   }else{
     message.channel.send({embeds: [rw]})
     await money.sumar(`${message.author.id}.cash`, dg)
+    money.set(`${message.author.id}.total`, await money.get(`${message.author.id}.cash`)+await money.get(`${message.author.id}.bank`)) 
     return
   }
 }

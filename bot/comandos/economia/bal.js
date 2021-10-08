@@ -12,6 +12,7 @@ module.exports = {
   if(!dineroautor) dineroautor = message.author
   let cash = await money.get(`${dineroautor.id}.cash`)
   let bank = await money.get(`${dineroautor.id}.bank`)
+  let total = await money.get(`${dineroautor.id}.total`)
   if(!money.has(`${dineroautor.id}.bank`)) cash=0, bank=0;
   const embed = new Discord.MessageEmbed()
   .setTitle(`Dinero de ${dineroautor.username}`)
@@ -19,6 +20,7 @@ module.exports = {
   .setDescription("Economia Internacional")
   .addField('En el bolsillo:', cash.toString())
   .addField('En el banco:', bank.toString())
+  .addField('En Total:', total.toString())
   message.channel.send({embeds: [embed]})
 }
 }
