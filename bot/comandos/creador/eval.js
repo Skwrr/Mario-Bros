@@ -2,13 +2,14 @@ module.exports = {
   name: "eval",
   description: "Evalua algo como si fuera un comando",
   use: "(code)",
+  perms: {
+    owner: process.env.OWNERS_ID
+  },
   category: 'creador',
   alias: ["e"],
   async run(client, message, args) {
     const db = require("megadb")
     const Discord = require("discord.js")
-    const staff = process.env.OWNERS_ID
-    if (!staff.includes(message.author.id)) return message.channel.send("❌ **Solo mi Creador puede usar Este cmd** ❌")
 
     const jsp = require('jspaste')
 
@@ -84,7 +85,7 @@ module.exports = {
         if(code.length > 1024){
           require("beautify")(args.join(" "), {format: 'js'})
           const embed = new Discord.MessageEmbed()
-          .addField(":inbox_tray: Entrada", `\`\`\`js\n${code}\n\`\`\``)
+          .addField(":inbox_tray: Entrada", `\`\`\`js\ncodigo largo\n\`\`\``)
           .addField(":outbox_tray: Salida", `\`${txt.replace(client.token, "No quieres saber eso.")}`)
           .addField(":file_folder: Tipo", `\`\`\`js\n${mayuscula(tipo)}\n\`\`\``, true)
           .addField(":stopwatch: Tiempo", `\`\`\`fix\n${Date.now() - tiempo1}ms\n\`\`\``, true)
@@ -97,11 +98,12 @@ module.exports = {
     
         if (txt.length > 1024) {
           let link = await jsp.publicar(txt)
+
             
             require("beautify")(args.join(" "), {format: 'js'})
           const embed = new Discord.MessageEmbed()
-          .addField(":inbox_tray: Entrada", `\`\`\`js\nreturn "El codigo es muy largo"\n\`\`\``)
-          .addField(":outbox_tray: Salida", `\`\`\`js\n${txt.replace(client.token, "No quieres saber eso.")}\n\`\`\``)
+          .addField(":inbox_tray: Entrada", `\`\`\`js\n${require("beautify")(code, {format: 'js'})}\n\`\`\``)
+          .addField(":outbox_tray: Salida", `El codigo es muy largo, aca tienes el link: ${link.url}`)
           .addField(":file_folder: Tipo", `\`\`\`js\n${mayuscula(tipo)}\n\`\`\``, true)
           .addField(":stopwatch: Tiempo", `\`\`\`fix\n${Date.now() - tiempo1}ms\n\`\`\``, true)
           .setColor("#7289DA")

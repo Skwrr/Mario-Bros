@@ -367,18 +367,33 @@
         );
         $.get("/api/user", (data) => {
           let guild = data.user.guilds.find(e => e.id == Guild.id)
-          if(!guild.hasPerms) return window.location = `https://Krypton.sergioesquina.repl.co/servers/`
+          if(!guild.hasPerms) return window.location = `https://krypton.sergioesquina.repl.co/servers/`
           else {
-            $.get("/api/info/"+Guild.id, (data) => {
+            $.get("/api/info", (data) => {
           if(!Guild.inGuild){
-            window.location = `https://discord.com/oauth2/authorize?client_id=${
-              data.ClientID
-            }&permissions=${data.Permissions}&scope=bot%20${data.Scopes.join(
-              "%20"
-            )}&redirect_uri=${data.Website}${
-              data.CallbackURL
-            }&response_type=code`;
+            let miwin = window.open("https://discord.com/api/oauth2/authorize?client_id=662995691164925973&permissions=8&scope=bot%20applications.commands", "width=400,height=800")
+            let hiddenXe = false
+            $(window).focus(function() {
+              if (hiddenXe) return;
+              window.location.reload();
+              miwin.close();
+              hiddenXe = true;
+            });
+            $(miwin).focus(function() {
+              if (!miwin.location.pathname.split("/")[2] == "authorized") return
+              window.location.reload();
+              miwin.close();
+            });
+            // window.location = `https://discord.com/oauth2/authorize?client_id=${
+            //   data.ClientID
+            // }&permissions=${data.Permissions}&scope=bot%20${data.Scopes.join(
+            //   "%20"
+            // )}&redirect_uri=${data.Website}${
+            //   data.CallbackURL
+            // }&response_type=code`;
           }
+          });
+          $.get("/api/info/"+Guild.id, (data) => {
             $("#songLoop").text(data.songsLoop);
         $("#queueLoop").text(data.queueLoop);
         $("#prefix").text(data.prefix);
@@ -409,15 +424,12 @@ function login() {
   let myWindow = window.open(
     "https://krypton.sergioesquina.repl.co/login", "width=400,height=800");
 
-  setTimeout(() => myWindow.close(), 20000)
-
   $(window).focus(function() {
     if (hiddenX) return;
     window.location.reload();
     myWindow.close();
     hiddenX = true;
   });
-
 
 }
   </script>

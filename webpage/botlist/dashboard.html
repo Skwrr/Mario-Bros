@@ -241,6 +241,12 @@
     ::-webkit-scrollbar-thumb:hover {
       background: #414ca1;
     }
+
+    .fixedimg {
+      border-radius: 50%;
+      margin: 10px;
+      cursor: pointer;
+    }
   </style>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script>
@@ -257,7 +263,7 @@
                           <p class="mb-0">${bots[bot].name}</p>
                         </div>
                         <div class="align-self-center">
-                          <img class="fas text-danger fa-3x botimg-${bots[bot].id}" width="60" height="60" onclick="window.location = '/botlist/bot/${bots[bot].id}'" src="${bots[bot].imageurl}"></img>
+                          <img class="fas text-danger fa-3x botimg-${bots[bot].id} fixedimg" width="60" height="60" onclick="window.location = '/botlist/bot/${bots[bot].id}'" src="${bots[bot].imageurl}"></img>
                         </div>
                       </div>
                     </div>
@@ -274,7 +280,7 @@
                           <p class="mb-0">${bots[bot].name}</p>
                         </div>
                         <div class="align-self-center">
-                          <img class="fas text-danger fa-3x botimg-${bots[bot].id}" width="60" height="60" onclick="window.location = '/botlist/bot/${bots[bot].id}'" src="${bots[bot].imageurl}"></img>
+                          <img class="fas text-danger fa-3x botimg-${bots[bot].id} fixedimg" width="60" height="60" onclick="window.location = '/botlist/bot/${bots[bot].id}'" src="${bots[bot].imageurl}"></img>
                         </div>
                       </div>
                     </div>
@@ -291,15 +297,12 @@ function login() {
   let myWindow = window.open(
     "https://krypton.sergioesquina.repl.co/login", "width=400,height=800");
 
-  setTimeout(() => myWindow.close(), 20000)
-
   $(window).focus(function() {
     if (hiddenX) return;
     window.location.reload();
     myWindow.close();
     hiddenX = true;
   });
-
 
 }
   </script>

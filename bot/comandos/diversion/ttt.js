@@ -161,8 +161,14 @@ module.exports = {
       db.set(message.guild.id, e.id)
 
     partida.on('ganador', (jugador, tablero, paso) => {
+      mdb.delete(message.guild.id)
+      let wonmoney = Math.floor(Math.random() * 2000)
+      let dba = require("megadb")
+      let dinero = new dba.crearDB("economy")
+      if(!dinero.has(jugador)) dinero.set(jugador, {cash: 0, bank: 0})
+      dinero.add(jugador+".cash", wonmoney)
       db.delete(message.guild.id)
-      embed.setTitle("Ha ganado **"+client.users.resolve(jugador).username+"**!")
+      embed.setTitle("Ha ganado **"+client.users.resolve(jugador).username+"**! (Gana "+wonmoney+")")
       embed.setDescription(tablero.string)
 
       e.edit({embeds: [embed]});

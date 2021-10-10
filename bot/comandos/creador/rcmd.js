@@ -2,14 +2,15 @@ module.exports = {
   name: "rcmd",
   description: "Reinicia un comando",
   use: "(commandName) (commandCategory)",
+  perms: {
+    owner: process.env.OWNERS_ID
+  },
   category: 'creador',
   alias: ["reloadcmd", "reloadcommand", "resetcommand", "rcommand"],
   async run(client, message, args) {
     const Discord = require("discord.js")
 
     const fs = require("fs")
-    const staff = process.env.OWNERS_ID
-    if (!staff.includes(message.author.id)) return message.channel.send("❌ **Solo mi Creador puede usar Este cmd** ❌")
 
     let commandCategory = args[1]
     let commandName = args[0];

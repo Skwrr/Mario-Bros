@@ -3,7 +3,7 @@ module.exports = {
   description: "Muestra el canal a todos los usuarios",
   use: "",
   category: 'moderacion',
-  alias: [],
+  alias: ["unblind"],
   async run(client, message, args) {
     const Discord = require("discord.js")
   if(!message.member.permissions.has("MANAGE_CHANNELS")) return message.reply("No tienes permisos")

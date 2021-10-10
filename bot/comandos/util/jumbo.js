@@ -19,9 +19,9 @@ module.exports = {
     }else{
       const emoji = require("discord.js").Util.parseEmoji(args[0])
       if(emoji.id == null) return message.reply("Ese no es un emoji válido")
-      link = `https://cdn.discordapp.com/emojis/${emoji.id}.${emoji.animated ? "gif" : "png"}`
+      link = `https://cdn.discordapp.com/emojis/${emoji.id}.${emoji.animated ? "gif" : "png"}?size=60`
     }
-    message.channel.send({content: link, components: [row]}).then(m => {
+    message.reply({content: link, components: [row]}).then(m => {
       let filter = (btn) => {
         if(btn.user.bot) return
         if(btn.user.id !== message.author.id) return btn.reply({content: "No puedes usar este botón", ephemeral: true})

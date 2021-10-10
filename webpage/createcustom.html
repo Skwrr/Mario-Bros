@@ -114,6 +114,8 @@
               <input type="text" for="cmdname" class="form-input input-lg" id="input-cmdname" name="cmdname"></input>
               <label class="form-label" for="userId">Tu ID:</label>
               <input type="text" for="userId" class="form-input input-lg" id="input-id" name="userId"></input>
+              <label class="form-label args-list" for="args">Argumentos:</label>
+              <input for="args" type="button" value="Añadir Argumento" onclick="newArg()"></input>
               <label class="form-label" for="input-code">Codigo:</label>
               <textarea for="code" class="form-input add-code" id="input-code" rows="15" name="code"></textarea>
               <button type="submit" class="btn btn-design btn-lg">Enviar Codigo</button>
@@ -206,7 +208,7 @@
     }
 
     .footer {
-      position: fixed;
+      position: auto;
       bottom: 0;
       background: #192027;
       text-align: center;
@@ -444,6 +446,19 @@
     }
   </style>
   <script>
+    let i = 0
+    function newArg(item = ".args-list"){
+      $(item).append(`<label class="form-label" id="input-args-${i}" for="args--${i}">Argumento ${i+1}:</label>
+      <input type="text" for="args-${i}" class="form-input input-lg" id="input-args-${i}" name="args${i}"></input>
+      <input type="button" for="args-${i}" value="Eliminar Arg" id="input-args-${i}" onclick="deleteArg(${i})"></input>`)
+      i++
+    }
+    function deleteArg(arg){
+      $(`#input-args-${arg}`).remove()
+      $(`#input-args-${arg}`).remove()
+      $(`#input-args-${arg}`).remove()
+      i--
+    }
 var hiddenX = false;
 
 function login() {
@@ -451,15 +466,12 @@ function login() {
   let myWindow = window.open(
     "https://krypton.sergioesquina.repl.co/login", "width=400,height=800");
 
-  setTimeout(() => myWindow.close(), 20000)
-
   $(window).focus(function() {
     if (hiddenX) return;
     window.location.reload();
     myWindow.close();
     hiddenX = true;
   });
-
 
 }
   </script>

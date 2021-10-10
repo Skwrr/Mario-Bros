@@ -5,6 +5,7 @@ module.exports = async(client, member) => {
   db = new db.crearDB("bienvenidas")
   let wlcch = await db.get(member.guild.id+".channel")
   let wlcr = await db.get(member.guild.id+".role")
+  console.log(wlcr, wlcch)
   let arr = []
   const ms = require("@fabricio-191/ms")
   const isMalicious = await mmdb.findElementByID(member.id);
@@ -18,10 +19,10 @@ module.exports = async(client, member) => {
   /*let guild = client.guilds.resolve(member.guild.id)
   let channel = guild.channels.resolve(wlcch)
   channel.send("Bienvenido!",embed)*/
-  if(!wlcch) return
-  else client.channels.fetch(wlcch).then(ch => ch.send({embeds: [embed]}))
-  if(!wlcr) return
-  else member.roles.add(wlcr)
+  if(wlcch) client.channels.fetch(wlcch).then(ch => ch.send({embeds: [embed]}))
+  else return
+  if(wlcr) member.roles.add(wlcr)
+  else return
 
   if (isMalicious) {
     arr.push(member.guild.members.resolve(isMalicious.id).tag)

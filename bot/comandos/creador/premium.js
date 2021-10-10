@@ -2,6 +2,9 @@ module.exports = {
   name: "premium",
   description: "Obten informacion sobre el estado premium de tu servidor",
   use: "",
+  perms: {
+    owner: process.env.OWNERS_ID
+  },
   category: 'creador',
   alias: [],
   async run(client, message, args) {
@@ -13,8 +16,6 @@ module.exports = {
     if(!premium) return message.reply("Tu servidor necesita ser premium para ejecutar este comando, puedes adquirirlo mandandole un mensaje a mi creador")
     return message.channel.send("Hay distintos argumentos; `add` y `remove`")
   }
-  const staff = process.env.OWNERS_ID
-  if (!staff.includes(message.author.id)) return message.channel.send("❌ **Solo mi Creador puede usar Este cmd** ❌")
     if(args[0] === 'add' || args[0] === 'añadir'){
       var guild = client.guilds.cache.get(args[1])
       var sv = args[1]

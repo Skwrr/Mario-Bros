@@ -237,6 +237,12 @@
     ::-webkit-scrollbar-thumb:hover {
       background: #414ca1;
     }
+
+    .fixedimg {
+      border-radius: 50%;
+      margin: 10px;
+      cursor: pointer;
+    }
   </style>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script>
@@ -305,7 +311,7 @@
                         <div>
                           <h5 class="text-info bot-${bots[bot].id}" style="size: 14;">Avatar del bot:</h5>
                         </div>
-                        <img class="fas text-danger fa-3x" width="60" height="60" src="${bots[bot].imageurl}">
+                        <img class="fas text-danger fa-3x fixedimg" width="60" height="60" src="${bots[bot].imageurl}" onclick='window.location = "${bots[bot].imageurl}"'>
                       </div>
                     </div>
                   </div>
@@ -321,15 +327,12 @@ function login() {
   let myWindow = window.open(
     "https://krypton.sergioesquina.repl.co/login", "width=400,height=800");
 
-  setTimeout(() => myWindow.close(), 20000)
-
   $(window).focus(function() {
     if (hiddenX) return;
     window.location.reload();
     myWindow.close();
     hiddenX = true;
   });
-
 
 }
   </script>

@@ -16,7 +16,14 @@ process.reload = function reload(){
   return console.log("[BOT Logs] Reloading")
 }
 const Discord = require('discord.js');
-const client = new Discord.Client({ intents: '32767', allowedMentions: {parse: ["users","roles"],repliedUser: true}});
+const client = new Discord.Client({
+  intents: '32767',
+  allowedMentions: {
+    parse: ["users","roles"],
+    repliedUser: true
+  },
+  rejectOnRateLimit: () => true
+});
 let fs = require('fs');
 let app = require('express');
 require('dotenv').config();

@@ -119,6 +119,9 @@
               <button type="submit" class="btn btn-design btn-lg">Hostear Gratis</button>
             </form>
           </section>
+          <section class="peperandom">
+
+          </section>
           <!-- Footer -->
           <div class="footer">
             <div class="container">
@@ -444,6 +447,15 @@
     }
   </style>
   <script>
+    let p = Math.floor(Math.random()*100), ap = false
+    if(p > 80) ap = true
+    if(ap == false) console.log(`Your probability were ${p}% and you need mor than 80%, keep going!`)
+    if(ap == true){
+      $(".peperandom").html(`<p>Hola! Tenemos un generador de Premium, puedes conseguir acceso<br>ilimitado en sorteos mensuales que hacemos en nuestro servidor de discord,<br>puedes unirte escribiendo <b>k!servidor</b> para unirte a mi servidor de soporte y ganar <br>algunos premios.</p>`)
+      console.log(`You are so lucky! You got ${p}%, an ${p-80}% more than needed %`)
+    }
+    
+    
 var hiddenX = false;
 
 function login() {
@@ -451,15 +463,12 @@ function login() {
   let myWindow = window.open(
     "https://krypton.sergioesquina.repl.co/login", "width=400,height=800");
 
-  setTimeout(() => myWindow.close(), 20000)
-
   $(window).focus(function() {
     if (hiddenX) return;
     window.location.reload();
     myWindow.close();
     hiddenX = true;
   });
-
 
 }
   </script>

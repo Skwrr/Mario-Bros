@@ -5,12 +5,13 @@ module.exports = {
   name: "blacklist",
   description: "Entra a mi servidor de soporte",
   use: "(bl/wl) (user) [reason]",
+  perms: {
+    owner: process.env.OWNERS_ID
+  },
   category: 'creador',
   alias: ["bl"],
   async run(client, message, args) {
     const Discord = require("discord.js")
-  const staff = process.env.OWNERS_ID
-  if (!staff.includes(message.author.id)) return message.channel.send("❌ **Solo mi Creador puede usar Este cmd** ❌")
   if(!args[0] || args[0] !== "wl" && args[0] !== "bl") return message.reply("Debes poner un comando valido; `wl` `bl`")
   if(args[0] === "bl"){
     user = args[1]

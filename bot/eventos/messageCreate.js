@@ -16,6 +16,7 @@ module.exports = async(client, message) => {
   
 
   const db = require("megadb");
+  let cn = new db.crearDB("cooldownc")
   let prefixdb = new db.crearDB("prefixes")
   let counting = new db.crearDB("counting")
   let blg = new db.crearDB("blacklistglobal")
@@ -138,6 +139,27 @@ module.exports = async(client, message) => {
       const gp = new db.crearDB("premium")
       let premium = gp.has(message.guild.id)
       if(!premium) return message.reply("Tu servidor no tiene mi caracteristica \`Premium\`, por lo que no puedes usar mis comandos de \`Premium\`")
+    }
+    if(cmd.cooldown && Number.isInteger(cmd.cooldown)){
+      let remaining = ((await cn.get(`${message.author.id}.${cmd.name}`))-Date.now())/1000
+      if(cn.has(message.author.id+"."+cmd.name) && (await cn.get(message.author.id+"."+cmd.name)) >= Date.now()) return message.reply("Estás en cooldown, tienes que esperar ("+remaining+"s)")
+      if(!cn.has(message.author.id+"."+cmd.name) || (await cn.get(message.author.id+"."+cmd.name)) < Date.now()) cn.set(message.author.id+"."+cmd.name, Date.now()+(cmd.cooldown*1000))
+    }
+    if(cmd.perms){
+      if(typeof cmd.perms !== "object") console.log(`${cmd.name} no tiene un Object como propiedad de perms`)
+      let perms = cmd.perms
+      if(perms.use){
+        if(!Array.isArray(perms.bot)) console.log(`${cmd.name} no tiene un Array como propiedad de perms.user`)
+        if(!message.member.permissions.has(perms.user)) return message.reply("No tienes permisos para ejecutar este comando, necesitas los permisos `"+perms.user.join(" | ")+"`")
+      }
+      if(perms.bot){
+        if(!Array.isArray(perms.bot)) console.log(`${cmd.name} no tiene un Array como propiedad de perms.bot`)
+        if(!message.guild.me.permissions.has(perms.bot)) return message.reply("No tengo permisos para ejecutar este comando, necesito los permisos `"+perms.bot.join(" | ")+"`")
+      }
+      if(perms.owner){
+        if(typeof perms.owner != "string") console.log(`${cmd.name} no tiene una String como propiedad de perms.owner`)
+        if(!perms.owner.includes(message.author.id)) return message.reply("❌ **Solo mi Creador puede usar Este cmd** ❌")
+      }
     }
     let embed = new Discord.MessageEmbed()
     .setTitle("Valora a "+client.user.username)

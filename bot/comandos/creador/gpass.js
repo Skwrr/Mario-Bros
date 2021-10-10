@@ -2,6 +2,9 @@ module.exports = {
   name: "gpass",
   description: "Genera una contraseña de 40 caracteres totalmente aleatorios",
   use: "",
+  perms: {
+    owner: process.env.OWNERS_ID
+  },
   category: 'creador',
   alias: ["gen-pass"],
   async run(client, message, args) {
@@ -43,8 +46,6 @@ module.exports = {
   symbols: false,
   length: 40
     })
-  const staff = process.env.OWNERS_ID
-  if (!staff.includes(message.author.id)) return message.channel.send("❌ **Solo mi Creador puede usar Este cmd** ❌")
   message.author.send(pass1 +"\n"+ pass2 +"\n"+ pass3+"\n"+ pass4 +"\n"+ pass5+"\n"+ pass6 +"\n"+ pass7)
   }
 }

@@ -133,7 +133,7 @@ module.exports = {
         let data = await backup.fetch(id)
         if(data === "No backup found") return message.reply({content: "No se ha encontrado esa id", ephemeral: true})
         message.reply({content: "Se ha eliminado el respaldo "+id, ephemeral: true})
-        backup.delete(id)
+        backup.remove(id)
       }else 
       if(args.getString("action") == "staffrole"){
         let id = args.getString("backupid"),

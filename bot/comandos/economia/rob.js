@@ -42,7 +42,7 @@ module.exports = {
     money.set(`${message.author.id}.total`, await money.get(`${message.author.id}.cash`)+await money.get(`${message.author.id}.bank`)) 
     return
   }else{
-    message.channel.send({emebds: [rw]})
+    message.channel.send({embeds: [rw]})
     await money.restar(`${j.id}.cash`, dg)
     money.set(`${message.author.id}.total`, await money.get(`${message.author.id}.cash`)+await money.get(`${message.author.id}.bank`)) 
     await money.sumar(`${message.author.id}.cash`, dg)

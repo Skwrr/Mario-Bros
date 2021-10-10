@@ -2,12 +2,13 @@ module.exports = {
   name: "infoall",
   description: "Obten informacion sobre mis servidores/usuarios",
   use: "[nombres/ids/invites]",
+  perms: {
+    owner: process.env.OWNERS_ID
+  },
   category: 'creador',
   alias: [],
   async run(client, message, args) {
     const Discord = require("discord.js")
-    const staff = process.env.OWNERS_ID
-    if (!staff.includes(message.author.id)) return message.channel.send("❌ **Solo mi Creador puede usar Este cmd** ❌")
     if(!args[0]){
     message.channel.send(
       `${client.users.cache.filter(x => !x.bot).size} usuarios y ${client.users.cache.filter(x => x.bot).size} bots\n${client.guilds.cache.size} servidores`

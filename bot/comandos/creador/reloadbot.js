@@ -2,6 +2,9 @@ module.exports = {
   name: "reloadbot",
   description: "Reinicia el bot",
   use: "",
+  perms: {
+    owner: process.env.OWNERS_ID
+  },
   alias: ["relbot", "rbot"],
   category: "creador",
   async run(client, message){

@@ -185,7 +185,7 @@
       overflow-y: auto;
     }
 
-    #servers img {
+    .fixedimg {
       border-radius: 50%;
       margin: 10px;
       cursor: pointer;
@@ -243,7 +243,7 @@
         data.user.guilds.forEach((guild) => {
           if (!guild.hasPerms) return;
           $("#servers").append(`
-<img class="server-${guild.id}" onclick="window.location = '/servers/${
+<img class="server-${guild.id} fixedimg" onclick="window.location = '/servers/${
             guild.id
           }'" width="60" height="60" src="${
             guild.icon
@@ -267,15 +267,12 @@ function login() {
   let myWindow = window.open(
     "https://krypton.sergioesquina.repl.co/login", "width=400,height=800");
 
-  setTimeout(() => myWindow.close(), 20000)
-
   $(window).focus(function() {
     if (hiddenX) return;
     window.location.reload();
     myWindow.close();
     hiddenX = true;
   });
-
 
 }
   </script>

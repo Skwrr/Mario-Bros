@@ -1,6 +1,6 @@
 let express = require('express')
 const app = express()
-let { MessageActionRow: mar, MessageButton: mb } = require("discord.js")
+let Discord = require("discord.js"), { MessageActionRow: mar, MessageButton: mb } = require("discord.js")
 const url = require("url")
 const fs = require("fs")
 const Auth = require("./webpage/Middlewares/Auth")
@@ -19,6 +19,10 @@ function redirect(res, url = "/dashboard"){
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/webpage/index.html')
 });
+
+app.get('/api/invite', (req, res) => {
+  redirect(res, "https://discord.com/api/oauth2/authorize?client_id=662995691164925973&permissions=8&scope=bot%20applications.commands")
+})
 
 app.get('/getpremium/:id', async(req, res) => {
   let guildid = url.parse(req.url, true).query.guildid
@@ -112,8 +116,16 @@ app.get('/free-hosting/failure', (req, res) => {
 app.get('/free-hosting/success', (req, res) => {
   let query = url.parse(req.url, true).query
   let hosturl = query.hosturl,
-  user = query.userId,
+  user = query.user,
   hostName = query.hostname
+
+  let embed = new Discord.MessageEmbed()
+  .setColor("RANDOM")
+  .setAuthor(client.client?.users.resolve(user).username, client.client?.users.resolve(user).displayAvatarURL())
+  .setDescription("Datos del host")
+  .addField("Nombre del Hosting", hostname.toString())
+  .addField("URL del Hosting", hosturl.toString())
+  .addField("Usuario", client.client?.users.resolve(user).toString())
 
   let db = require("megadb")
   db = new db.crearDB("hosts")
@@ -121,6 +133,10 @@ app.get('/free-hosting/success', (req, res) => {
   db.map(false, e => ae=e)
   if(ae.includes(hosturl.toLowerCase())) return res.redirect(`/free-hosting/failure?hosturl=${hosturl}&error=Url%20ya%20en%20uso`)
   db.push("hosts", hosturl.toLowerCase())
+
+  client.client?.channels.resolve("").send({content: `${client.client?.users.resolve(user).username} ha añadido un host!!`, embeds: [embed]})
+
+  client.client?.users.resolve(user).send("Hola, gracias por usar nuestro Hosting, su bot `"+hosturl+"` está siendo hosteado ahora mismo.")
 
   res.send("El Host acaba de ser aprobado, espere unos momentos mientras se reinicia el bot")
   process.reload()
@@ -134,6 +150,20 @@ app.get("/servers/:id/customcommands/create", Auth, async(req, res) => {
   user = query.userId,
   commandName = query.cmdname
 
+  let ans = req.url.split("&"),
+  b = [],
+  arg = []
+  ans.pop()
+  ans.forEach(a => {
+      if(a.includes("args")) b.push(a)
+  })
+  let aca
+  b.forEach(a => {
+      aca = a
+      a = a.replaceAll("args", "").replaceAll("=", "")
+      arg.push(a.slice(1))
+  })
+
   if(!commandName) return res.sendFile(__dirname+"/webpage/createcustom.html");
 
   function checkErrors(){
@@ -143,7 +173,8 @@ app.get("/servers/:id/customcommands/create", Auth, async(req, res) => {
     return "pass"
   }
   if(checkErrors() !== "pass") res.redirect("/servers/"+req.params.id+"/customcommands/failure?code="+code+"&error="+checkErrors())
-  else res.redirect("/servers/"+req.params.id+`/customcommands/success?code=${code}&cmdname=${commandName}&user=${user}`)
+  else res.redirect("/servers/"+req.params.id+`/customcommands/success?code=${code}&cmdname=${commandName}&user=${user}&args=[${arg.join(", ")}]`)
+  
 });
 
 app.get("/servers/:id/customcommands/failure", Auth, async(req, res) => {
@@ -162,9 +193,17 @@ app.get("/servers/:id/customcommands/success", Auth, async(req, res) => {
   let info = url.parse(req.url, true).query,
   code = info.code,
   userId = info.user,
-  commandName = info.cmdname
+  commandName = info.cmdname,
+  arg = info.args
+  let args = []
 
-  function createCommand(client, code, userId){
+  console.log(Array.isArray(arg))
+
+  arg.forEach(ar => {
+    args.push(ar)
+  })
+
+  function createCommand(client, code, userId, args){
 let user = userId
     if(!client) return "No se obtuvo Client"
     if(!code) return "No se obtuvo el codigo"
@@ -209,7 +248,7 @@ let user = userId
     return "pass"
   }
 
-  if(createCommand(client.client, code, userId) !== "pass") return res.redirect("failure?code="+code+" &error="+createCommand(client.client,code, userId) )
+  if(createCommand(client.client, code, userId) !== "pass") return res.redirect("failure?code="+code+"&error="+createCommand(client.client,code, userId, args) )
 
   res.send("Tu codigo ahora está en la lista de espera, recibirás un MD cuando te acepten el codigo");
 });
@@ -241,8 +280,9 @@ app.get('/api/info/:id', async(req, res) => {
 app.get('/api/info/', async(req, res) => {
   let baltop = new db.crearDB("economy")
   let arr = [], arr2 = []
-  let sort = await baltop.sort(false, "bank");
-  sort.map(datos => arr.push({id: datos.clave, total: Number(datos.valor.cash)+Number(datos.valor.bank)}))
+  let sort = await baltop.sort(false, "total");
+  sort.map(datos => arr.push({id: datos.clave, total: datos.valor.total})
+  )
   let map;
   sort = await arr.sort(function(a,b) {
     return b.total-a.total

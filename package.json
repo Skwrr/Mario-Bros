@@ -12,9 +12,9 @@
   "license": "ISC",
   "dependencies": {
     "@discordjs/builders": "^0.5.0",
+    "@discordjs/opus": "^0.3.3",
     "@discordjs/rest": "0.1.0-canary.0",
     "@discordjs/voice": "^0.6.0",
-    "@discordjs/opus": "^0.3.3",
     "@fabricio-191/ms": "^1.2.0-2",
     "ai-tic-tac-toe": "^1.1.1",
     "anti-link-discord": "^1.0.4",
@@ -30,6 +30,7 @@
     "discord-shitpost": "^1.1.2",
     "discord-tts": "^1.0.3",
     "discord.js": "^13.1.0",
+    "discord.js-light": "^3.2.0",
     "discordimgs": "^1.4.0",
     "distube": "^3.0.0-beta.39",
     "dotenv": "^8.2.0",
