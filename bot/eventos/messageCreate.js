@@ -19,7 +19,9 @@ module.exports = async(client, message) => {
   let cn = new db.crearDB("cooldownc")
   let prefixdb = new db.crearDB("prefixes")
   let counting = new db.crearDB("counting")
+  let money = new db.crearDB("economy")
   let blg = new db.crearDB("blacklistglobal")
+  let command = new db.crearDB("commands")
 
   if(client.distube.getQueue(message.guildId)){
     if(client.distube.getQueue(message.guildId).autoplay === true) client.distube.toggleAutoplay(message)
@@ -42,8 +44,12 @@ module.exports = async(client, message) => {
 
   if (message.author.bot) return;
   if(!message.content.toLowerCase().startsWith(prefix)){
-    if(message.mentions.users.first()){
-    if(message.mentions.users.first().id === client.user.id && !message.reference) return message.reply("Mi prefix en este servidor es `"+prefix+"`")
+    if(!money.has(message.author.id)) return
+    let moni = parseInt(message.content.length)/5
+    money.add(message.author.id+".cash", moni)
+    let mentions = message.mentions.users.map(e => e.id)
+    if(mentions.includes(client.user.id) && !message.reference){
+      message.reply("Mi prefix en este servidor es `"+prefix+"`")
     }
   /*if(message.content.toLowerCase().startsWith('sepox')){
     message.channel.send('SEPOXCRAFT48? El que busca gente que le ayude y todos le ignoran?')
@@ -63,7 +69,7 @@ module.exports = async(client, message) => {
   if(message.content.toLowerCase().startsWith('guga') || message.content.toLowerCase().startsWith('guga')){
     message.channel.send('gugaliz? Que queres de el, no toques al mejor amigo de SEPOX')
   }*///Userphone :facherismo:
-  if (message.channel.name == "userphone") {
+  if (message.channel.name.toLowerCase().includes("userphone")) {
     if(message.content.startsWith(prefix)){
 
     message.channel.send("Aqui no puedes escribir ningun comando").then(m => setTimeout(() => m.delete(), 4000))
@@ -77,7 +83,7 @@ module.exports = async(client, message) => {
     .trim()
     .split(/ +/g);
   commandName = args.shift();
-  let canal = client.channels.cache.filter(c => c.name == "userphone");
+  let canal = client.channels.cache.filter(c => c.name.toLowerCase().includes("userphone"));
 
     const embed = new Discord.MessageEmbed()
       .setAuthor(message.author.tag, message.author.displayAvatarURL())
@@ -96,7 +102,7 @@ module.exports = async(client, message) => {
       ".net"
     ];
 
-    if (message.channel.name == "userphone") {
+    if (message.channel.name.toLowerCase().includes("userphone")) {
 
       if (array.some(word => message.content.toLowerCase().includes(word))) {
 
@@ -108,8 +114,8 @@ module.exports = async(client, message) => {
 
       } else {
 
-        canal.forEach(m => {
-          client.channels.cache.get(m.id).send({embeds: [embed]});
+        canal.forEach(async m => {
+          (await client.channels.fetch(m.id)).send({embeds: [embed]});
         }); 
       } 
     }
@@ -134,6 +140,12 @@ module.exports = async(client, message) => {
   if (!cmd) return message.reply('**No existe ese comando, puedes sugerirlo con el comando `'+prefix+'request`**')
   if(new db.crearDB("blacklistglobal").has(message.author.id)) return message.reply("Estas en la lista negra de los comandos, no intentes recuperar el derecho a usarme")
   if(cmd){
+    let maint = new db.crearDB("maintenance")
+    if(await maint.get("status") == "on") {
+      if(cmd.name == "maintenance") cmd.run(client, message, args, db, Discord)
+      else message.reply("El mantenimiento está activado, no puedes ejecutar ningún comando")
+      return
+    }
     const { MessageEmbed } = require("discord.js")
     if(cmd.premium && cmd.premium === true){
       const gp = new db.crearDB("premium")
@@ -148,16 +160,16 @@ module.exports = async(client, message) => {
     if(cmd.perms){
       if(typeof cmd.perms !== "object") console.log(`${cmd.name} no tiene un Object como propiedad de perms`)
       let perms = cmd.perms
-      if(perms.use){
-        if(!Array.isArray(perms.bot)) console.log(`${cmd.name} no tiene un Array como propiedad de perms.user`)
+      if(perms.user){
+        if(typeof perms.user != "object") console.log(`${cmd.name} no tiene un Array como propiedad de perms.user`)
         if(!message.member.permissions.has(perms.user)) return message.reply("No tienes permisos para ejecutar este comando, necesitas los permisos `"+perms.user.join(" | ")+"`")
       }
       if(perms.bot){
-        if(!Array.isArray(perms.bot)) console.log(`${cmd.name} no tiene un Array como propiedad de perms.bot`)
+        if(typeof perms.bot != "object") console.log(`${cmd.name} no tiene un Array como propiedad de perms.bot`)
         if(!message.guild.me.permissions.has(perms.bot)) return message.reply("No tengo permisos para ejecutar este comando, necesito los permisos `"+perms.bot.join(" | ")+"`")
       }
       if(perms.owner){
-        if(typeof perms.owner != "string") console.log(`${cmd.name} no tiene una String como propiedad de perms.owner`)
+        if(typeof perms.owner != "string") console.log(`${cmd.name} no tiene ua String como propiedad de perms.owner`)
         if(!perms.owner.includes(message.author.id)) return message.reply("❌ **Solo mi Creador puede usar Este cmd** ❌")
       }
     }
@@ -196,8 +208,12 @@ module.exports = async(client, message) => {
     try{
       cmd.run(client, message, args, db, Discord)
       client.commandsran++
+      command.add("times", 1)
     }catch(error) {
-      console.log(error.stack)
+      client.commandsran++
+      command.add("times", 1)
+      console.error(error)
+      (async(error)=>(await client?.channels?.fetch("878389543458451477")).send({embeds: [new Discord.MessageEmbed().setTitle("Bug Detectado").setColor("RANDOM").setDescription('```js\n'+error+'\n```').setAuthor(message.author.username, message.author.displayAvatarURL()).addField("Comando:", `\`${cmd.name}\``)]}))()
     }
   }
 }

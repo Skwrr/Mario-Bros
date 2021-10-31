@@ -1,7 +1,7 @@
 module.exports = {
-  name: "jumbo",
-  description: "Observa un emoji grande",
-  use: "(:emoji:)",
+  name: "emojify",
+  description: "Convierte un link en un emoji",
+  use: "(link)",
   category: "util",
   alias: [],
   async run(client, message, args){
@@ -10,25 +10,22 @@ module.exports = {
     let prefix = require("megadb")
     prefix = new prefix.crearDB("prefixes")
     prefix = prefix.has(message.guild.id) ? await prefix.get(message.guild.id) : "k!"
-    if(!args[0]) return message.reply("Debes escribir un emoji, si quieres ver una lista de ellos, usa \`"+prefix+"emojis\` o usa una url para convertir en emoji")
     let row = null
-    let link = null
-    if(isLink(args[0])){
-      link = args[0]
+    let link = args[0]
+    if(message.attachments.first()) link = message.attachments.first().proxyURL
+    if(!link) return message.reply("Debes escribir una url para convertir en emoji")
+    if(isLink(link) && link.includes("https://") || link.includes("http://")){
       row = new mar().addComponents(new mb().setStyle("PRIMARY").setLabel("Añadir al servidor").setCustomId("addtoserver"))
     }else{
-      const emoji = require("discord.js").Util.parseEmoji(args[0])
-      if(emoji.id == null) return message.reply("Ese no es un emoji válido")
-      link = `https://cdn.discordapp.com/emojis/${emoji.id}.${emoji.animated ? "gif" : "png"}?size=60`
+      return message.reply("Eso no es un link")
     }
-    message.reply({content: link, components: [row]}).then(m => {
+    message.reply({files: [link], components: [row]}).then(m => {
       let filter = (btn) => {
         if(btn.user.bot) return
         if(btn.user.id !== message.author.id) return btn.reply({content: "No puedes usar este botón", ephemeral: true})
         btn.deferUpdate()
         row = new mar().addComponents(new mb().setStyle("PRIMARY").setLabel("Añadir al servidor").setCustomId("addtoserver").setDisabled(true))
         m.edit({
-          content: m.content,
           components: [row]
         })
         if(btn.customId === "addtoserver"){
@@ -44,7 +41,6 @@ module.exports = {
       }
       m.awaitMessageComponent({filter, componentType: "BUTTON", time: 30000, errors:["time"]}).catch(error => {
         m.edit({
-          content: m.content,
           components: [row]
         })
       })

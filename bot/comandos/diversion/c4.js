@@ -6,8 +6,6 @@ module.exports = {
   alias: ["connect4"],
   async run(client, message, args, db){
     let mdb = new db.memoDB("activec4")
-    if(mdb.has(message.channel.id)) return message.reply("Ya se está jugando una partida en este canal")
-    else mdb.set(message.channel.id, "true")
     let { MessageActionRow: mar, MessageButton: mb } = require("discord.js")
     let member = message.member,
     mention = message.mentions.members.first() || message.guild.members.resolve(args[0])
@@ -17,7 +15,7 @@ module.exports = {
     if(!mention) return message.reply("Debes mencionar a alguien")
     if(mention.user.id == client.user.id) return message.reply("Ojalá puediera...")
     if(mention.user.bot) return message.reply("No puedes jugar contra un bot")
-    // if(mention.user.id == member.id) return message.reply("Como vas a jugar contra tí mismo?")
+    if(mention.user.id == member.id) return message.reply("Como vas a jugar contra tí mismo?")
 
     let row0 = new mar(),
     row1 = new mar(),
@@ -28,6 +26,8 @@ module.exports = {
     for(let i = 0; i < size*size; i++){
       btn.push(new mb().setStyle("SECONDARY").setLabel("?").setCustomId(`slot${i}`))
     }
+    if(mdb.has(message.channel.id)) return message.reply("Ya se está jugando una partida en este canal")
+    else mdb.set(message.channel.id, "true")
     row0.addComponents([btn[0], btn[1], btn[2], btn[3], btn[4]])
     row1.addComponents([btn[5], btn[6], btn[7], btn[8], btn[9]])
     row2.addComponents([btn[10], btn[11], btn[12], btn[13], btn[14]])
@@ -157,7 +157,7 @@ module.exports = {
 
                 btn.deferUpdate()
                 m.edit({content: "Turno de "+turno.user.username, components: [row0, row1, row2, row3, row4]})
-                let checker = require("connect4-checker")
+                let {checker} = require("connect4-discord")
                 let status = new checker(btna, turno)
                 if(status.status == "end") {
                   mdb.delete(message.channel.id)

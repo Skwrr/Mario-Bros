@@ -7,12 +7,12 @@ module.exports = {
   cooldown: 10,
   premium: true,
   async run(client, message, args){
-    if(!message.member.permissions.has("MANAGE_CHANNELS")) return message.reply("No tienes permisos para ejecutar ese comando, necesitas `MANAGE_CHANNELS`")
     let {a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z} = require("../functions").unicode
     let arr = [a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z]
     let arr2 = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
     if(!args.join(" ")) return message.reply("Escribe algún texto")
     if(args[0] == "replaceAll"){
+      if(!message.member.permissions.has("MANAGE_CHANNELS")) return message.reply("No tienes permisos para ejecutar ese comando, necesitas `MANAGE_CHANNELS`")
       try{
       let namo = message.guild.name
       for(const ch of [...message.guild.channels.cache.values()]){

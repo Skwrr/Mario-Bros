@@ -1,3 +1,4 @@
+let Discord = require("discord.js")
 module.exports = {
   getMemoryUsage: function() {
     const OS = require('os'); 
@@ -124,6 +125,44 @@ module.exports = {
     if(int > 999) int = (int/1000).toFixed(2)+"k"
 
     return int
+  },
+  get: class getter {
+    constructor(client, thing, Discord){
+      if(!client) throw new TypeError("Client needed")
+      if(!Discord) Discord = require("discord.js")
+      let emotes = new Discord.Collection()
+      for(let guild of [...client.guilds.cache]){
+        emotes.set(guild[1].id, guild[1].emojis.cache)
+      }
+      let myroles = new Discord.Collection(),
+      roles = new Discord.Collection()
+      for(let guild of [...client.guilds.cache]){
+        myroles.set(guild[1].id, guild[1].me.roles.cache)
+        roles.set(guild[1].id, guild[1].roles.cache)
+      }
+      if(thing == "emojis" || thing == "emotes") this.emotes = {
+        emotes,
+        size: eval(emotes.map(e => e.size).join("+"))
+      }
+      else if(thing == "roles") this.roles = {
+        me: {
+          myroles,
+          size: eval(myroles.map(e => e.size).join("+"))
+        },
+        general: {
+          roles,
+          size: eval(roles.map(e => e.size).join("+"))
+        }
+      }
+      else {
+        this.emotes = emotes
+        this.roles = {
+          me: myroles,
+          general: roles
+        }
+      }
+      return this
+    }
   },
   unicode: {
     a: '🇦', b: '🇧', c: '🇨', d: '🇩',

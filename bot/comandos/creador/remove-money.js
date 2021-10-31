@@ -3,12 +3,14 @@ module.exports = {
   description: "Quitale dinero a un usuario",
   use: "(@user) (ammount) (cash/bank)",
   category: 'economia',
+  perms: {
+    owner: process.env.OWNERS_ID
+  },
   alias: [],
   async run(client, message, args) {
     const Discord = require("discord.js")
   const db = require("megadb")
   const money = new db.crearDB("economy")
-  if(!message.member.permissions.has("ADMINISTRATOR")) return message.reply("No tienes permisos para dar dinero")
   let j = message.mentions.users.first()
   if(!j) return message.reply("Mencione a alguien")
   let c = args[1]

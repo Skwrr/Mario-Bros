@@ -7,6 +7,8 @@ module.exports = async(client) => {
   client.commandsran = 0
   client.usuarios = client.users
   client.db = require("megadb")
+  let commandc = new db.crearDB("commands")
+  if(!commandc.has("times")) commandc.set("times", 0)
   module.exports.client = client
   client.user.setPresence({
         activities: [{
@@ -109,4 +111,39 @@ mens.edit({embeds: [embed], components: [new mr().addComponents([buttons.backwar
 }
   m.awaitMessageComponent({filter})
 }))
+
+
+// Server Count
+setInterval(async() => {
+  let channel1 = await client.channels.fetch("901522176279191663"),
+  channel2 = await client.channels.fetch("901522220604620810"),
+  channel3 = await client.channels.fetch("901522255178240040"),
+  channel4 = await client.channels.fetch("903839732570673202"),
+  channel41 = await client.channels.fetch("896422103161643019")
+  rstatus = "Down"
+
+  if(await require("roblox-status") == "Active Incident") rstatus = "Down"
+  else rstatus = "Working"
+    
+  channel1.setName("╠Bots: "+channel1.guild.members.cache.filter(e => e.user.bot).size)
+  channel2.setName("╠Usuarios: "+channel2.guild.members.cache.filter(e => !e.user.bot).size)
+  channel3.setName("╠Miembros: "+channel3.guild.members.cache.size)
+  channel4.setName("╚Roblox Status: "+rstatus)
+  channel41.setName("Boblox Status: "+rstatus)
+}, 2500)
+
+function switchAvatar(client, normal, sleeping){
+  let time = new Date().getHours()+2
+  console.log(time)
+  if(time < 22) {
+    if(client.user.displayAvatarURL({format: "png"}) != normal) client.user.setAvatar(normal)
+  }else if(time >= 22) {
+    if(client.user.displayAvatarURL({format: "png"}) == normal) client.user.setAvatar(sleeping)
+  }
+}
+
+setInterval(() => {
+  switchAvatar(client, "https://cdn.discordapp.com/avatars/662995691164925973/d31c7c6f770d12105fd4a6c2ead27f86.png", "https://cdn.discordapp.com/avatars/662995691164925973/ba749b5610ce1b6b3d550e111190af97.png")
+}, 3600000)
+
 }

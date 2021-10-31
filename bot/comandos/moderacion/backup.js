@@ -3,7 +3,7 @@ module.exports = {
   description: "Administra los respaldos de tu servidor",
   use: "(create/info/load/delete/staffrole) (backupcode)",
   alias: [],
-  category: "beta",
+  category: "moderacion",
   async run(client, message, args){
     message.channel.send("Este comando es un SlashCommand, puedes volver a invitar al bot si no ves los SlashCommand")
     require("../ayuda/invite").run(client, message)

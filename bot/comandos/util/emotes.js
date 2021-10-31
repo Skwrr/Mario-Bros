@@ -17,7 +17,7 @@ message.guild.emojis.cache.filter(x => !x.animated).map(x => emojis.push(`<:${x.
 
 message.guild.emojis.cache.filter(x => x.animated).map(x => emojis_a.push(`<a:${x.name}:${x.id}>`))
 
-message.channel.send({embed: { 
+message.channel.send({embeds: [{ 
   title: `Emojis de ${message.guild.name}`, 
   color: 'RANDOM', 
   fields: [{ 
@@ -34,7 +34,7 @@ message.channel.send({embed: {
     name: `Pedido por: ${message.author.tag}`,
     icon_url: message.author.displayAvatarURL()
   }
-}}).then(async a => {
+}]}).then(async a => {
 
   await a.react('◀️')
   await a.react('⏹️')
@@ -57,7 +57,7 @@ message.channel.send({embed: {
       i-=10
       i2-=10
 
-      a.edit({embed: {
+      a.edit({embeds: [{
         title: `Emojis de ${message.guild.name}`, 
         color: 'RANDOM', 
         fields: [{ 
@@ -74,7 +74,7 @@ message.channel.send({embed: {
           name: `Pedido por: ${message.author.tag}`,
           icon_url: message.author.displayAvatarURL()
         }
-      }})      
+      }]})      
       }
 
       }else if(reaction.emoji.name === "⏹️"){
@@ -91,7 +91,7 @@ message.channel.send({embed: {
       i+=10
       i2+=10
 
-      a.edit({embed: {
+      a.edit({embeds: [{
         title: `Emojis de ${message.guild.name}`, 
         color: 'RANDOM', 
         fields: [{ 
@@ -108,7 +108,7 @@ message.channel.send({embed: {
           name: `Pedido por: ${message.author.tag}`,
           icon_url: message.author.displayAvatarURL()
         }
-      }})   
+      }]})   
       }
       }
 }

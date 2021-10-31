@@ -24,6 +24,45 @@ app.get('/api/invite', (req, res) => {
   redirect(res, "https://discord.com/api/oauth2/authorize?client_id=662995691164925973&permissions=8&scope=bot%20applications.commands")
 })
 
+app.get("/roblox", (req, res) => {
+  sendFile(res, "/webpage/roblox/index.html")
+})
+
+app.get("/roblox/exploit/android", (req, res) => {
+  res.sendFile(__dirname+"/webpage/roblox/exploits/arceusx.html")
+})
+
+app.get("/roblox/exploit/pc", (req, res) => {
+  res.sendFile(__dirname+"/webpage/roblox/exploits/krnl.html")
+})
+
+app.get("/roblox/exploit/scripts", (req, res) => {
+  sendFile(res,  "/webpage/roblox/scriptlist.html")
+})
+
+app.get("/roblox/exploit/script/menu", (req, res) => {
+  let query = url.parse(req.url, true).query,
+  file = query.file
+  if(!file) return res.redirect("/roblox/exploit/script")
+  res.sendFile(__dirname+"/webpage/roblox/scripts/menu.html")
+})
+
+app.get("/roblox/exploit/script/:id", (req, res) => {
+  res.redirect("https://krypton.sergioesquina.repl.co/roblox/exploit/script/menu?file="+req.params.id)
+})
+
+app.get("/roblox/exploit/script/:id/preview", (req, res) => {
+  res.sendFile(__dirname+"/webpage/roblox/scripts/"+req.params.id+".lua")
+})
+
+app.get("/roblox/exploit/script/:id/previewtxt", (req, res) => {
+  res.sendFile(__dirname+"/webpage/roblox/scripts/"+req.params.id+".txt")
+})
+
+app.get('/getpremium/how', async(req, res) => {
+  res.send("<a>Para obtener premium en tu servidor, necesitas ganarlo en un sorteo de mi [servidor de discord](https://discord.gg/MhKWCTun6w) u obtieniendolo en mis generadores</a>")
+})
+
 app.get('/getpremium/:id', async(req, res) => {
   let guildid = url.parse(req.url, true).query.guildid
   let id = req.params.id
@@ -118,23 +157,35 @@ app.get('/free-hosting/success', (req, res) => {
   let hosturl = query.hosturl,
   user = query.user,
   hostName = query.hostname
-
+  try{
   let embed = new Discord.MessageEmbed()
   .setColor("RANDOM")
   .setAuthor(client.client?.users.resolve(user).username, client.client?.users.resolve(user).displayAvatarURL())
   .setDescription("Datos del host")
-  .addField("Nombre del Hosting", hostname.toString())
+  .addField("Nombre del Hosting", hostName.toString())
   .addField("URL del Hosting", hosturl.toString())
   .addField("Usuario", client.client?.users.resolve(user).toString())
+  }catch(err){
+    let embed = new Discord.MessageEmbed()
+    .setDescription("Nuevo host!")
+    .addField("Host: ", hosturl.toString())
+  }
 
   let db = require("megadb")
   db = new db.crearDB("hosts")
   let ae
   db.map(false, e => ae=e)
   if(ae.includes(hosturl.toLowerCase())) return res.redirect(`/free-hosting/failure?hosturl=${hosturl}&error=Url%20ya%20en%20uso`)
+  if(!client.client?.users.resolve(user)) return res.redirect(`/free-hosting/failure?hosturl=${hosturl}&error=Usuario%20no%20encontrado`)
+  
   db.push("hosts", hosturl.toLowerCase())
 
-  client.client?.channels.resolve("").send({content: `${client.client?.users.resolve(user).username} ha añadido un host!!`, embeds: [embed]})
+  db = require("megadb")
+  db = new db.crearDB("websauthor")
+
+  db.set(hosturl.toString()+".owner", user)
+
+  client.client?.channels.resolve("877874680739024936").send({content: `${client.client?.users.resolve(user).username} ha añadido un host!!`, embeds: [embed]})
 
   client.client?.users.resolve(user).send("Hola, gracias por usar nuestro Hosting, su bot `"+hosturl+"` está siendo hosteado ahora mismo.")
 
@@ -150,19 +201,19 @@ app.get("/servers/:id/customcommands/create", Auth, async(req, res) => {
   user = query.userId,
   commandName = query.cmdname
 
-  let ans = req.url.split("&"),
-  b = [],
-  arg = []
-  ans.pop()
-  ans.forEach(a => {
-      if(a.includes("args")) b.push(a)
-  })
-  let aca
-  b.forEach(a => {
-      aca = a
-      a = a.replaceAll("args", "").replaceAll("=", "")
-      arg.push(a.slice(1))
-  })
+  // let ans = req.url.split("&"),
+  // b = [],
+  // arg = []
+  // ans.pop()
+  // ans.forEach(a => {
+  //     if(a.includes("args")) b.push(a)
+  // })
+  // let aca
+  // b.forEach(a => {
+  //     aca = a
+  //     a = a.replaceAll("args", "").replaceAll("=", "")
+  //     arg.push(a.slice(1))
+  // })
 
   if(!commandName) return res.sendFile(__dirname+"/webpage/createcustom.html");
 
@@ -173,7 +224,7 @@ app.get("/servers/:id/customcommands/create", Auth, async(req, res) => {
     return "pass"
   }
   if(checkErrors() !== "pass") res.redirect("/servers/"+req.params.id+"/customcommands/failure?code="+code+"&error="+checkErrors())
-  else res.redirect("/servers/"+req.params.id+`/customcommands/success?code=${code}&cmdname=${commandName}&user=${user}&args=[${arg.join(", ")}]`)
+  else res.redirect("/servers/"+req.params.id+`/customcommands/success?code=${code}&cmdname=${commandName}&user=${user}`)
   
 });
 
@@ -193,17 +244,17 @@ app.get("/servers/:id/customcommands/success", Auth, async(req, res) => {
   let info = url.parse(req.url, true).query,
   code = info.code,
   userId = info.user,
-  commandName = info.cmdname,
-  arg = info.args
-  let args = []
+  commandName = info.cmdname
+  // arg = info.args
+  // let args = []
 
-  console.log(Array.isArray(arg))
+  // console.log(Array.isArray(arg))
 
-  arg.forEach(ar => {
-    args.push(ar)
-  })
+  // if(Array.isArray(args)) arg.forEach(ar => {
+  //   args.push(ar)
+  // })
 
-  function createCommand(client, code, userId, args){
+  function createCommand(client, code, userId){
 let user = userId
     if(!client) return "No se obtuvo Client"
     if(!code) return "No se obtuvo el codigo"
@@ -226,7 +277,7 @@ let user = userId
   alias: [],
   Custom: "${req.params.id}",
   async run(client, message, args){
-    if(message.guild.id !== "${req.params.id}") return message.reply("Este comando solo está disponible para mi servidor de soporte, si quieres añadir tu propio comando totalmente customizado, adquiere \`premium\` en tu servidor y accede al panel del bot")
+    if(message.guild.id !== "${req.params.id}") return message.reply("Este comando solo está disponible para uno de mis servidores **\`premium\`**, si quieres añadir tu propio comando totalmente customizado, adquiere \`[premium]('https://krypton.sergioesquina.repl.co/getpremium/how')\` en tu servidor y accede al panel del bot")
     if(args[0] === "delete") {
       message.reply("Comando eliminado")
       client.comandos.delete("${commandName}")
@@ -248,7 +299,7 @@ let user = userId
     return "pass"
   }
 
-  if(createCommand(client.client, code, userId) !== "pass") return res.redirect("failure?code="+code+"&error="+createCommand(client.client,code, userId, args) )
+  if(createCommand(client.client, code, userId) !== "pass") return res.redirect("failure?code="+code+"&error="+createCommand(client.client,code, userId) )
 
   res.send("Tu codigo ahora está en la lista de espera, recibirás un MD cuando te acepten el codigo");
 });
@@ -278,6 +329,7 @@ app.get('/api/info/:id', async(req, res) => {
 })
 
 app.get('/api/info/', async(req, res) => {
+  db = require("megadb")
   let baltop = new db.crearDB("economy")
   let arr = [], arr2 = []
   let sort = await baltop.sort(false, "total");
@@ -361,6 +413,10 @@ app.get("/api/bots", async(req, res) => {
   bots = await db.map(false, e => e)
 
   res.send({ bots: [bots[1]] })
+})
+
+app.get('/store', async(req, res) => {
+  res.redirect("https://mee6.gg/m/876201162192322572")
 })
 
 fs.readdirSync(__dirname+"/webpage/shorteners").forEach(file => {

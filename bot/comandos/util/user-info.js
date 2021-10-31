@@ -55,8 +55,11 @@ module.exports = {
             userm.presence?.game != null ? userm.presence?.game.name : "Nada",
             true
           )
+          let presence;
+          if(userm.presence?.status) presence = userm.presence?.status
+          else presence = null
           .addField("ID", userm.id)
-          .addField("Estado", ":"+userm.presence?.status.toString()+":" || "Desconectado")
+          .addField("Estado", presence.toString() || "Desconectado")
           .addField("Insignias", userFlags.join("\n") || "No tiene")
           .addField("Apodo", userm.nickname || "No tiene")
           .addField("Cuenta Creada", "<t:"+Math.floor(Number(userm.user.createdAt/1000))+">")

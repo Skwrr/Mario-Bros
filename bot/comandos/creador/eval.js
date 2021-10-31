@@ -82,7 +82,7 @@ module.exports = {
         if (typeof evalued !== 'string') evalued = require('util').inspect(evalued, { depth: 0, maxStringLength: 2000});
         let txt = "" + evalued;
 
-        if(code.length > 1024){
+        if(code.length > 1012){
           require("beautify")(args.join(" "), {format: 'js'})
           const embed = new Discord.MessageEmbed()
           .addField(":inbox_tray: Entrada", `\`\`\`js\ncodigo largo\n\`\`\``)
@@ -96,7 +96,7 @@ module.exports = {
           });
         }
     
-        if (txt.length > 1024) {
+        if (txt.length > 1012) {
           let link = await jsp.publicar(txt)
 
             

@@ -29,6 +29,7 @@ let nuevoprefix = args[0]
         m.edit("**Ha ocurrido un error y no se pudo cambiar el prefix.**"+e.stack);
       })
       .then(() => {
+        message.guild.me.setNickname(client.user.username)
         m.edit('**Prefix cambiado a `k!`**');
       });
   });
@@ -48,6 +49,7 @@ let nuevoprefix = args[0]
         m.edit("**Ha ocurrido un error y no se pudo cambiar el prefix.**"+e.stack);
       })
       .then(() => {
+        message.guild.me.setNickname(`[${nuevoprefix}] `+client.user.username)
         m.edit(`**Prefix cambiado a ${nuevoprefix}**`);
       });
   });

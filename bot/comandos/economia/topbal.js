@@ -9,9 +9,6 @@ module.exports = {
       const Discord = require("discord.js")
       const db = require("megadb")
       const dinero = new db.crearDB("economy");
-      // let mapp = []
-      // let mepped = await dinero.map(datos => mapp.push({user: datos.clave, total: {total: Number(datos.valor.bank)+Number(datos.valor.cash), cash: datos.valor.cash, bank: datos.valor.bank}}))
-      // console.log(mapp)
       let sort = await dinero.sort(false, "total");
       let map;
       try{

@@ -15,122 +15,7 @@ module.exports = {
 
     if(!usuario) return message.reply("Debes mencionar a un usuario")
     if(usuario.id === message.author.id) return message.reply("No puedes jugar contra tí, puedes jugar solo si me mencionas")
-    if(usuario.id === client.user.id) return message.reply("Yo? No se jugar :(") /*{
-      const partida = new tresenraya.partida({ jugadores: [message.author.id, usuario.id] });
-
-    const embed = new Discord.MessageEmbed()
-    .setTitle("LOL")
-    .setDescription("Puedes ver esto?")
-    .setColor("RANDOM")
-    .setFooter("Creditos al npm `tresenraya`")
-    .setTimestamp()
-    .setThumbnail(message.guild.iconURL())
-    partida.turno.jugador = message.author.id
-    embed.setTitle('Empieza ' + client.users.resolve(partida.turno.jugador).username + ', elige un número del 1 al 9 [`' + partida.turno.ficha + '`]')
-    embed.setDescription(partida.tablero.string)
-
-    message.channel.send(embed).then(e => {
-      db.set(message.guild.id, e.id)
-
-    partida.on('ganador', (jugador, tablero, paso) => {
-      db.delete(message.guild.id)
-      embed.setTitle("Ha ganado **"+client.users.resolve(jugador).username+"**!")
-      embed.setDescription(tablero.string)
-
-      e.edit(embed);
-
-    });
-
-    partida.on('empate', (jugadores, tablero, paso) => {
-      db.delete(message.guild.id)
-
-      embed.setTitle("Hubo un empate entre **"+jugadores.map(x => client.users.resolve(x).username).join("** y **")+"**")
-      embed.setDescription(tablero.string)
-
-      e.edit(embed)
-
-    });
-    ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '528988083513982977'].forEach(emoji => {
-      e.react(emoji)
-    })
-    e.awaitReactions(async(reaction, user) => {
-      if(user.bot) return
-      
-      if(user.id !== partida.turno.jugador) return
-      if(reaction.emoji.name === "1️⃣") {
-        
-        if(partida.disponible('1')) partida.elegir('1')
-      }else
-      if(reaction.emoji.name === "2️⃣") {
-        
-        if(partida.disponible('2')) partida.elegir('2')
-      }else
-      if(reaction.emoji.name === "3️⃣") {
-        
-        if(partida.disponible('3')) partida.elegir('3')
-      }else
-      if(reaction.emoji.name === "4️⃣") {
-        
-        if(partida.disponible('4')) partida.elegir('4')
-      }else
-      if(reaction.emoji.name === "5️⃣") {
-        
-        if(partida.disponible('5')) partida.elegir('5')
-      }else
-      if(reaction.emoji.name === "6️⃣") {
-        
-        if(partida.disponible('6')) partida.elegir('6')
-      }else
-      if(reaction.emoji.name === "7️⃣") {
-        
-        if(partida.disponible('7')) partida.elegir('7')
-      }else
-      if(reaction.emoji.name === "8️⃣") {
-        
-        if(partida.disponible('8')) partida.elegir('8')
-      }else
-      if(reaction.emoji.name === "9️⃣") {
-        
-        if(partida.disponible('9')) partida.elegir('9')
-      }else
-      if(reaction.emoji.name === "yeg"){
-        partida.finalizar()
-      }else{
-        return
-      }
-
-      if (partida.finalizado) {
-        embed.setDescription(partida.tablero.string)
-        embed.setTitle(`Partida finalizada por ${client.users.resolve(user.id).username}`)
-        db.delete(message.guild.id)
-        return e.edit(embed)
-
-      }
-      embed.setDescription(partida.tablero.string)
-      embed.setTitle(`Turno de ${client.users.resolve(partida.turno.jugador).username} [${partida.turno.ficha}]`)
-      e.edit(embed);
-      let ficha
-      let fichapos
-      if(partida.turno.ficha === "❌") {
-        ficha = "x"
-      }else{
-        ficha = "o"
-      }
-      fichapos = AI.getmove(partida.tablero.array, ficha)
-      let fichaposs = partida.mejorPos(ficha)
-      setTimeout(() => {
-        console.log(ficha)
-        console.log(fichapos)
-        console.log(fichaposs)
-        if(partida.disponible(fichaposs)) partida.elegir(fichaposs)
-        embed.setDescription(partida.tablero.string)
-        embed.setTitle(`Turno de ${client.users.resolve(partida.turno.jugador).username} [${partida.turno.ficha}]`)
-        e.edit(embed);
-      }, 3000)
-    })
-        })
-        return
-    }else{*/
+    if(usuario.id === client.user.id) return message.reply("Yo? No se jugar :(")
     message.channel.send(`<@${usuario.id}> aceptas jugar una partida al 3 en raya contra <@${message.author.id}>?`).then(async me => {
       await me.react('👍')
       await me.react('👎')
@@ -161,7 +46,7 @@ module.exports = {
       db.set(message.guild.id, e.id)
 
     partida.on('ganador', (jugador, tablero, paso) => {
-      mdb.delete(message.guild.id)
+      db.delete(message.guild.id)
       let wonmoney = Math.floor(Math.random() * 2000)
       let dba = require("megadb")
       let dinero = new dba.crearDB("economy")

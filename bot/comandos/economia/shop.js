@@ -2,7 +2,7 @@ const db = require("megadb")
 module.exports = {
   name: "shop",
   description: "Compra algo",
-  use: "[buy/item] (item)",
+  use: "[buy/additem/delitem/item] (itemname) [cost] [messagetosay]",
   category: 'economia',
   alias: ["buy"],
   async run(client, message, args) {
@@ -31,31 +31,12 @@ module.exports = {
     const embed = new Discord.MessageEmbed()
     .setTitle("Store")
     .setColor("RANDOM")
-    console.log(items)
     let i = 0
     while(i < items.length){
-      console.log(items[i])
       embed.addField(items[i].item, betterInt(items[i].precio).toString())
       i++
     }
     return message.channel.sendEmbed(embed)
-  }
-  if(args[0] !== 'buy'){
-    let precio
-    let i = 0
-    let items = await store.get(guild)
-    while(i < items.length){
-      precio = items[i]
-      if(precio.item === args[0]) {
-        const embed = new Discord.MessageEmbed()
-          .setTitle(args[0].toUpperCase())
-          .addField("Precio", betterInt(precio.precio).toString())
-          .setColor("RANDOM")
-        return message.channel.sendEmbed(embed)
-      }
-      i++
-    }
-    return message.reply("Ese objeto no existe")
   }else
   if(args[0] === "buy"){
     if(!args[1]) return message.reply("Escriba el nombre del item")
@@ -82,6 +63,7 @@ module.exports = {
             if(btn.user.id !== message.author.id) return btn.reply({content: "No puedes usar eso", ephemeral: true})
             if(btn.customId === "no") {
               pressed++
+              m.delete()
               return btn.reply("Has rechazado la compra")
             }
             if(btn.customId === "yes") {
@@ -97,14 +79,74 @@ module.exports = {
                 } else btn.reply("Tu servidor ya era premium")
                 return pressed++
               }
-              btn.reply("Has comprado "+args[1]+", pero no puedes hacer nada").then(() => new db.crearDB("economy").restar(message.author.id+".cash", precio.precio))
+              btn.reply("Has comprado "+args[1]).then(() => new db.crearDB("economy").restar(message.author.id+".cash", precio.precio))
               pressed++
+              btn.user.send(precio.act)
+              m.delete()
             }
           }
           m.awaitMessageComponent({filter, componentType: "BUTTON", max: 1, time: 20000, errors: ['time']}).catch(error => {
             message.reply("Se ha acabado el tiempo")
           })
         })
+      }
+      i++
+    }
+    return message.reply("Ese objeto no existe")
+  }else if(args[0] == "additem"){
+    let item = args[1],
+    description = args.slice(3).join(" "),
+    price = args[2]
+    async function hasitem(itm){
+      let aaiiaa = await store.get(`${guild}`)
+      aaiiaa = aaiiaa.some(e => e.item == itm)
+      return aaiiaa
+    }
+    if(!item) return message.reply("Debes escribir el nombre de un item")
+    if(!price) return message.reply("Debes escribir el precio")
+    if(!description) return message.reply("Debes escribir lo que quieres que envíe el bot")
+    if(await hasitem(item)) return message.reply("Ese item ya está en la tienda")
+    else store.push(`${guild}`, {
+      item: item,
+      precio: parseInt(price),
+      act: description
+    })
+    message.reply("Item añadido")
+  }else if(args[0] == "delitem"){
+    let item = args[1]
+    async function hasitem(itm){
+      let aaiiaa = await store.get(`${guild}`)
+      aaiiaa = aaiiaa.some(e => e.item == itm)
+      return aaiiaa
+    }
+    if(!item) return message.reply("Debes escribir el nombre de un item")
+    if(!(await hasitem(item))) return message.reply("Ese item no está en la tienda")
+    else {
+      let precio
+      let i = 0
+      let items = await store.get(guild)
+      while(i < items.length){
+        if(items[i].item == item) {
+          store.extract(`${guild}`, items[i])
+          message.reply("Item eliminado")
+          return
+        }
+        i=i++
+      }
+      message.reply("Item no encontrado")
+    }
+  }else if(args[0] !== 'buy'){
+    let precio
+    let i = 0
+    let items = await store.get(guild)
+    while(i < items.length){
+      precio = items[i]
+      if(precio.item === args[0]) {
+        const embed = new Discord.MessageEmbed()
+          .setTitle(args[0].toUpperCase())
+          .addField("Precio", betterInt(precio.precio).toString())
+          .setColor("RANDOM")
+        return message.channel.sendEmbed(embed)
       }
       i++
     }
@@ -153,10 +195,8 @@ module.exports = {
     const embed = new Discord.MessageEmbed()
     .setTitle("Store")
     .setColor("RANDOM")
-    console.log(items)
     let i = 0
     while(i < items.length){
-      console.log(items[i])
       embed.addField(items[i].item, betterInt(items[i].precio).toString())
       i++
     }
@@ -220,8 +260,9 @@ module.exports = {
                 } else btn.reply({content: "Tu servidor ya era premium", ephemeral: true})
                 return pressed++
               }
-              btn.reply({content: "Has comprado "+args.getString("itemtobuy")+", pero no puedes hacer nada", ephemeral: true}).then(() => new db.crearDB("economy").restar(message.user.id+".cash", precio.precio))
+              btn.reply({content: "Has comprado "+args.getString("itemtobuy"), ephemeral: true}).then(() => new db.crearDB("economy").restar(message.user.id+".cash", precio.precio))
               pressed++
+              btn.user.send(precio.act)
             }
           }
           m.awaitMessageComponent({filter, componentType: "BUTTON", max: 1, time: 20000, errors: ['time']}).catch(error => {

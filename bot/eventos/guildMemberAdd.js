@@ -5,7 +5,9 @@ module.exports = async(client, member) => {
   db = new db.crearDB("bienvenidas")
   let wlcch = await db.get(member.guild.id+".channel")
   let wlcr = await db.get(member.guild.id+".role")
-  console.log(wlcr, wlcch)
+  db = require("megadb")
+  let maint = new db.crearDB("maintenance")
+  if(await maint.get("status") == "on") return
   let arr = []
   const ms = require("@fabricio-191/ms")
   const isMalicious = await mmdb.findElementByID(member.id);
@@ -29,9 +31,7 @@ module.exports = async(client, member) => {
     if(!wlcch) return
     else client.channels.fetch(wlcch).then(ch => ch.send(`Usuario Malicioso:\nID: ${isMalicious.id}\nReason: ${isMalicious.razon}\nProof: ${isMalicious.prueba}`))
   }
-  if(member.guild.id === "876201162192322572"){
-    if(member.user.bot){
-      member.roles.add("877297208838467644")
-    }
+  if(member.user.bot){
+    member.roles.add("877297208838467644")
   }
 }

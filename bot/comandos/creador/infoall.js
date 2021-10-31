@@ -42,7 +42,7 @@ module.exports = {
     let guild = client.guilds.resolve(args[1])
     if(!guild) return message.reply("Esa id no es valida")
     if(!guild.me.permissions.has("CREATE_INSTANT_INVITE")) return message.reply("No puedo crear invitacion")
-    if(guild.sustemChannelId === null){
+    if(guild.systemChannelId === null){
       await guild.invites.create(guild.channels.cache.random().id,{maxAge: 0, maxUses: 1}).then(invite => {
       let embed = new Discord.MessageEmbed()
       .setDescription(`[${guild.name}](${invite.url})`)

@@ -12,7 +12,9 @@ module.exports = {
       m.edit(
         `:incoming_envelope: Ping Mensajes: \`${Math.floor(
           Date.now() - m.createdTimestamp
-        )} ms\`\n:satellite_orbital: Ping DiscordAPI: \`${ping} ms\``
+        )} ms\`\n:satellite_orbital: Ping DiscordAPI: \`${ping} ms\`\n🗺️ Ping general aprox.: \`${(Math.floor(
+          Date.now() - m.createdTimestamp
+        )*(ping/1000)).toFixed(3)}\``
       );
     });
   }

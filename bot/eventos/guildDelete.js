@@ -2,9 +2,10 @@ module.exports = async(client, guild) => {
   const db = require("megadb")
   const Discord = require("discord.js")
   let ms = require("@fabricio-191/ms")
+  if(!guild || !guild.name) return;
   const embed = new Discord.MessageEmbed()
   .setTitle("Servidor Abandonado!")
-  .setDescription(guild.name)
+  .setDescription(guild.name || "Nombre desconocido")
   .addField(guild.members.cache.size+" usuarios", "Me uní el <t:"+Math.floor(Number(guild.joinedAt)/1000)+">")
   .setThumbnail(guild.iconURL())
   .setColor("RANDOM")

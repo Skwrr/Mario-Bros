@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu</title>
+</head>
+<body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <p class="ntxt"></p>
+  <p class="preview"></p>
+  <p class="dlua"></p>
+  <p class="dtxt"></p>
+</body>
+<script>
+  let file = location.href.split("?")[1].split("=")[1].split("&")[0]
+  $(".preview").html(`<button class="preview" onclick="let win = window.open(); win.location.href = 'https://krypton.sergioesquina.repl.co/roblox/exploit/script/${file}/preview'">Preview</button>`)
+  $(".dlua").html(`<button><a class="dlua" href="${file}/preview" download="SayNO Exploit">Download .LUA</a></button>`)
+  $(".dtxt").html(`<button><a class="dtxt" href="${file}/previewtxt" download="SayNO Exploit">Download .TXT</a></button>`)
+  $(".ntxt").text(`Downloads Avalible for ${file}`)
+</script>
+</html>

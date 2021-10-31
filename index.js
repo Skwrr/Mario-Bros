@@ -10,6 +10,7 @@ function getWebsites(){
   )
   return arr
 }
+
 global.websites = getWebsites()
 process.reload = function reload(){
   setTimeout(() => process.exit(), 1500)
@@ -21,15 +22,26 @@ const client = new Discord.Client({
   allowedMentions: {
     parse: ["users","roles"],
     repliedUser: true
-  },
-  rejectOnRateLimit: () => true
+  }
 });
 let fs = require('fs');
 let app = require('express');
 require('dotenv').config();
 require('moment-duration-format')
 
+const { GiveawaysManager } = require('discord-giveaways')
+let gmanager = new GiveawaysManager(client, {
+  forceUpdateEvery: 17000,
+  endedGiveawaysLifetime: 120000,
+  default: {
+    botsCanWin: false,
+    embedColorEnd: "#FF000",
+    embedColor: '#000000'
+  }
+}, true)
+
 client.comandos = new Discord.Collection();
+client.giveaways = gmanager
 
 const {DisTube: distube} = require('distube');
 client.distube = new distube(client, {
@@ -92,12 +104,9 @@ client.distube.on('playSong', (queue, song) => {
 			'** | ' +
 			song.formattedDuration
 	);
-});
-
-client.distube.on('playList', (queue, playlist) => {
-	queue.textChannel.send(
+  if (song.playlist) queue.textChannel.send(
 		'Reproduciendo playlist: **' +
-			playlist.name +
+			song.playList.name +
 			'**'
 	);
 });
@@ -152,13 +161,22 @@ websites.forEach(async id => {
 		interval: 2 // minutes
 	});
 
+  let webs = require("megadb")
+  webs = new webs.crearDB("websauthor")
+
 	monitor.on('up', res => {
 		console.log(`${res.website} está encedido.`);
 	});
-	monitor.on('down', res =>
+	monitor.on('down', async res => {
 		console.log(`${res.website} se ha caído - ${res.statusMessage}`)
-	);
-	monitor.on('stop', website => console.log(`${website} se ha parado.`));
+    let web = webs.has(res.website) ? await webs.get(res.website) : null
+    if(web) client.users.resolve(web.owner).send("Hola! Nuestro sistema ha detectado que su host `"+res.website+"` se ha caído, si su web vuelve a caerse, nuestro sistema el volverá a avisar dentro de 2 minutos, si desea eliminar el hosting, por favor, únase a mi servidor de soporte y cree un ticket")
+  });
+	monitor.on('stop', async website => {
+    console.log(`${website} se ha parado.`)
+    let web = webs.has(website) ? await webs.get(website) : null
+    if(web) client.users.resolve(web.owner).send("Hola! Nuestro sistema ha detectado que su host `"+website+"` se ha detenido, si su web vuelve a detenerse, nuestro sistema el volverá a avisar dentro de 2 minutos, si desea eliminar el hosting, por favor, únase a mi servidor de soporte y cree un ticket")
+  });
 	monitor.on('error', error => console.error(error));
 });
 
@@ -178,8 +196,9 @@ login().then(() => {
 
 
 // Anti apagos
-process.on("unhandledRejection", error => {
+process.on("unhandledRejection", async error => {
   console.error(error);
+  (await client?.channels?.fetch("878389543458451477")).send({embeds: [new Discord.MessageEmbed().setTitle("Bug Detectado").setColor("RANDOM").setDescription('```js\n'+error.stack+'\n```')]})
 
   if (error.requestData?.json) console.error(require("util").inspect(error.requestData.json, { depth: 5 }));
 
